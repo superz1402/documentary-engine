@@ -1,6 +1,8 @@
 # Opuscar Studio — Video Library
 
-A public production studio: every documentary produced with the [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) pipeline lives here. **Each new video is published as a GitHub Release** — no per-video repositories to manage. Release assets (MP4, subtitles, poster, metadata) are freely downloadable..
+A public production studio: every documentary produced with the [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) pipeline lives here. **🎬 Landing page (GitHub Pages): https://superz1402.github.io/opuscar-studio/ — film library with embedded trailers.**
+
+Each new video is published as a GitHub Release — no per-video repositories to manage. Release assets (MP4, subtitles, poster, metadata) are freely downloadable..
 
 ## Library
 
@@ -20,6 +22,7 @@ films/
     build.sh              # one-command rebuild
     render_range.mjs      # resumable range renderer for constrained hosts
     zodiac-002.srt        # subtitles
+    trailer: zodiac-002-trailer.mp4  # 1:09 web trailer (also on the Release + Pages site)
     chapters.txt          # YouTube chapter timestamps
     youtube.md            # title / description / tags package
     SOURCES.md            # fact-check sources
