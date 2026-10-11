@@ -1,0 +1,614 @@
+[
+{
+"id": "s01a",
+"scene": "S1",
+"text": "In the summer of 1969, three newspapers in the San Francisco Bay Area received identical letters. Each envelope held a third of a cryptogram — 408 symbols in strange rows — and a promise: solve it, and find the killer's name inside.",
+"say": "In the summer of nineteen sixty nine, three newspapers in the San Francisco Bay Area received identical letters. Each envelope held a third of a cryptogram — four hundred and eight symbols in strange rows — and a promise: solve it, and find the killer's name inside.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "In the summer of 1969, three newspapers in the San Francisco Bay Area received identical letters. Each envelope held a third of a cryptogram, 408 symbols in strange rows and a promise. Solve it and find the killer's name inside."
+},
+{
+"id": "s01b",
+"scene": "S1",
+"text": "The letters were signed, not with a name, but with a crosshair — the sight of a gun, seen from above. Within days, the author gave himself a title. \"This is the Zodiac speaking.\"",
+"say": "The letters were signed, not with a name, but with a crosshair — the sight of a gun, seen from above. Within days, the author gave himself a title. This is the Zodiac speaking.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The letters were signed, not with a name, but with a crosshair, the sight of a gun, seen from above. Within days, the author gave himself a title. This is the Zodiac speaking."
+},
+{
+"id": "s01c",
+"scene": "S1",
+"text": "He attacked in the darkness of lovers' lanes, in a lakeside park, on a city street. He wrote to the press, he telephoned the police, and he kept writing for years.",
+"say": "He attacked in the darkness of lovers' lanes, in a lakeside park, on a city street. He wrote to the press, he telephoned the police, and he kept writing for years.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "He attacked in the darkness of lovers' lanes in a lakeside park on a city street. He wrote to the press, he telephoned the police, and he kept riding for years."
+},
+{
+"id": "s01d",
+"scene": "S1",
+"text": "And he left behind something no killer is supposed to leave: a library of evidence. Letters. Fingerprints. Handwriting. DNA. Two of his own secret codes. Everything an investigation could hope for. Everything except an identity.",
+"say": "And he left behind something no killer is supposed to leave: a library of evidence. Letters. Fingerprints. Handwriting. D N A. Two of his own secret codes. Everything an investigation could hope for. Everything except an identity.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "And he left behind something no killer is supposed to leave, a library of evidence, letters, fingerprints, handwriting, DNA, two of his own secret codes, everything an investigation could hope for, everything except an identity."
+},
+{
+"id": "s02a",
+"scene": "S2",
+"text": "This is the file of the Zodiac Killer. Four confirmed attacks. Five people dead. Two survivors. A suspect list thousands of names long. And an open case that has outlived every era of investigation since.",
+"say": "This is the file of the Zodiac Killer. Four confirmed attacks. Five people dead. Two survivors. A suspect list thousands of names long. And an open case that has outlived every era of investigation since.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "This is the file of the Zodiac Killer, four confirmed attacks, five people dead, two survivors, a suspect lists thousands of names long, and an open case that has outlived every era of investigation since."
+},
+{
+"id": "s02b",
+"scene": "S2",
+"text": "How does a killer leave this much material — and still walk out of the story unnamed? That question is the spine of this film. Exhibit by exhibit: what the evidence proves, and what it does not.",
+"say": "How does a killer leave this much material — and still walk out of the story unnamed? That question is the spine of this film. Exhibit by exhibit: what the evidence proves, and what it does not.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "How does a killer leave this much material and still walk out of the story unnamed? That question is the spine of this film, exhibit by exhibit, what the evidence proves and what it does not."
+},
+{
+"id": "s03a",
+"scene": "S3",
+"text": "It began on a rural road on the edge of Benicia, just before midnight on December 20th, 1968. High school seniors David Faraday and Betty Lou Jensen had parked on Lake Herman Road when a car pulled up behind them. Within minutes, both were dead. Police found no motive, and no suspect.",
+"say": "It began on a rural road on the edge of Benicia, just before midnight on December twentieth, nineteen sixty eight. High school seniors David Faraday and Betty Lou Jensen had parked on Lake Herman Road when a car pulled up behind them. Within minutes, both were dead. Police found no motive, and no suspect.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "It began on a rural road on the edge of Banisha, just before midnight on December 20, 1968. High school seniors David Faraday and Betty Lou Jensen had parked on Lake Herman Road when a car pulled up behind them. Within minutes, both were dead. Police found no motive and no suspect."
+},
+{
+"id": "s03b",
+"scene": "S3",
+"text": "Six months later, just before midnight on July 4th, 1969, a young couple sat in another parked car at Blue Rock Springs Park, on the edge of Vallejo. A shooter walked up, fired through the window, and drove away. Darlene Ferrin died at the hospital. Michael Mageau, nineteen years old, survived his wounds.",
+"say": "Six months later, just before midnight on July fourth, nineteen sixty nine, a young couple sat in another parked car at Blue Rock Springs Park, on the edge of Vallejo. A shooter walked up, fired through the window, and drove away. Darlene Ferrin died at the hospital. Michael Mageau, nineteen years old, survived his wounds.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Six months later, just before midnight on July 4, 1969, a young couple sat in another parked car at Blue Rock Springs Park on the edge of Vallejo. A shooter walked up, fired through the window and drove away. Darlene Farron died at the hospital. Michael Meijau, 19 years old, survived his wounds."
+},
+{
+"id": "s03c",
+"scene": "S3",
+"text": "Then the killer began to speak. On September 27th, 1969, at Lake Berryessa, a figure in a black executioner's hood approached two college students picnicking by the shore. He carried a gun, a knife, and lengths of clothesline. He bound Bryan Hartnell and Cecelia Shepard, and stabbed them repeatedly. Shepard died the next day. Hartnell survived.",
+"say": "Then the killer began to speak. On September twenty seventh, nineteen sixty nine, at Lake Berryessa, a figure in a black executioner's hood approached two college students picnicking by the shore. He carried a gun, a knife, and lengths of clothesline. He bound Bryan Hartnell and Cecelia Shepard, and stabbed them repeatedly. Shepard died the next day. Hartnell survived.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Then, the killer began to speak. On September 27, 1969, at Lake Baryessa, a figure in a black executioner's hood approached two college students picnicking by the shore. He carried a gun, a knife, and lengths of clothesline. He bound Brian Hartnell and Cecilia Shepard and stabbed them repeatedly. Shepard died the next day. Hartnell survived."
+},
+{
+"id": "s03d",
+"scene": "S3",
+"text": "Three weeks later, on October 11th, 1969, a cab driver named Paul Stine picked up a fare in San Francisco. In the Presidio Heights district, the passenger shot him once in the head, took his wallet and keys, and tore a piece from his shirt. A police officer had even passed the killer on the street — and, sent the wrong description by dispatch, drove on.",
+"say": "Three weeks later, on October eleventh, nineteen sixty nine, a cab driver named Paul Stine picked up a fare in San Francisco. In the Presidio Heights district, the passenger shot him once in the head, took his wallet and keys, and tore a piece from his shirt. A police officer had even passed the killer on the street — and, sent the wrong description by dispatch, drove on.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Three weeks later on October 11, 1969, a cab driver named Paul Stein picked up a fare in San Francisco. In the Presidio Heights district, the passenger shot him once in the head, took his wallet and keys, and tore a piece from his shirt. A police officer had even passed the killer on the street and sent the wrong description by dispatch drove on."
+},
+{
+"id": "s04a",
+"scene": "S4",
+"text": "Count them. Five people killed: David Faraday. Betty Lou Jensen. Darlene Ferrin. Cecelia Shepard. Paul Stine. Two survived: Michael Mageau and Bryan Hartnell — and their testimony became some of the most important evidence in the case.",
+"say": "Count them. Five people killed: David Faraday. Betty Lou Jensen. Darlene Ferrin. Cecelia Shepard. Paul Stine. Two survived: Michael Mageau and Bryan Hartnell — and their testimony became some of the most important evidence in the case.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Count them. Five people killed David Faraday, Betty Lou Jensen, Darlene Farron, Cecilia Shepard, Paul Stein. Two survived. Michael Meijau and Brian Hartnell and their testimony became some of the most important evidence in the case."
+},
+{
+"id": "s04b",
+"scene": "S4",
+"text": "Less than an hour after the Berryessa attack, someone telephoned the Napa County Sheriff's Office from a payphone, reported the crime, and hung up. Another detail only the attacker should have had.",
+"say": "Less than an hour after the Berryessa attack, someone telephoned the Napa County Sheriff's Office from a payphone, reported the crime, and hung up. Another detail only the attacker should have had.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Less than an hour after the Baryessa attack, someone telephoned the Napa County Sheriff's Office from a payphone, reported the crime, and hung up. Another detail only the attacker should have had."
+},
+{
+"id": "s04c",
+"scene": "S4",
+"text": "The killer would later claim thirty-seven victims. Investigators found no evidence to support anything close to that number. The confirmed total remains five.",
+"say": "The killer would later claim thirty seven victims. Investigators found no evidence to support anything close to that number. The confirmed total remains five.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The killer would later claim 37 victims. Investigators found no evidence to support anything close to that number. The confirmed total remains five."
+},
+{
+"id": "s05a",
+"scene": "S5",
+"text": "What made this case different started on August 1st, 1969 — not with a fingerprint, or a witness, but with an envelope. Three letters landed that day at the San Francisco Chronicle, the San Francisco Examiner, and the Vallejo Times-Herald.",
+"say": "What made this case different started on August first, nineteen sixty nine — not with a fingerprint, or a witness, but with an envelope. Three letters landed that day at the San Francisco Chronicle, the San Francisco Examiner, and the Vallejo Times Herald.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "What made this case different started on August 1st, 1969, not with a fingerprint or a witness, but with an envelope. Three letters landed that day at the San Francisco Chronicle, the San Francisco Examiner, and the Vallejo Times Herald."
+},
+{
+"id": "s05b",
+"scene": "S5",
+"text": "Each gave details only the killer could know. Each carried a third of a cipher. And each made the same demand: print this cryptogram — or the writer would go hunting lone people all weekend, night after night.",
+"say": "Each gave details only the killer could know. Each carried a third of a cipher. And each made the same demand: print this cryptogram — or the writer would go hunting lone people all weekend, night after night.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Each gave details only the killer could know. Each carried a third of a cipher, and each made the same demand. Print this cryptogram, or the rider would go hunting lone people all weekend, night after night."
+},
+{
+"id": "s05c",
+"scene": "S5",
+"text": "The newspapers published. Three days later, a fourth letter arrived with the line that would name the case: \"This is the Zodiac speaking.\" The crosshair came with it, drawn into the letter's header.",
+"say": "The newspapers published. Three days later, a fourth letter arrived with the line that would name the case: This is the Zodiac speaking. The crosshair came with it, drawn into the letter's header.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The newspapers published. Three days later, a fourth letter arrived with a line that would name the case. This is the zodiac speaking. The crosshair came with it, drawn into the letter's header."
+},
+{
+"id": "s06a",
+"scene": "S6",
+"text": "Some letters carried proof. On October 13th, 1969, the Chronicle received a swatch of cloth from Paul Stine's shirt — torn from the victim by his killer — along with a threat against schoolchildren. The threat was never carried out. The shirt piece was authentic.",
+"say": "Some letters carried proof. On October thirteenth, nineteen sixty nine, the Chronicle received a swatch of cloth from Paul Stine's shirt — torn from the victim by his killer — along with a threat against schoolchildren. The threat was never carried out. The shirt piece was authentic.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Some letters carried proof. On October 13, 1969, the Chronicle received a swatch of cloth from Paul Stein's shirt, torn from the victim by his killer, along with a threat against school children. The threat was never carried out. The shirt piece was authentic."
+},
+{
+"id": "s06b",
+"scene": "S6",
+"text": "Other letters carried bombs that were never found, codes that were never solved, and demands that the papers keep printing. They joked about the police who could not catch him. They arrived with a return address no one could trace: the crosshair.",
+"say": "Other letters carried bombs that were never found, codes that were never solved, and demands that the papers keep printing. They joked about the police who could not catch him. They arrived with a return address no one could trace: the crosshair.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Other letters carried bombs that were never found, codes that were never solved, and demands that the papers keep printing. They joked about the police who could not catch him. They arrived with a return address no one could trace, the crosshair."
+},
+{
+"id": "s06c",
+"scene": "S6",
+"text": "For handwriting examiners, for the FBI's cryptanalysis unit, for a decade of detectives, this mail was the case's core contradiction. The killer kept talking. He kept proving it was him. And he kept telling them nothing about who he was.",
+"say": "For handwriting examiners, for the F B I's cryptanalysis unit, for a decade of detectives, this mail was the case's core contradiction. The killer kept talking. He kept proving it was him. And he kept telling them nothing about who he was.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "For handwriting examiners for the FBI's cryptanalysis unit, for a decade of detectives, this male was the case's core contradiction. The killer kept talking. He kept proving it was him, and he kept telling them nothing about who he was."
+},
+{
+"id": "s07a",
+"scene": "S7",
+"text": "The first cipher was the 408. It looked like a rectangle of gibberish: rows of letters and symbols — anchors, crosses, circles with dots. But it was built on a simple idea.",
+"say": "The first cipher was the four oh eight. It looked like a rectangle of gibberish: rows of letters and symbols — anchors, crosses, circles with dots. But it was built on a simple idea.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The first cipher was the 408. It looked like a rectangle of gibberish. Rose of letters and symbols, anchors, crosses, circles with dots. But it was built on a simple idea."
+},
+{
+"id": "s07b",
+"scene": "S7",
+"text": "It is called a homophonic substitution. Each letter is replaced by a symbol — but common letters, like E or T, get several different symbols, so the repeats that normally crack a code disappear into the noise.",
+"say": "It is called a homophonic substitution. Each letter is replaced by a symbol — but common letters, like E or T, get several different symbols, so the repeats that normally crack a code disappear into the noise.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "It is called a homophonic substitution. Each letter is replaced by a symbol, but common letters like E or T get several different symbols, so the repeats that normally crack a code disappear into the noise."
+},
+{
+"id": "s07c",
+"scene": "S7",
+"text": "It was a strong idea for a cipher designed to intimidate. It was not a professional design. The killer made spelling slips, repeated some patterns, and left a rhythm in the code that could be pulled apart.",
+"say": "It was a strong idea for a cipher designed to intimidate. It was not a professional design. The killer made spelling slips, repeated some patterns, and left a rhythm in the code that could be pulled apart.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "It was a strong idea for a cipher designed to intimidate. It was not a professional design. The killer made spelling slips, repeated some patterns, and left a rhythm in the code that could be pulled apart."
+},
+{
+"id": "s08a",
+"scene": "S8",
+"text": "A high school teacher in Salinas, Donald Harden, and his wife Bettye went after it at their kitchen table. Pencil and paper. No computer. Around twenty hours of work, spread across days.",
+"say": "A high school teacher in Salinas, Donald Harden, and his wife Bettye went after it at their kitchen table. Pencil and paper. No computer. Around twenty hours of work, spread across days.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "A high school teacher in Salinas, Donald Hardin and his wife Beth and I went after it at their kitchen table. Pencil and paper, no computer, around 20 hours of work spread across days."
+},
+{
+"id": "s08b",
+"scene": "S8",
+"text": "Bettye's hunch was that a boastful killer would use the word \"kill\" more than once. The repeated patterns around those guesses let them start prying the alphabet open.",
+"say": "Bettye's hunch was that a boastful killer would use the word kill more than once. The repeated patterns around those guesses let them start prying the alphabet open.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Bed-eyes hunch was that a boastful killer would use the word kill more than once. The repeated patterns around those guesses let them start prying the alphabet open."
+},
+{
+"id": "s08c",
+"scene": "S8",
+"text": "By August 5th, 1969, the solution was in the newspapers. The message was chilling — and useless. \"I like killing because it is so much fun. It is more fun than killing wild game in the forest, because man is the most dangerous animal of all.\"",
+"say": "By August fifth, nineteen sixty nine, the solution was in the newspapers. The message was chilling — and useless. I like killing because it is so much fun. It is more fun than killing wild game in the forest, because man is the most dangerous animal of all.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "By August 5th, 1969, the solution was in the newspapers. The message was chilling and useless. I like killing because it is so much fun. It is more fun than killing wild game in the forest because man is the most dangerous animal of all."
+},
+{
+"id": "s08d",
+"scene": "S8",
+"text": "It promised that his victims would become his slaves in the afterlife. It ended exactly where the investigation did: \"I will not give you my name.\" And the cipher's final eighteen characters never resolved cleanly at all.",
+"say": "It promised that his victims would become his slaves in the afterlife. It ended exactly where the investigation did: I will not give you my name. And the cipher's final eighteen characters never resolved cleanly at all.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "It promised that his victims would become his slaves in the afterlife. It ended exactly where the investigation did. I will not give you my name. And the cypher's final 18 characters never resolved cleanly at all."
+},
+{
+"id": "s09a",
+"scene": "S9",
+"text": "Then, on November 8th, 1969, the Chronicle received a greeting card with a second cipher inside. Three hundred and forty characters. A denser grid, a new set of symbols — and a design that refused every known approach.",
+"say": "Then, on November eighth, nineteen sixty nine, the Chronicle received a greeting card with a second cipher inside. Three hundred and forty characters. A denser grid, a new set of symbols — and a design that refused every known approach.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Then, on November 8, 1969, the Chronicle received a greeting card with a second cipher inside. 340 characters, a denser grid, a new set of symbols, and a design that refused every known approach."
+},
+{
+"id": "s09b",
+"scene": "S9",
+"text": "America's official code-breakers at the National Security Agency and the FBI took their turn. So did generations of hobbyists, mathematicians, and anyone with a suspicion and a spreadsheet. Nothing worked.",
+"say": "America's official code breakers at the National Security Agency and the F B I took their turn. So did generations of hobbyists, mathematicians, and anyone with a suspicion and a spreadsheet. Nothing worked.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "America's official code breakers at the National Security Agency and the FBI took their turn. So did generations of hobbyists, mathematicians, and anyone with a suspicion and a spreadsheet? Nothing worked."
+},
+{
+"id": "s09c",
+"scene": "S9",
+"text": "For fifty-one years, it held. It became one of the most studied substitution ciphers in history.",
+"say": "For fifty one years, it held. It became one of the most studied substitution ciphers in history.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "For 51 years, it held. It became one of the most studied substitution ciphers in history."
+},
+{
+"id": "s10a",
+"scene": "S10",
+"text": "The team that finally broke it were not government code-breakers. They were amateurs — in the best sense of the word. David Oranchak, a web designer in Virginia who had studied the 340 for over a decade. Sam Blake, a mathematician in Australia. And Jarl Van Eycke, a Belgian code-breaker and solver toolsmith.",
+"say": "The team that finally broke it were not government code breakers. They were amateurs — in the best sense of the word. David Oranchak, a web designer in Virginia who had studied the three forty for over a decade. Sam Blake, a mathematician in Australia. And Jarl Van Eycke, a Belgian code breaker and solver toolsmith.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The team that finally broke it were not government code breakers. They were amateurs in the best sense of the word. David Orinchak, a web designer in Virginia who had studied the 340 for over a decade. Sam Blake, a mathematician in Australia, and Jarl Van Eich, a Belgian code breaker and solver toolsmith."
+},
+{
+"id": "s10b",
+"scene": "S10",
+"text": "In December 2020, working across continents, they found what fifty-one years of solvers had missed.",
+"say": "In December twenty twenty, working across continents, they found what fifty one years of solvers had missed.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "In December 2020, working across continents, they found what 51 years of solvers had missed."
+},
+{
+"id": "s11a",
+"scene": "S11",
+"text": "The 340 was not just a substitution cipher. It was two puzzles stacked. First, the killer wrote his message. Then he rearranged it — reading the text diagonally through the grid — a transposition that scrambled the order of every symbol.",
+"say": "The three forty was not just a substitution cipher. It was two puzzles stacked. First, the killer wrote his message. Then he rearranged it — reading the text diagonally through the grid — a transposition that scrambled the order of every symbol.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The 340 was not just a substitution cipher. It was two puzzles stacked. First, the killer wrote his message. Then he rearranged it, reading the text diagonally through the grid, a transposition that scrambled the order of every symbol."
+},
+{
+"id": "s11b",
+"scene": "S11",
+"text": "That shuffle broke every frequency count and every crib that had been thrown at the cipher since 1969. The substitution underneath was similar to the 408 — which is exactly why nobody had found it.",
+"say": "That shuffle broke every frequency count and every crib that had been thrown at the cipher since nineteen sixty nine. The substitution underneath was similar to the four oh eight — which is exactly why nobody had found it.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "That shuffle broke every frequency count and every crib that had been thrown at the cipher since 1969. The substitution underneath was similar to the 408, which is exactly why nobody had found it."
+},
+{
+"id": "s11c",
+"scene": "S11",
+"text": "The three tested a hypothesis: reorder the grid by a fixed period, then attack the text underneath. On December 5th, 2020, a candidate key finally survived a hill-climb search — a method that tries millions of near-miss solutions and keeps the ones that look slightly more like English.",
+"say": "The three tested a hypothesis: reorder the grid by a fixed period, then attack the text underneath. On December fifth, twenty twenty, a candidate key finally survived a hill climb search — a method that tries millions of near miss solutions and keeps the ones that look slightly more like English.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The three tested a hypothesis, reorder the grid by a fixed period, then attack the text underneath. On December 5th, 2020, a candidate key finally survived a hill climb search, a method that tries millions of near-miss solutions and keeps the ones that look slightly more like English."
+},
+{
+"id": "s11d",
+"scene": "S11",
+"text": "The plaintext emerged. Within days, the FBI confirmed the solution was authentic.",
+"say": "The plaintext emerged. Within days, the F B I confirmed the solution was authentic.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The plaintext emerged. Within days, the FBI confirmed the solution was authentic."
+},
+{
+"id": "s12a",
+"scene": "S12",
+"text": "The 340 said: \"I hope you are having lots of fun in trying to catch me. That wasn't me on the TV show, which brings up a point about me: I am not afraid of the gas chamber, because it will send me to paradice all the sooner.\"",
+"say": "The three forty said: I hope you are having lots of fun in trying to catch me. That wasn't me on the TV show, which brings up a point about me: I am not afraid of the gas chamber, because it will send me to paradise all the sooner.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The 340 said, I hope you are having lots of fun in trying to catch me. That wasn't me on the TV show which brings up a point about me. I am not afraid of the gas chamber because it will send me to Paradis all the sooner."
+},
+{
+"id": "s12b",
+"scene": "S12",
+"text": "And again, the promise of an afterlife with slaves. And again, nothing else. No name. No address. No detail of any crime the police did not already know.",
+"say": "And again, the promise of an afterlife with slaves. And again, nothing else. No name. No address. No detail of any crime the police did not already know.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "And again, the promise of an afterlife with slaves, and again nothing else. No name, no address, no detail of any crime the police did not already know."
+},
+{
+"id": "s12c",
+"scene": "S12",
+"text": "The greatest breakthrough in the case — the product of half a century of failure — revealed a man who understood exactly how far to talk.",
+"say": "The greatest breakthrough in the case — the product of half a century of failure — revealed a man who understood exactly how far to talk.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The greatest breakthrough in the case, the product of half a century of failure, revealed a man who understood exactly how far to talk."
+},
+{
+"id": "s13a",
+"scene": "S13",
+"text": "Understand what the ciphers were for. They were never a confession machine. They were a stage.",
+"say": "Understand what the ciphers were for. They were never a confession machine. They were a stage.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Understand what the ciphers were for. They were never a confession machine. They were a stage."
+},
+{
+"id": "s13b",
+"scene": "S13",
+"text": "The 408 promised a name and delivered a taunt. The 340 never even made the promise. As long as the killer never encoded his identity, no solution could contain it.",
+"say": "The four oh eight promised a name and delivered a taunt. The three forty never even made the promise. As long as the killer never encoded his identity, no solution could contain it.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The 408 promised a name and delivered a taunt. The 340 never even made the promise. As long as the killer never encoded his identity, no solution could contain it."
+},
+{
+"id": "s13c",
+"scene": "S13",
+"text": "The codes bought him the only currency he seemed to want: front pages, fear, and the spectacle of experts losing to a homemade puzzle.",
+"say": "The codes bought him the only currency he seemed to want: front pages, fear, and the spectacle of experts losing to a homemade puzzle.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The codes bought him the only currency he seemed to want, front pages, fear, and the spectacle of experts losing to a homemade puzzle."
+},
+{
+"id": "s14a",
+"scene": "S14",
+"text": "Two of his ciphers are still officially unsolved. In April 1970, a letter followed the words \"My name is\" with thirteen symbols — a puzzle that seems to offer the very thing every other cipher withheld.",
+"say": "Two of his ciphers are still officially unsolved. In April nineteen seventy, a letter followed the words my name is, with thirteen symbols — a puzzle that seems to offer the very thing every other cipher withheld.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Two of his ciphers are still officially unsolved. In April 1970, a letter followed the words, my name is, with 13 symbols, a puzzle that seems to offer the very thing every other cipher withheld."
+},
+{
+"id": "s14b",
+"scene": "S14",
+"text": "Thirteen characters are almost certainly too few to solve honestly. With no key and no way to verify, thousands of names and phrases can be forced to fit. Most researchers believe it can never be confirmed — whatever it says.",
+"say": "Thirteen characters are almost certainly too few to solve honestly. With no key and no way to verify, thousands of names and phrases can be forced to fit. Most researchers believe it can never be confirmed — whatever it says.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "13 characters are almost certainly too few to solve honestly. With no key and no way to verify, thousands of names and phrases can be forced to fit. Most researchers believe it can never be confirmed, whatever it says."
+},
+{
+"id": "s14c",
+"scene": "S14",
+"text": "It remains exactly what it was in 1970. A dare.",
+"say": "It remains exactly what it was in nineteen seventy. A dare.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "It remains exactly what it was in 1970, a dare."
+},
+{
+"id": "s15a",
+"scene": "S15",
+"text": "That June, he mailed a thirty-two-symbol cipher with a Phillips 66 road map of the Bay Area, marked with a crosshair on Mount Diablo. The cipher, he wrote, showed where a bomb was set.",
+"say": "That June, he mailed a thirty two symbol cipher with a Phillips sixty six road map of the Bay Area, marked with a crosshair on Mount Diablo. The cipher, he wrote, showed where a bomb was set.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "That June, he mailed a 32-symbol cipher with a Philip 66 road map of the Bay Area, marked with a crosshair on Mount Diablo. The cipher, he wrote, showed where a bomb was set."
+},
+{
+"id": "s15b",
+"scene": "S15",
+"text": "The bomb was never found. The cipher has never been verified. With thirty-two symbols, it may be solvable only with the key that made it — and he took that with him.",
+"say": "The bomb was never found. The cipher has never been verified. With thirty two symbols, it may be solvable only with the key that made it — and he took that with him.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The bomb was never found. The cipher has never been verified. With 32 symbols it may be solvable only with the key that made it and he took that with him."
+},
+{
+"id": "s15c",
+"scene": "S15",
+"text": "Both short ciphers teach the same lesson the long ones taught. With the Zodiac, even the puzzles are puzzles.",
+"say": "Both short ciphers teach the same lesson the long ones taught. With the Zodiac, even the puzzles are puzzles.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Both short ciphers teach the same lesson the long ones taught, with the zodiac even the puzzles are puzzles."
+},
+{
+"id": "s16a",
+"scene": "S16",
+"text": "Over five decades, thousands of people have been named as the Zodiac. A handful of names have case files. None have a conviction.",
+"say": "Over five decades, thousands of people have been named as the Zodiac. A handful of names have case files. None have a conviction.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Over five decades, thousands of people have been named as the Zodiac. A handful of names have case files. None have a conviction."
+},
+{
+"id": "s16b",
+"scene": "S16",
+"text": "The most heavily investigated suspect was Arthur Leigh Allen of Vallejo — searched by police in 1991, linked by informants, and the owner of a wristwatch bearing the Zodiac brand's crosshair logo. He was never charged. He denied everything, and he died in August 1992.",
+"say": "The most heavily investigated suspect was Arthur Leigh Allen of Vallejo — searched by police in nineteen ninety one, linked by informants, and the owner of a wristwatch bearing the Zodiac brand's crosshair logo. He was never charged. He denied everything, and he died in August nineteen ninety two.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The most heavily investigated suspect was Arthur Lee Allen of Vallejo, searched by police in 1991, linked by informants, and the owner of a wristwatch bearing the Zodiac brand's crosshair logo. He was never charged. He denied everything, and he died in August 1992."
+},
+{
+"id": "s16c",
+"scene": "S16",
+"text": "In 2002, investigators reported comparing D N A from a saliva seal on a confirmed Zodiac letter with Allen's own. Police said he was excluded. It was the closest the case came to a scientific verdict — and it closed one door without opening another.",
+"say": "In twenty oh two, investigators reported comparing D N A from a saliva seal on a confirmed Zodiac letter with Allen's own. Police said he was excluded. It was the closest the case came to a scientific verdict — and it closed one door without opening another.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "In 2002, investigators reported comparing DN a from a saliva seal on a confirmed zodiac letter with Allen's own. Police said he was excluded. It was the closest the case came to a scientific verdict, and it closed one door without opening another."
+},
+{
+"id": "s16d",
+"scene": "S16",
+"text": "Every other name — Richard Gaikowski, Lawrence Kane, Earl Van Best Junior, and dozens more — carries a book, a documentary, or a theory. None carries evidence that establishes identification.",
+"say": "Every other name — Richard Gaikowski, Lawrence Kane, Earl Van Best Junior, and dozens more — carries a book, a documentary, or a theory. None carries evidence that establishes identification.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Every other name, Richard Gekowski, Lawrence Kane, Earl Van Best Jr. and dozens more, carries a book, a documentary, or a theory. None carries evidence that establishes identification."
+},
+{
+"id": "s17a",
+"scene": "S17",
+"text": "In October 2021, a group called the Case Breakers announced that the Zodiac was Gary Francis Poste, a veteran who had died in 2018. The announcement made international headlines.",
+"say": "In October twenty twenty one, a group called the Case Breakers announced that the Zodiac was Gary Francis Poste, a veteran who had died in twenty eighteen. The announcement made international headlines.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "In October 2021, a group called the case Breakers announced that the Zodiac was Gary Francis Post, a veteran who had died in 2018. The announcement made international headlines."
+},
+{
+"id": "s17b",
+"scene": "S17",
+"text": "Investigators rejected the claim. The FBI said the case remained open, with no new information. The pattern held: every confident announcement has collapsed under review — and the file has absorbed each of them without changing.",
+"say": "Investigators rejected the claim. The F B I said the case remained open, with no new information. The pattern held: every confident announcement has collapsed under review — and the file has absorbed each of them without changing.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Investigators rejected the claim. The FBI said the case remained open with no new information. The pattern held. Every confident announcement has collapsed under review and the file has absorbed each of them without changing."
+},
+{
+"id": "s18a",
+"scene": "S18",
+"text": "So why does a case with this much material still fail? Start with the year. In 1969 there was no DNA profiling — the first forensic DNA conviction in the United States was still far in the future. No camera grids. No cell-site records. No national databases searching prints and handwriting in seconds.",
+"say": "So why does a case with this much material still fail? Start with the year. In nineteen sixty nine there was no D N A profiling — the first forensic D N A conviction in the United States was still far in the future. No camera grids. No cell site records. No national databases searching prints and handwriting in seconds.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "So why does a case with this much material still fail? Start with the year. In 1969, there was no DNA profiling. The first forensic DNA conviction in the United States was still far in the future. No camera grids, no cell site records, no national databases searching prints and handwriting in seconds."
+},
+{
+"id": "s18b",
+"scene": "S18",
+"text": "There were prints from the crime scenes and the letters. There was handwriting on hundreds of envelopes. None of it has ever matched a name.",
+"say": "There were prints from the crime scenes and the letters. There was handwriting on hundreds of envelopes. None of it has ever matched a name.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "There were prints from the crime scenes and the letters. There was handwriting on hundreds of envelopes. None of it has ever matched a name."
+},
+{
+"id": "s18c",
+"scene": "S18",
+"text": "And there were mistakes. After the Stine murder, a radio dispatch described the suspect incorrectly, and an officer who had just seen the real man was waved off. The killer walked away in plain sight.",
+"say": "And there were mistakes. After the Stine murder, a radio dispatch described the suspect incorrectly, and an officer who had just seen the real man was waved off. The killer walked away in plain sight.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "And there were mistakes. After the Stein murder, a radio dispatch described the suspect incorrectly, and an officer who had just seen the real man was waved off. The killer walked away in plain sight."
+},
+{
+"id": "s19a",
+"scene": "S19",
+"text": "The physical evidence has aged. Stamps and envelope seals hold only small amounts of D N A, often degraded, often mixed. Re-testing has continued for years — and the genealogy methods that solved other cold cases are waiting on a sample clean enough to use.",
+"say": "The physical evidence has aged. Stamps and envelope seals hold only small amounts of D N A, often degraded, often mixed. Re testing has continued for years — and the genealogy methods that solved other cold cases are waiting on a sample clean enough to use.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The physical evidence has aged. Stamps and envelope seals hold only small amounts of D and A, often degraded, often mixed. Retesting has continued for years, and the genealogy methods that solved other cold cases are waiting on a sample clean enough to use."
+},
+{
+"id": "s19b",
+"scene": "S19",
+"text": "Above all, the case invites confirmation bias. When a suspect has a criminal record, a strange name, and a crosshair watch, any detail fits. Cases built backwards from a favorite suspect read every clue as confirmation.",
+"say": "Above all, the case invites confirmation bias. When a suspect has a criminal record, a strange name, and a crosshair watch, any detail fits. Cases built backwards from a favorite suspect read every clue as confirmation.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Above all, the case invites confirmation bias. When a suspect has a criminal record, a strange name and a crosshair watch, any detail fits. Cases built backwards from a favorite suspect read every clue as confirmation."
+},
+{
+"id": "s19c",
+"scene": "S19",
+"text": "The lesson of fifty-one years of cipher hunting applies to suspects too. Certainty is easy. Verification is rare.",
+"say": "The lesson of fifty one years of cipher hunting applies to suspects too. Certainty is easy. Verification is rare.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The lesson of 51 years of cypher hunting applies to suspects too. Certainty is easy. Verification is rare."
+},
+{
+"id": "s21a",
+"scene": "S21",
+"text": "So — strip the folklore away. What does the evidence actually support?",
+"say": "So — strip the folklore away. What does the evidence actually support?",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "So strip the folklore away. What does the evidence actually support?"
+},
+{
+"id": "s21b",
+"scene": "S21",
+"text": "Confirmed. Four attacks between December 1968 and October 1969. Five people killed. Two survivors. A stream of letters authenticated by details only the killer could know. Two ciphers solved and verified. Two ciphers unsolved. A claim of thirty-seven victims — unsupported.",
+"say": "Confirmed. Four attacks between December nineteen sixty eight and October nineteen sixty nine. Five people killed. Two survivors. A stream of letters authenticated by details only the killer could know. Two ciphers solved and verified. Two ciphers unsolved. A claim of thirty seven victims — unsupported.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Confirmed. Four attacks between December 1968 and October 1969. Five people killed. Two survivors. A stream of letters authenticated by details only the killer could know. Two ciphers solved and verified. Two ciphers unsolved. A claim of 37 victims unsupported."
+},
+{
+"id": "s21c",
+"scene": "S21",
+"text": "Disputed. Whether his first killing was actually in Riverside, two years before Lake Herman Road — a connection the authorities never adopted. Whether the final letters of 1974 are authentic. Whether any of his unconfirmed victims were real.",
+"say": "Disputed. Whether his first killing was actually in Riverside, two years before Lake Herman Road — a connection the authorities never adopted. Whether the final letters of nineteen seventy four are authentic. Whether any of his unconfirmed victims were real.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Disputed, whether his first killing was actually in Riverside, two years before Lake Hermann Road, a connection the authorities never adopted. Whether the final letters of 1974 are authentic, whether any of his unconfirmed victims were real."
+},
+{
+"id": "s21d",
+"scene": "S21",
+"text": "Unknown: everything that matters most. His name. His face, beyond a witness sketch. His reason for stopping.",
+"say": "Unknown: everything that matters most. His name. His face, beyond a witness sketch. His reason for stopping.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Unknown everything that matters most his name his face beyond a witness sketch his reason for stopping"
+},
+{
+"id": "s22a",
+"scene": "S22",
+"text": "The Zodiac left investigators more material than almost any killer in American history. The letters are real. The ciphers are readable. The DNA is testable. And the file is still open — because the one thing all of it was supposed to produce, a name, never appears anywhere in it.",
+"say": "The Zodiac left investigators more material than almost any killer in American history. The letters are real. The ciphers are readable. The D N A is testable. And the file is still open — because the one thing all of it was supposed to produce, a name, never appears anywhere in it.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "The Zodiac left investigators more material than almost any killer in American history. The letters are real, the ciphers are readable, the DNA is testable, and the file is still open because the one thing all of it was supposed to produce, a name never appears anywhere in it."
+},
+{
+"id": "s22b",
+"scene": "S22",
+"text": "He did not outsmart the evidence. He simply stood outside it.",
+"say": "He did not outsmart the evidence. He simply stood outside it.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "He did not outsmart the evidence. He simply stood outside it."
+},
+{
+"id": "s23a",
+"scene": "S23",
+"text": "Somewhere, there may still be an envelope nobody has checked — a stamp, a seal, a cleaner sample. The methods keep improving. The case has not been closed by a press release, a documentary, or a book. It closes on identification, or not at all.",
+"say": "Somewhere, there may still be an envelope nobody has checked — a stamp, a seal, a cleaner sample. The methods keep improving. The case has not been closed by a press release, a documentary, or a book. It closes on identification, or not at all.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Somewhere, there may still be an envelope nobody has checked, a stamp, a seal, a cleaner sample. The methods keep improving. The case has not been closed by a press release, a documentary, or a book. It closes on identification, or not at all."
+},
+{
+"id": "s23b",
+"scene": "S23",
+"text": "This is the file of the Zodiac Killer. Case status: open.",
+"say": "This is the file of the Zodiac Killer. Case status: open.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "This is the file of the Zodiac Killer, K status open."
+},
+{
+"id": "s24a",
+"scene": "S24",
+"text": "Full source list and chapter timestamps are in the description below.",
+"say": "Full source list and chapter timestamps are in the description below.",
+"voice": "am_michael",
+"speed": 0.95,
+"asr": "Full source list and chapter timestamps are in the description below."
+}
+]

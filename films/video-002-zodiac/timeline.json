@@ -1,0 +1,1499 @@
+{
+ "dur": 1043.469,
+ "scenes": [
+  {
+   "id": "S1",
+   "t0": 0.6,
+   "t1": 64.217,
+   "lines": [
+    {
+     "id": "s01a",
+     "t0": 3.2,
+     "t1": 22.498
+    },
+    {
+     "id": "s01b",
+     "t0": 22.918,
+     "t1": 34.493
+    },
+    {
+     "id": "s01c",
+     "t0": 34.913,
+     "t1": 45.942
+    },
+    {
+     "id": "s01d",
+     "t0": 46.362,
+     "t1": 63.117
+    }
+   ],
+   "chip": "COLD OPEN",
+   "title": "THE LETTERS ARRIVE"
+  },
+  {
+   "id": "S2",
+   "t0": 64.217,
+   "t1": 95.067,
+   "lines": [
+    {
+     "id": "s02a",
+     "t0": 65.517,
+     "t1": 81.045
+    },
+    {
+     "id": "s02b",
+     "t0": 81.465,
+     "t1": 93.967
+    }
+   ],
+   "chip": "FILE 002",
+   "title": "THE QUESTION"
+  },
+  {
+   "id": "S3",
+   "t0": 95.067,
+   "t1": 191.655,
+   "lines": [
+    {
+     "id": "s03a",
+     "t0": 96.367,
+     "t1": 117.658
+    },
+    {
+     "id": "s03b",
+     "t0": 118.078,
+     "t1": 140.225
+    },
+    {
+     "id": "s03c",
+     "t0": 140.645,
+     "t1": 165.401
+    },
+    {
+     "id": "s03d",
+     "t0": 165.821,
+     "t1": 190.555
+    }
+   ],
+   "chip": "EXHIBIT A",
+   "title": "THE ATTACKS"
+  },
+  {
+   "id": "S4",
+   "t0": 191.655,
+   "t1": 235.838,
+   "lines": [
+    {
+     "id": "s04a",
+     "t0": 192.955,
+     "t1": 209.945
+    },
+    {
+     "id": "s04b",
+     "t0": 210.365,
+     "t1": 223.593
+    },
+    {
+     "id": "s04c",
+     "t0": 224.013,
+     "t1": 234.738
+    }
+   ],
+   "chip": "EXHIBIT A",
+   "title": "TOLL & CLAIMS"
+  },
+  {
+   "id": "S5",
+   "t0": 235.838,
+   "t1": 284.802,
+   "lines": [
+    {
+     "id": "s05a",
+     "t0": 237.138,
+     "t1": 255.574
+    },
+    {
+     "id": "s05b",
+     "t0": 255.994,
+     "t1": 270.309
+    },
+    {
+     "id": "s05c",
+     "t0": 270.729,
+     "t1": 283.702
+    }
+   ],
+   "chip": "EXHIBIT B",
+   "title": "THE LETTERS"
+  },
+  {
+   "id": "S6",
+   "t0": 284.802,
+   "t1": 339.527,
+   "lines": [
+    {
+     "id": "s06a",
+     "t0": 286.102,
+     "t1": 305.064
+    },
+    {
+     "id": "s06b",
+     "t0": 305.484,
+     "t1": 321.557
+    },
+    {
+     "id": "s06c",
+     "t0": 321.977,
+     "t1": 338.427
+    }
+   ],
+   "chip": "EXHIBIT B",
+   "title": "PROOF & THREATS"
+  },
+  {
+   "id": "S7",
+   "t0": 339.527,
+   "t1": 384.66,
+   "lines": [
+    {
+     "id": "s07a",
+     "t0": 340.827,
+     "t1": 354.186
+    },
+    {
+     "id": "s07b",
+     "t0": 354.606,
+     "t1": 369.717
+    },
+    {
+     "id": "s07c",
+     "t0": 370.137,
+     "t1": 383.56
+    }
+   ],
+   "chip": "EXHIBIT C",
+   "title": "INSIDE THE 408"
+  },
+  {
+   "id": "S8",
+   "t0": 384.66,
+   "t1": 446.531,
+   "lines": [
+    {
+     "id": "s08a",
+     "t0": 385.96,
+     "t1": 399.414
+    },
+    {
+     "id": "s08b",
+     "t0": 399.834,
+     "t1": 410.969
+    },
+    {
+     "id": "s08c",
+     "t0": 411.389,
+     "t1": 429.983
+    },
+    {
+     "id": "s08d",
+     "t0": 430.403,
+     "t1": 445.431
+    }
+   ],
+   "chip": "EXHIBIT C",
+   "title": "DECODED 1969"
+  },
+  {
+   "id": "S9",
+   "t0": 446.531,
+   "t1": 488.372,
+   "lines": [
+    {
+     "id": "s09a",
+     "t0": 447.831,
+     "t1": 464.787
+    },
+    {
+     "id": "s09b",
+     "t0": 465.207,
+     "t1": 480.399
+    },
+    {
+     "id": "s09c",
+     "t0": 480.819,
+     "t1": 487.272
+    }
+   ],
+   "chip": "EXHIBIT D",
+   "title": "THE 340"
+  },
+  {
+   "id": "S10",
+   "t0": 488.372,
+   "t1": 521.411,
+   "lines": [
+    {
+     "id": "s10a",
+     "t0": 489.672,
+     "t1": 512.463
+    },
+    {
+     "id": "s10b",
+     "t0": 512.883,
+     "t1": 520.311
+    }
+   ],
+   "chip": "EXHIBIT D",
+   "title": "THE SOLVERS"
+  },
+  {
+   "id": "S11",
+   "t0": 521.411,
+   "t1": 584.794,
+   "lines": [
+    {
+     "id": "s11a",
+     "t0": 522.711,
+     "t1": 539.637
+    },
+    {
+     "id": "s11b",
+     "t0": 540.057,
+     "t1": 555.707
+    },
+    {
+     "id": "s11c",
+     "t0": 556.127,
+     "t1": 577.502
+    },
+    {
+     "id": "s11d",
+     "t0": 577.922,
+     "t1": 583.694
+    }
+   ],
+   "chip": "EXHIBIT D",
+   "title": "HOW IT BROKE"
+  },
+  {
+   "id": "S12",
+   "t0": 584.794,
+   "t1": 622.852,
+   "lines": [
+    {
+     "id": "s12a",
+     "t0": 586.094,
+     "t1": 601.068
+    },
+    {
+     "id": "s12b",
+     "t0": 601.488,
+     "t1": 612.392
+    },
+    {
+     "id": "s12c",
+     "t0": 612.812,
+     "t1": 621.752
+    }
+   ],
+   "chip": "EXHIBIT D",
+   "title": "WHAT IT SAID"
+  },
+  {
+   "id": "S13",
+   "t0": 622.852,
+   "t1": 654.341,
+   "lines": [
+    {
+     "id": "s13a",
+     "t0": 624.152,
+     "t1": 630.055
+    },
+    {
+     "id": "s13b",
+     "t0": 630.475,
+     "t1": 643.327
+    },
+    {
+     "id": "s13c",
+     "t0": 643.747,
+     "t1": 653.241
+    }
+   ],
+   "chip": "EXHIBIT D",
+   "title": "WHY NO NAME"
+  },
+  {
+   "id": "S14",
+   "t0": 654.341,
+   "t1": 693.488,
+   "lines": [
+    {
+     "id": "s14a",
+     "t0": 655.641,
+     "t1": 671.186
+    },
+    {
+     "id": "s14b",
+     "t0": 671.606,
+     "t1": 687.422
+    },
+    {
+     "id": "s14c",
+     "t0": 687.842,
+     "t1": 692.388
+    }
+   ],
+   "chip": "EXHIBIT E",
+   "title": "Z-13"
+  },
+  {
+   "id": "S15",
+   "t0": 693.488,
+   "t1": 728.068,
+   "lines": [
+    {
+     "id": "s15a",
+     "t0": 694.788,
+     "t1": 707.952
+    },
+    {
+     "id": "s15b",
+     "t0": 708.372,
+     "t1": 719.131
+    },
+    {
+     "id": "s15c",
+     "t0": 719.551,
+     "t1": 726.968
+    }
+   ],
+   "chip": "EXHIBIT E",
+   "title": "Z-32"
+  },
+  {
+   "id": "S16",
+   "t0": 728.068,
+   "t1": 794.927,
+   "lines": [
+    {
+     "id": "s16a",
+     "t0": 729.368,
+     "t1": 738.316
+    },
+    {
+     "id": "s16b",
+     "t0": 738.736,
+     "t1": 760.42
+    },
+    {
+     "id": "s16c",
+     "t0": 760.84,
+     "t1": 779.561
+    },
+    {
+     "id": "s16d",
+     "t0": 779.981,
+     "t1": 793.827
+    }
+   ],
+   "chip": "EXHIBIT F",
+   "title": "THE SUSPECTS"
+  },
+  {
+   "id": "S17",
+   "t0": 794.927,
+   "t1": 828.418,
+   "lines": [
+    {
+     "id": "s17a",
+     "t0": 796.227,
+     "t1": 810.626
+    },
+    {
+     "id": "s17b",
+     "t0": 811.046,
+     "t1": 827.318
+    }
+   ],
+   "chip": "EXHIBIT F",
+   "title": "2021 REJECTED"
+  },
+  {
+   "id": "S18",
+   "t0": 828.418,
+   "t1": 876.244,
+   "lines": [
+    {
+     "id": "s18a",
+     "t0": 829.718,
+     "t1": 852.293
+    },
+    {
+     "id": "s18b",
+     "t0": 852.713,
+     "t1": 861.21
+    },
+    {
+     "id": "s18c",
+     "t0": 861.63,
+     "t1": 875.144
+    }
+   ],
+   "chip": "EXHIBIT G",
+   "title": "ERA LIMITS"
+  },
+  {
+   "id": "S19",
+   "t0": 876.244,
+   "t1": 923.231,
+   "lines": [
+    {
+     "id": "s19a",
+     "t0": 877.544,
+     "t1": 897.157
+    },
+    {
+     "id": "s19b",
+     "t0": 897.577,
+     "t1": 913.59
+    },
+    {
+     "id": "s19c",
+     "t0": 914.01,
+     "t1": 922.131
+    }
+   ],
+   "chip": "EXHIBIT G",
+   "title": "EVIDENCE & BIAS"
+  },
+  {
+   "id": "S21",
+   "t0": 923.231,
+   "t1": 980.245,
+   "lines": [
+    {
+     "id": "s21a",
+     "t0": 924.531,
+     "t1": 928.917
+    },
+    {
+     "id": "s21b",
+     "t0": 929.337,
+     "t1": 952.556
+    },
+    {
+     "id": "s21c",
+     "t0": 952.976,
+     "t1": 971.289
+    },
+    {
+     "id": "s21d",
+     "t0": 971.709,
+     "t1": 979.145
+    }
+   ],
+   "chip": "VERDICT",
+   "title": "EVIDENCE AUDIT"
+  },
+  {
+   "id": "S22",
+   "t0": 980.245,
+   "t1": 1007.035,
+   "lines": [
+    {
+     "id": "s22a",
+     "t0": 981.545,
+     "t1": 1001.624
+    },
+    {
+     "id": "s22b",
+     "t0": 1002.044,
+     "t1": 1005.935
+    }
+   ],
+   "chip": "VERDICT",
+   "title": "THE ANSWER"
+  },
+  {
+   "id": "S23",
+   "t0": 1007.035,
+   "t1": 1031.87,
+   "lines": [
+    {
+     "id": "s23a",
+     "t0": 1008.335,
+     "t1": 1026.167
+    },
+    {
+     "id": "s23b",
+     "t0": 1026.587,
+     "t1": 1030.77
+    }
+   ],
+   "chip": "CLOSE",
+   "title": "CASE STATUS"
+  },
+  {
+   "id": "S24",
+   "t0": 1031.87,
+   "t1": 1043.469,
+   "lines": [
+    {
+     "id": "s24a",
+     "t0": 1033.17,
+     "t1": 1037.469
+    }
+   ],
+   "chip": "END",
+   "title": "SOURCES"
+  }
+ ],
+ "cues": [
+  {
+   "t0": 3.1,
+   "t1": 10.43,
+   "text": "IN THE SUMMER OF 1969, THREE NEWSPAPERS IN THE SAN FRANCISCO BAY AREA RECEIVED IDENTICAL LETTERS."
+  },
+  {
+   "t0": 10.45,
+   "t1": 17.32,
+   "text": "EACH ENVELOPE HELD A THIRD OF A CRYPTOGRAM — 408 SYMBOLS IN STRANGE ROWS —"
+  },
+  {
+   "t0": 17.34,
+   "t1": 22.8,
+   "text": "AND A PROMISE: SOLVE IT, AND FIND THE KILLER'S NAME INSIDE."
+  },
+  {
+   "t0": 22.82,
+   "t1": 27.22,
+   "text": "THE LETTERS WERE SIGNED, NOT WITH A NAME, BUT WITH A CROSSHAIR —"
+  },
+  {
+   "t0": 27.24,
+   "t1": 32.669999999999995,
+   "text": "THE SIGHT OF A GUN, SEEN FROM ABOVE. WITHIN DAYS, THE AUTHOR GAVE HIMSELF A TITLE."
+  },
+  {
+   "t0": 32.69,
+   "t1": 34.19,
+   "text": "\"THIS IS THE ZODIAC SPEAKING.\""
+  },
+  {
+   "t0": 34.21,
+   "t1": 40.35,
+   "text": "HE ATTACKED IN THE DARKNESS OF LOVERS' LANES, IN A LAKESIDE PARK, ON A CITY STREET."
+  },
+  {
+   "t0": 40.65,
+   "t1": 45.63999999999999,
+   "text": "HE WROTE TO THE PRESS, HE TELEPHONED THE POLICE, AND HE KEPT WRITING FOR YEARS."
+  },
+  {
+   "t0": 45.66,
+   "t1": 49.74,
+   "text": "AND HE LEFT BEHIND SOMETHING NO KILLER IS SUPPOSED TO LEAVE:"
+  },
+  {
+   "t0": 50.02,
+   "t1": 55.02,
+   "text": "A LIBRARY OF EVIDENCE. LETTERS. FINGERPRINTS. HANDWRITING."
+  },
+  {
+   "t0": 55.36,
+   "t1": 61.0,
+   "text": "DNA. TWO OF HIS OWN SECRET CODES. EVERYTHING AN INVESTIGATION COULD HOPE FOR."
+  },
+  {
+   "t0": 61.02,
+   "t1": 63.18,
+   "text": "EVERYTHING EXCEPT AN IDENTITY."
+  },
+  {
+   "t0": 64.82,
+   "t1": 69.9,
+   "text": "THIS IS THE FILE OF THE ZODIAC KILLER. FOUR CONFIRMED ATTACKS."
+  },
+  {
+   "t0": 70.36,
+   "t1": 76.22,
+   "text": "FIVE PEOPLE DEAD. TWO SURVIVORS. A SUSPECT LIST THOUSANDS OF NAMES LONG."
+  },
+  {
+   "t0": 76.52,
+   "t1": 81.02,
+   "text": "AND AN OPEN CASE THAT HAS OUTLIVED EVERY ERA OF INVESTIGATION SINCE."
+  },
+  {
+   "t0": 81.37,
+   "t1": 87.09,
+   "text": "HOW DOES A KILLER LEAVE THIS MUCH MATERIAL — AND STILL WALK OUT OF THE STORY UNNAMED?"
+  },
+  {
+   "t0": 87.11,
+   "t1": 90.81,
+   "text": "THAT QUESTION IS THE SPINE OF THIS FILM. EXHIBIT BY EXHIBIT:"
+  },
+  {
+   "t0": 90.83,
+   "t1": 94.31,
+   "text": "WHAT THE EVIDENCE PROVES, AND WHAT IT DOES NOT."
+  },
+  {
+   "t0": 95.67,
+   "t1": 104.07,
+   "text": "IT BEGAN ON A RURAL ROAD ON THE EDGE OF BENICIA, JUST BEFORE MIDNIGHT ON DECEMBER 20TH, 1968."
+  },
+  {
+   "t0": 104.39,
+   "t1": 109.85000000000001,
+   "text": "HIGH SCHOOL SENIORS DAVID FARADAY AND BETTY LOU JENSEN HAD PARKED ON LAKE HERMAN ROAD WHEN"
+  },
+  {
+   "t0": 109.87,
+   "t1": 114.01,
+   "text": "A CAR PULLED UP BEHIND THEM. WITHIN MINUTES, BOTH WERE DEAD."
+  },
+  {
+   "t0": 114.03,
+   "t1": 117.36,
+   "text": "POLICE FOUND NO MOTIVE, AND NO SUSPECT."
+  },
+  {
+   "t0": 117.38,
+   "t1": 124.8,
+   "text": "SIX MONTHS LATER, JUST BEFORE MIDNIGHT ON JULY 4TH, 1969, A YOUNG COUPLE SAT IN ANOTHER PARKED"
+  },
+  {
+   "t0": 124.82,
+   "t1": 128.8,
+   "text": "CAR AT BLUE ROCK SPRINGS PARK, ON THE EDGE OF VALLEJO."
+  },
+  {
+   "t0": 128.92,
+   "t1": 132.98,
+   "text": "A SHOOTER WALKED UP, FIRED THROUGH THE WINDOW, AND DROVE AWAY."
+  },
+  {
+   "t0": 133.52,
+   "t1": 139.92999999999998,
+   "text": "DARLENE FERRIN DIED AT THE HOSPITAL. MICHAEL MAGEAU, NINETEEN YEARS OLD, SURVIVED HIS WOUNDS."
+  },
+  {
+   "t0": 139.95,
+   "t1": 147.85,
+   "text": "THEN THE KILLER BEGAN TO SPEAK. ON SEPTEMBER 27TH, 1969, AT LAKE BERRYESSA, A FIGURE IN A"
+  },
+  {
+   "t0": 147.87,
+   "t1": 152.59,
+   "text": "BLACK EXECUTIONER'S HOOD APPROACHED TWO COLLEGE STUDENTS PICNICKING BY THE SHORE."
+  },
+  {
+   "t0": 152.91,
+   "t1": 156.45,
+   "text": "HE CARRIED A GUN, A KNIFE, AND LENGTHS OF CLOTHESLINE."
+  },
+  {
+   "t0": 156.65,
+   "t1": 161.09,
+   "text": "HE BOUND BRYAN HARTNELL AND CECELIA SHEPARD, AND STABBED THEM REPEATEDLY."
+  },
+  {
+   "t0": 161.79,
+   "t1": 165.07,
+   "text": "SHEPARD DIED THE NEXT DAY. HARTNELL SURVIVED."
+  },
+  {
+   "t0": 165.72,
+   "t1": 172.45,
+   "text": "THREE WEEKS LATER, ON OCTOBER 11TH, 1969, A CAB DRIVER NAMED PAUL STINE PICKED UP A FARE IN"
+  },
+  {
+   "t0": 172.47,
+   "t1": 178.07,
+   "text": "SAN FRANCISCO. IN THE PRESIDIO HEIGHTS DISTRICT, THE PASSENGER SHOT HIM ONCE IN THE HEAD,"
+  },
+  {
+   "t0": 178.09,
+   "t1": 182.57,
+   "text": "TOOK HIS WALLET AND KEYS, AND TORE A PIECE FROM HIS SHIRT."
+  },
+  {
+   "t0": 182.59,
+   "t1": 187.06,
+   "text": "A POLICE OFFICER HAD EVEN PASSED THE KILLER ON THE STREET —"
+  },
+  {
+   "t0": 187.08,
+   "t1": 190.9,
+   "text": "AND, SENT THE WRONG DESCRIPTION BY DISPATCH, DROVE ON."
+  },
+  {
+   "t0": 192.86,
+   "t1": 197.42999999999998,
+   "text": "COUNT THEM. FIVE PEOPLE KILLED: DAVID FARADAY. BETTY LOU JENSEN."
+  },
+  {
+   "t0": 197.45,
+   "t1": 201.1,
+   "text": "DARLENE FERRIN. CECELIA SHEPARD. PAUL STINE. TWO SURVIVED:"
+  },
+  {
+   "t0": 201.12,
+   "t1": 207.98999999999998,
+   "text": "MICHAEL MAGEAU AND BRYAN HARTNELL — AND THEIR TESTIMONY BECAME SOME OF THE MOST IMPORTANT"
+  },
+  {
+   "t0": 208.01,
+   "t1": 209.64999999999998,
+   "text": "EVIDENCE IN THE CASE."
+  },
+  {
+   "t0": 209.67,
+   "t1": 215.86999999999998,
+   "text": "LESS THAN AN HOUR AFTER THE BERRYESSA ATTACK, SOMEONE TELEPHONED THE NAPA COUNTY SHERIFF'S"
+  },
+  {
+   "t0": 215.89,
+   "t1": 220.33,
+   "text": "OFFICE FROM A PAYPHONE, REPORTED THE CRIME, AND HUNG UP."
+  },
+  {
+   "t0": 220.55,
+   "t1": 223.29,
+   "text": "ANOTHER DETAIL ONLY THE ATTACKER SHOULD HAVE HAD."
+  },
+  {
+   "t0": 223.31,
+   "t1": 227.05,
+   "text": "THE KILLER WOULD LATER CLAIM THIRTY-SEVEN VICTIMS."
+  },
+  {
+   "t0": 227.87,
+   "t1": 232.21,
+   "text": "INVESTIGATORS FOUND NO EVIDENCE TO SUPPORT ANYTHING CLOSE TO THAT NUMBER."
+  },
+  {
+   "t0": 232.49,
+   "t1": 234.79,
+   "text": "THE CONFIRMED TOTAL REMAINS FIVE."
+  },
+  {
+   "t0": 236.44,
+   "t1": 242.61999999999998,
+   "text": "WHAT MADE THIS CASE DIFFERENT STARTED ON AUGUST 1ST, 1969 —"
+  },
+  {
+   "t0": 242.64,
+   "t1": 247.26,
+   "text": "NOT WITH A FINGERPRINT, OR A WITNESS, BUT WITH AN ENVELOPE."
+  },
+  {
+   "t0": 247.28,
+   "t1": 253.56,
+   "text": "THREE LETTERS LANDED THAT DAY AT THE SAN FRANCISCO CHRONICLE, THE SAN FRANCISCO EXAMINER,"
+  },
+  {
+   "t0": 253.58,
+   "t1": 255.52,
+   "text": "AND THE VALLEJO TIMES-HERALD."
+  },
+  {
+   "t0": 255.89,
+   "t1": 261.52000000000004,
+   "text": "EACH GAVE DETAILS ONLY THE KILLER COULD KNOW. EACH CARRIED A THIRD OF A CIPHER."
+  },
+  {
+   "t0": 261.54,
+   "t1": 265.29,
+   "text": "AND EACH MADE THE SAME DEMAND: PRINT THIS CRYPTOGRAM —"
+  },
+  {
+   "t0": 265.31,
+   "t1": 270.01,
+   "text": "OR THE WRITER WOULD GO HUNTING LONE PEOPLE ALL WEEKEND, NIGHT AFTER NIGHT."
+  },
+  {
+   "t0": 270.03,
+   "t1": 276.11,
+   "text": "THE NEWSPAPERS PUBLISHED. THREE DAYS LATER, A FOURTH LETTER ARRIVED WITH THE LINE THAT WOULD"
+  },
+  {
+   "t0": 276.13,
+   "t1": 283.81,
+   "text": "NAME THE CASE: \"THIS IS THE ZODIAC SPEAKING.\" THE CROSSHAIR CAME WITH IT, DRAWN INTO THE LETTER'S HEADER."
+  },
+  {
+   "t0": 286.0,
+   "t1": 292.3,
+   "text": "SOME LETTERS CARRIED PROOF. ON OCTOBER 13TH, 1969, THE CHRONICLE RECEIVED A SWATCH OF CLOTH"
+  },
+  {
+   "t0": 292.32,
+   "t1": 297.78000000000003,
+   "text": "FROM PAUL STINE'S SHIRT — TORN FROM THE VICTIM BY HIS KILLER —"
+  },
+  {
+   "t0": 297.8,
+   "t1": 302.84000000000003,
+   "text": "ALONG WITH A THREAT AGAINST SCHOOLCHILDREN. THE THREAT WAS NEVER CARRIED OUT."
+  },
+  {
+   "t0": 302.86,
+   "t1": 304.76,
+   "text": "THE SHIRT PIECE WAS AUTHENTIC."
+  },
+  {
+   "t0": 304.78,
+   "t1": 310.96000000000004,
+   "text": "OTHER LETTERS CARRIED BOMBS THAT WERE NEVER FOUND, CODES THAT WERE NEVER SOLVED, AND DEMANDS"
+  },
+  {
+   "t0": 310.98,
+   "t1": 316.68,
+   "text": "THAT THE PAPERS KEEP PRINTING. THEY JOKED ABOUT THE POLICE WHO COULD NOT CATCH HIM."
+  },
+  {
+   "t0": 316.86,
+   "t1": 321.26,
+   "text": "THEY ARRIVED WITH A RETURN ADDRESS NO ONE COULD TRACE: THE CROSSHAIR."
+  },
+  {
+   "t0": 321.28,
+   "t1": 328.58000000000004,
+   "text": "FOR HANDWRITING EXAMINERS, FOR THE FBI'S CRYPTANALYSIS UNIT, FOR A DECADE OF DETECTIVES, THIS"
+  },
+  {
+   "t0": 328.6,
+   "t1": 333.32,
+   "text": "MAIL WAS THE CASE'S CORE CONTRADICTION. THE KILLER KEPT TALKING."
+  },
+  {
+   "t0": 333.68,
+   "t1": 338.42,
+   "text": "HE KEPT PROVING IT WAS HIM. AND HE KEPT TELLING THEM NOTHING ABOUT WHO HE WAS."
+  },
+  {
+   "t0": 340.73,
+   "t1": 346.13,
+   "text": "THE FIRST CIPHER WAS THE 408. IT LOOKED LIKE A RECTANGLE OF GIBBERISH:"
+  },
+  {
+   "t0": 346.15,
+   "t1": 350.73,
+   "text": "ROWS OF LETTERS AND SYMBOLS — ANCHORS, CROSSES, CIRCLES WITH DOTS."
+  },
+  {
+   "t0": 350.75,
+   "t1": 354.49,
+   "text": "BUT IT WAS BUILT ON A SIMPLE IDEA."
+  },
+  {
+   "t0": 354.51,
+   "t1": 360.20000000000005,
+   "text": "IT IS CALLED A HOMOPHONIC SUBSTITUTION. EACH LETTER IS REPLACED BY A SYMBOL —"
+  },
+  {
+   "t0": 360.22,
+   "t1": 366.74,
+   "text": "BUT COMMON LETTERS, LIKE E OR T, GET SEVERAL DIFFERENT SYMBOLS, SO THE REPEATS THAT NORMALLY"
+  },
+  {
+   "t0": 366.76,
+   "t1": 369.42,
+   "text": "CRACK A CODE DISAPPEAR INTO THE NOISE."
+  },
+  {
+   "t0": 369.44,
+   "t1": 373.92,
+   "text": "IT WAS A STRONG IDEA FOR A CIPHER DESIGNED TO INTIMIDATE."
+  },
+  {
+   "t0": 374.3,
+   "t1": 380.42,
+   "text": "IT WAS NOT A PROFESSIONAL DESIGN. THE KILLER MADE SPELLING SLIPS, REPEATED SOME PATTERNS,"
+  },
+  {
+   "t0": 380.58,
+   "t1": 383.72,
+   "text": "AND LEFT A RHYTHM IN THE CODE THAT COULD BE PULLED APART."
+  },
+  {
+   "t0": 385.86,
+   "t1": 392.99,
+   "text": "A HIGH SCHOOL TEACHER IN SALINAS, DONALD HARDEN, AND HIS WIFE BETTYE WENT AFTER IT AT THEIR"
+  },
+  {
+   "t0": 393.01,
+   "t1": 399.71000000000004,
+   "text": "KITCHEN TABLE. PENCIL AND PAPER. NO COMPUTER. AROUND TWENTY HOURS OF WORK, SPREAD ACROSS DAYS."
+  },
+  {
+   "t0": 399.73,
+   "t1": 405.68,
+   "text": "BETTYE'S HUNCH WAS THAT A BOASTFUL KILLER WOULD USE THE WORD \"KILL\" MORE THAN ONCE."
+  },
+  {
+   "t0": 405.7,
+   "t1": 411.27000000000004,
+   "text": "THE REPEATED PATTERNS AROUND THOSE GUESSES LET THEM START PRYING THE ALPHABET OPEN."
+  },
+  {
+   "t0": 411.29,
+   "t1": 415.31,
+   "text": "BY AUGUST 5TH, 1969, THE SOLUTION WAS IN THE NEWSPAPERS."
+  },
+  {
+   "t0": 415.33,
+   "t1": 421.78000000000003,
+   "text": "THE MESSAGE WAS CHILLING — AND USELESS. \"I LIKE KILLING BECAUSE IT IS SO MUCH FUN."
+  },
+  {
+   "t0": 421.8,
+   "t1": 429.68,
+   "text": "IT IS MORE FUN THAN KILLING WILD GAME IN THE FOREST, BECAUSE MAN IS THE MOST DANGEROUS ANIMAL OF ALL.\""
+  },
+  {
+   "t0": 429.7,
+   "t1": 434.18,
+   "text": "IT PROMISED THAT HIS VICTIMS WOULD BECOME HIS SLAVES IN THE AFTERLIFE."
+  },
+  {
+   "t0": 434.7,
+   "t1": 439.84,
+   "text": "IT ENDED EXACTLY WHERE THE INVESTIGATION DID: \"I WILL NOT GIVE YOU MY NAME.\""
+  },
+  {
+   "t0": 440.28,
+   "t1": 445.56,
+   "text": "AND THE CIPHER'S FINAL EIGHTEEN CHARACTERS NEVER RESOLVED CLEANLY AT ALL."
+  },
+  {
+   "t0": 447.73,
+   "t1": 454.85,
+   "text": "THEN, ON NOVEMBER 8TH, 1969, THE CHRONICLE RECEIVED A GREETING CARD WITH A SECOND CIPHER INSIDE."
+  },
+  {
+   "t0": 454.87,
+   "t1": 461.1,
+   "text": "THREE HUNDRED AND FORTY CHARACTERS. A DENSER GRID, A NEW SET OF SYMBOLS —"
+  },
+  {
+   "t0": 461.12,
+   "t1": 465.09000000000003,
+   "text": "AND A DESIGN THAT REFUSED EVERY KNOWN APPROACH."
+  },
+  {
+   "t0": 465.11,
+   "t1": 472.18,
+   "text": "AMERICA'S OFFICIAL CODE-BREAKERS AT THE NATIONAL SECURITY AGENCY AND THE FBI TOOK THEIR TURN."
+  },
+  {
+   "t0": 472.2,
+   "t1": 480.1,
+   "text": "SO DID GENERATIONS OF HOBBYISTS, MATHEMATICIANS, AND ANYONE WITH A SUSPICION AND A SPREADSHEET. NOTHING WORKED."
+  },
+  {
+   "t0": 480.12,
+   "t1": 487.34,
+   "text": "FOR FIFTY-ONE YEARS, IT HELD. IT BECAME ONE OF THE MOST STUDIED SUBSTITUTION CIPHERS IN HISTORY."
+  },
+  {
+   "t0": 489.57,
+   "t1": 493.85,
+   "text": "THE TEAM THAT FINALLY BROKE IT WERE NOT GOVERNMENT CODE-BREAKERS."
+  },
+  {
+   "t0": 493.87,
+   "t1": 498.58000000000004,
+   "text": "THEY WERE AMATEURS — IN THE BEST SENSE OF THE WORD."
+  },
+  {
+   "t0": 498.6,
+   "t1": 505.46000000000004,
+   "text": "DAVID ORANCHAK, A WEB DESIGNER IN VIRGINIA WHO HAD STUDIED THE 340 FOR OVER A DECADE."
+  },
+  {
+   "t0": 505.48,
+   "t1": 512.16,
+   "text": "SAM BLAKE, A MATHEMATICIAN IN AUSTRALIA. AND JARL VAN EYCKE, A BELGIAN CODE-BREAKER AND SOLVER TOOLSMITH."
+  },
+  {
+   "t0": 512.18,
+   "t1": 520.28,
+   "text": "IN DECEMBER 2020, WORKING ACROSS CONTINENTS, THEY FOUND WHAT FIFTY-ONE YEARS OF SOLVERS HAD MISSED."
+  },
+  {
+   "t0": 522.61,
+   "t1": 527.96,
+   "text": "THE 340 WAS NOT JUST A SUBSTITUTION CIPHER. IT WAS TWO PUZZLES STACKED."
+  },
+  {
+   "t0": 527.98,
+   "t1": 532.5,
+   "text": "FIRST, THE KILLER WROTE HIS MESSAGE. THEN HE REARRANGED IT —"
+  },
+  {
+   "t0": 532.52,
+   "t1": 539.94,
+   "text": "READING THE TEXT DIAGONALLY THROUGH THE GRID — A TRANSPOSITION THAT SCRAMBLED THE ORDER OF EVERY SYMBOL."
+  },
+  {
+   "t0": 539.96,
+   "t1": 547.09,
+   "text": "THAT SHUFFLE BROKE EVERY FREQUENCY COUNT AND EVERY CRIB THAT HAD BEEN THROWN AT THE CIPHER"
+  },
+  {
+   "t0": 547.11,
+   "t1": 552.01,
+   "text": "SINCE 1969. THE SUBSTITUTION UNDERNEATH WAS SIMILAR TO THE 408 —"
+  },
+  {
+   "t0": 552.03,
+   "t1": 556.01,
+   "text": "WHICH IS EXACTLY WHY NOBODY HAD FOUND IT."
+  },
+  {
+   "t0": 556.03,
+   "t1": 563.58,
+   "text": "THE THREE TESTED A HYPOTHESIS: REORDER THE GRID BY A FIXED PERIOD, THEN ATTACK THE TEXT UNDERNEATH."
+  },
+  {
+   "t0": 563.6,
+   "t1": 569.37,
+   "text": "ON DECEMBER 5TH, 2020, A CANDIDATE KEY FINALLY SURVIVED A HILL-CLIMB SEARCH —"
+  },
+  {
+   "t0": 569.39,
+   "t1": 576.0500000000001,
+   "text": "A METHOD THAT TRIES MILLIONS OF NEAR-MISS SOLUTIONS AND KEEPS THE ONES THAT LOOK SLIGHTLY"
+  },
+  {
+   "t0": 576.07,
+   "t1": 577.32,
+   "text": "MORE LIKE ENGLISH."
+  },
+  {
+   "t0": 577.22,
+   "t1": 583.56,
+   "text": "THE PLAINTEXT EMERGED. WITHIN DAYS, THE FBI CONFIRMED THE SOLUTION WAS AUTHENTIC."
+  },
+  {
+   "t0": 585.39,
+   "t1": 591.59,
+   "text": "THE 340 SAID: \"I HOPE YOU ARE HAVING LOTS OF FUN IN TRYING TO CATCH ME."
+  },
+  {
+   "t0": 591.79,
+   "t1": 595.77,
+   "text": "THAT WASN'T ME ON THE TV SHOW, WHICH BRINGS UP A POINT ABOUT ME:"
+  },
+  {
+   "t0": 595.83,
+   "t1": 600.77,
+   "text": "I AM NOT AFRAID OF THE GAS CHAMBER, BECAUSE IT WILL SEND ME TO PARADICE ALL THE SOONER.\""
+  },
+  {
+   "t0": 600.79,
+   "t1": 604.25,
+   "text": "AND AGAIN, THE PROMISE OF AN AFTERLIFE WITH SLAVES."
+  },
+  {
+   "t0": 604.73,
+   "t1": 612.45,
+   "text": "AND AGAIN, NOTHING ELSE. NO NAME. NO ADDRESS. NO DETAIL OF ANY CRIME THE POLICE DID NOT ALREADY KNOW."
+  },
+  {
+   "t0": 612.71,
+   "t1": 618.19,
+   "text": "THE GREATEST BREAKTHROUGH IN THE CASE — THE PRODUCT OF HALF A CENTURY OF FAILURE —"
+  },
+  {
+   "t0": 618.21,
+   "t1": 622.09,
+   "text": "REVEALED A MAN WHO UNDERSTOOD EXACTLY HOW FAR TO TALK."
+  },
+  {
+   "t0": 623.45,
+   "t1": 628.41,
+   "text": "UNDERSTAND WHAT THE CIPHERS WERE FOR. THEY WERE NEVER A CONFESSION MACHINE."
+  },
+  {
+   "t0": 628.79,
+   "t1": 630.04,
+   "text": "THEY WERE A STAGE."
+  },
+  {
+   "t0": 629.77,
+   "t1": 637.78,
+   "text": "THE 408 PROMISED A NAME AND DELIVERED A TAUNT. THE 340 NEVER EVEN MADE THE PROMISE."
+  },
+  {
+   "t0": 638.2,
+   "t1": 643.03,
+   "text": "AS LONG AS THE KILLER NEVER ENCODED HIS IDENTITY, NO SOLUTION COULD CONTAIN IT."
+  },
+  {
+   "t0": 643.05,
+   "t1": 647.09,
+   "text": "THE CODES BOUGHT HIM THE ONLY CURRENCY HE SEEMED TO WANT:"
+  },
+  {
+   "t0": 647.57,
+   "t1": 653.27,
+   "text": "FRONT PAGES, FEAR, AND THE SPECTACLE OF EXPERTS LOSING TO A HOMEMADE PUZZLE."
+  },
+  {
+   "t0": 655.54,
+   "t1": 658.98,
+   "text": "TWO OF HIS CIPHERS ARE STILL OFFICIALLY UNSOLVED."
+  },
+  {
+   "t0": 659.0,
+   "t1": 665.45,
+   "text": "IN APRIL 1970, A LETTER FOLLOWED THE WORDS \"MY NAME IS\" WITH THIRTEEN SYMBOLS —"
+  },
+  {
+   "t0": 665.47,
+   "t1": 671.49,
+   "text": "A PUZZLE THAT SEEMS TO OFFER THE VERY THING EVERY OTHER CIPHER WITHHELD."
+  },
+  {
+   "t0": 671.51,
+   "t1": 675.44,
+   "text": "THIRTEEN CHARACTERS ARE ALMOST CERTAINLY TOO FEW TO SOLVE HONESTLY."
+  },
+  {
+   "t0": 675.46,
+   "t1": 682.5600000000001,
+   "text": "WITH NO KEY AND NO WAY TO VERIFY, THOUSANDS OF NAMES AND PHRASES CAN BE FORCED TO FIT."
+  },
+  {
+   "t0": 682.58,
+   "t1": 687.12,
+   "text": "MOST RESEARCHERS BELIEVE IT CAN NEVER BE CONFIRMED — WHATEVER IT SAYS."
+  },
+  {
+   "t0": 687.14,
+   "t1": 692.4,
+   "text": "IT REMAINS EXACTLY WHAT IT WAS IN 1970. A DARE."
+  },
+  {
+   "t0": 694.69,
+   "t1": 701.25,
+   "text": "THAT JUNE, HE MAILED A THIRTY-TWO-SYMBOL CIPHER WITH A PHILLIPS 66 ROAD MAP OF THE BAY AREA,"
+  },
+  {
+   "t0": 701.27,
+   "t1": 708.25,
+   "text": "MARKED WITH A CROSSHAIR ON MOUNT DIABLO. THE CIPHER, HE WROTE, SHOWED WHERE A BOMB WAS SET."
+  },
+  {
+   "t0": 708.27,
+   "t1": 711.95,
+   "text": "THE BOMB WAS NEVER FOUND. THE CIPHER HAS NEVER BEEN VERIFIED."
+  },
+  {
+   "t0": 711.97,
+   "t1": 716.99,
+   "text": "WITH THIRTY-TWO SYMBOLS, IT MAY BE SOLVABLE ONLY WITH THE KEY THAT MADE IT —"
+  },
+  {
+   "t0": 717.01,
+   "t1": 718.83,
+   "text": "AND HE TOOK THAT WITH HIM."
+  },
+  {
+   "t0": 718.85,
+   "t1": 723.37,
+   "text": "BOTH SHORT CIPHERS TEACH THE SAME LESSON THE LONG ONES TAUGHT."
+  },
+  {
+   "t0": 723.81,
+   "t1": 726.81,
+   "text": "WITH THE ZODIAC, EVEN THE PUZZLES ARE PUZZLES."
+  },
+  {
+   "t0": 728.67,
+   "t1": 733.69,
+   "text": "OVER FIVE DECADES, THOUSANDS OF PEOPLE HAVE BEEN NAMED AS THE ZODIAC."
+  },
+  {
+   "t0": 734.09,
+   "t1": 738.19,
+   "text": "A HANDFUL OF NAMES HAVE CASE FILES. NONE HAVE A CONVICTION."
+  },
+  {
+   "t0": 738.64,
+   "t1": 744.4,
+   "text": "THE MOST HEAVILY INVESTIGATED SUSPECT WAS ARTHUR LEIGH ALLEN OF VALLEJO —"
+  },
+  {
+   "t0": 744.42,
+   "t1": 752.11,
+   "text": "SEARCHED BY POLICE IN 1991, LINKED BY INFORMANTS, AND THE OWNER OF A WRISTWATCH BEARING THE"
+  },
+  {
+   "t0": 752.13,
+   "t1": 755.96,
+   "text": "ZODIAC BRAND'S CROSSHAIR LOGO. HE WAS NEVER CHARGED."
+  },
+  {
+   "t0": 755.98,
+   "t1": 760.72,
+   "text": "HE DENIED EVERYTHING, AND HE DIED IN AUGUST 1992."
+  },
+  {
+   "t0": 760.74,
+   "t1": 767.79,
+   "text": "IN 2002, INVESTIGATORS REPORTED COMPARING D N A FROM A SALIVA SEAL ON A CONFIRMED ZODIAC LETTER"
+  },
+  {
+   "t0": 767.81,
+   "t1": 775.28,
+   "text": "WITH ALLEN'S OWN. POLICE SAID HE WAS EXCLUDED. IT WAS THE CLOSEST THE CASE CAME TO A SCIENTIFIC"
+  },
+  {
+   "t0": 775.3,
+   "t1": 779.86,
+   "text": "VERDICT — AND IT CLOSED ONE DOOR WITHOUT OPENING ANOTHER."
+  },
+  {
+   "t0": 779.88,
+   "t1": 786.78,
+   "text": "EVERY OTHER NAME — RICHARD GAIKOWSKI, LAWRENCE KANE, EARL VAN BEST JUNIOR, AND DOZENS MORE"
+  },
+  {
+   "t0": 786.8,
+   "t1": 794.17,
+   "text": "— CARRIES A BOOK, A DOCUMENTARY, OR A THEORY. NONE CARRIES EVIDENCE THAT ESTABLISHES IDENTIFICATION."
+  },
+  {
+   "t0": 795.53,
+   "t1": 803.01,
+   "text": "IN OCTOBER 2021, A GROUP CALLED THE CASE BREAKERS ANNOUNCED THAT THE ZODIAC WAS GARY FRANCIS"
+  },
+  {
+   "t0": 803.03,
+   "t1": 810.43,
+   "text": "POSTE, A VETERAN WHO HAD DIED IN 2018. THE ANNOUNCEMENT MADE INTERNATIONAL HEADLINES."
+  },
+  {
+   "t0": 810.95,
+   "t1": 817.71,
+   "text": "INVESTIGATORS REJECTED THE CLAIM. THE FBI SAID THE CASE REMAINED OPEN, WITH NO NEW INFORMATION."
+  },
+  {
+   "t0": 817.73,
+   "t1": 822.6800000000001,
+   "text": "THE PATTERN HELD: EVERY CONFIDENT ANNOUNCEMENT HAS COLLAPSED UNDER REVIEW —"
+  },
+  {
+   "t0": 822.7,
+   "t1": 827.66,
+   "text": "AND THE FILE HAS ABSORBED EACH OF THEM WITHOUT CHANGING."
+  },
+  {
+   "t0": 829.02,
+   "t1": 832.88,
+   "text": "SO WHY DOES A CASE WITH THIS MUCH MATERIAL STILL FAIL?"
+  },
+  {
+   "t0": 833.28,
+   "t1": 838.96,
+   "text": "START WITH THE YEAR. IN 1969 THERE WAS NO DNA PROFILING —"
+  },
+  {
+   "t0": 838.98,
+   "t1": 844.5600000000001,
+   "text": "THE FIRST FORENSIC DNA CONVICTION IN THE UNITED STATES WAS STILL FAR IN THE FUTURE."
+  },
+  {
+   "t0": 844.58,
+   "t1": 851.99,
+   "text": "NO CAMERA GRIDS. NO CELL-SITE RECORDS. NO NATIONAL DATABASES SEARCHING PRINTS AND HANDWRITING IN SECONDS."
+  },
+  {
+   "t0": 852.01,
+   "t1": 855.57,
+   "text": "THERE WERE PRINTS FROM THE CRIME SCENES AND THE LETTERS."
+  },
+  {
+   "t0": 855.99,
+   "t1": 859.07,
+   "text": "THERE WAS HANDWRITING ON HUNDREDS OF ENVELOPES."
+  },
+  {
+   "t0": 859.19,
+   "t1": 860.91,
+   "text": "NONE OF IT HAS EVER MATCHED A NAME."
+  },
+  {
+   "t0": 860.93,
+   "t1": 868.05,
+   "text": "AND THERE WERE MISTAKES. AFTER THE STINE MURDER, A RADIO DISPATCH DESCRIBED THE SUSPECT INCORRECTLY,"
+  },
+  {
+   "t0": 868.51,
+   "t1": 872.39,
+   "text": "AND AN OFFICER WHO HAD JUST SEEN THE REAL MAN WAS WAVED OFF."
+  },
+  {
+   "t0": 872.77,
+   "t1": 875.27,
+   "text": "THE KILLER WALKED AWAY IN PLAIN SIGHT."
+  },
+  {
+   "t0": 877.44,
+   "t1": 884.83,
+   "text": "THE PHYSICAL EVIDENCE HAS AGED. STAMPS AND ENVELOPE SEALS HOLD ONLY SMALL AMOUNTS OF D N A,"
+  },
+  {
+   "t0": 884.85,
+   "t1": 889.19,
+   "text": "OFTEN DEGRADED, OFTEN MIXED. RE-TESTING HAS CONTINUED FOR YEARS —"
+  },
+  {
+   "t0": 889.21,
+   "t1": 896.86,
+   "text": "AND THE GENEALOGY METHODS THAT SOLVED OTHER COLD CASES ARE WAITING ON A SAMPLE CLEAN ENOUGH TO USE."
+  },
+  {
+   "t0": 896.88,
+   "t1": 903.94,
+   "text": "ABOVE ALL, THE CASE INVITES CONFIRMATION BIAS. WHEN A SUSPECT HAS A CRIMINAL RECORD, A STRANGE"
+  },
+  {
+   "t0": 903.96,
+   "t1": 910.9200000000001,
+   "text": "NAME, AND A CROSSHAIR WATCH, ANY DETAIL FITS. CASES BUILT BACKWARDS FROM A FAVORITE SUSPECT"
+  },
+  {
+   "t0": 910.94,
+   "t1": 913.29,
+   "text": "READ EVERY CLUE AS CONFIRMATION."
+  },
+  {
+   "t0": 913.31,
+   "t1": 918.35,
+   "text": "THE LESSON OF FIFTY-ONE YEARS OF CIPHER HUNTING APPLIES TO SUSPECTS TOO."
+  },
+  {
+   "t0": 918.91,
+   "t1": 922.15,
+   "text": "CERTAINTY IS EASY. VERIFICATION IS RARE."
+  },
+  {
+   "t0": 924.43,
+   "t1": 929.22,
+   "text": "SO — STRIP THE FOLKLORE AWAY. WHAT DOES THE EVIDENCE ACTUALLY SUPPORT?"
+  },
+  {
+   "t0": 929.24,
+   "t1": 934.3100000000001,
+   "text": "CONFIRMED. FOUR ATTACKS BETWEEN DECEMBER 1968 AND OCTOBER 1969."
+  },
+  {
+   "t0": 934.33,
+   "t1": 942.8100000000001,
+   "text": "FIVE PEOPLE KILLED. TWO SURVIVORS. A STREAM OF LETTERS AUTHENTICATED BY DETAILS ONLY THE KILLER"
+  },
+  {
+   "t0": 942.83,
+   "t1": 948.47,
+   "text": "COULD KNOW. TWO CIPHERS SOLVED AND VERIFIED. TWO CIPHERS UNSOLVED."
+  },
+  {
+   "t0": 948.49,
+   "t1": 952.86,
+   "text": "A CLAIM OF THIRTY-SEVEN VICTIMS — UNSUPPORTED."
+  },
+  {
+   "t0": 952.88,
+   "t1": 959.6,
+   "text": "DISPUTED. WHETHER HIS FIRST KILLING WAS ACTUALLY IN RIVERSIDE, TWO YEARS BEFORE LAKE HERMAN"
+  },
+  {
+   "t0": 959.62,
+   "t1": 963.46,
+   "text": "ROAD — A CONNECTION THE AUTHORITIES NEVER ADOPTED."
+  },
+  {
+   "t0": 963.48,
+   "t1": 967.3100000000001,
+   "text": "WHETHER THE FINAL LETTERS OF 1974 ARE AUTHENTIC."
+  },
+  {
+   "t0": 967.33,
+   "t1": 970.99,
+   "text": "WHETHER ANY OF HIS UNCONFIRMED VICTIMS WERE REAL."
+  },
+  {
+   "t0": 971.01,
+   "t1": 974.65,
+   "text": "UNKNOWN: EVERYTHING THAT MATTERS MOST. HIS NAME."
+  },
+  {
+   "t0": 974.67,
+   "t1": 979.17,
+   "text": "HIS FACE, BEYOND A WITNESS SKETCH. HIS REASON FOR STOPPING."
+  },
+  {
+   "t0": 981.44,
+   "t1": 986.65,
+   "text": "THE ZODIAC LEFT INVESTIGATORS MORE MATERIAL THAN ALMOST ANY KILLER IN AMERICAN HISTORY."
+  },
+  {
+   "t0": 986.67,
+   "t1": 989.86,
+   "text": "THE LETTERS ARE REAL. THE CIPHERS ARE READABLE."
+  },
+  {
+   "t0": 989.88,
+   "t1": 994.28,
+   "text": "THE DNA IS TESTABLE. AND THE FILE IS STILL OPEN —"
+  },
+  {
+   "t0": 994.3,
+   "t1": 1001.32,
+   "text": "BECAUSE THE ONE THING ALL OF IT WAS SUPPOSED TO PRODUCE, A NAME, NEVER APPEARS ANYWHERE IN IT."
+  },
+  {
+   "t0": 1001.34,
+   "t1": 1006.18,
+   "text": "HE DID NOT OUTSMART THE EVIDENCE. HE SIMPLY STOOD OUTSIDE IT."
+  },
+  {
+   "t0": 1008.24,
+   "t1": 1012.57,
+   "text": "SOMEWHERE, THERE MAY STILL BE AN ENVELOPE NOBODY HAS CHECKED —"
+  },
+  {
+   "t0": 1012.59,
+   "t1": 1016.9300000000001,
+   "text": "A STAMP, A SEAL, A CLEANER SAMPLE. THE METHODS KEEP IMPROVING."
+  },
+  {
+   "t0": 1016.95,
+   "t1": 1022.88,
+   "text": "THE CASE HAS NOT BEEN CLOSED BY A PRESS RELEASE, A DOCUMENTARY, OR A BOOK."
+  },
+  {
+   "t0": 1022.9,
+   "t1": 1025.8700000000001,
+   "text": "IT CLOSES ON IDENTIFICATION, OR NOT AT ALL."
+  },
+  {
+   "t0": 1025.89,
+   "t1": 1030.73,
+   "text": "THIS IS THE FILE OF THE ZODIAC KILLER. CASE STATUS: OPEN."
+  },
+  {
+   "t0": 1032.47,
+   "t1": 1037.41,
+   "text": "FULL SOURCE LIST AND CHAPTER TIMESTAMPS ARE IN THE DESCRIPTION BELOW."
+  }
+ ]
+}

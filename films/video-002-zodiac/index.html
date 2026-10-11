@@ -1,0 +1,1395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Zodiac Killer: The Ciphers, the Letters, and the Killer Nobody Could Identify</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #F1E9D6; }
+  svg, canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #paper { mix-blend-mode: multiply; pointer-events: none; }
+  #fx { pointer-events: none; }
+  .mul { mix-blend-mode: multiply; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="boil" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence id="boilT" type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="4" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -22 15.2" result="gm"/>
+      <feComposite in="d" in2="gm" operator="in"/>
+    </filter>
+    <filter id="stampInk" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="11" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="3" seed="21" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 5.9" result="gm"/>
+      <feComposite in="d" in2="gm" operator="in"/>
+    </filter>
+    <clipPath id="frameClip"><rect width="1920" height="1080"/></clipPath>
+  </defs>
+  <g clip-path="url(#frameClip)">
+    <g id="cam"><g id="world"></g></g>
+    <g id="hud"></g>
+    <g id="wipe"></g>
+    <rect id="flash" width="1920" height="1080" fill="#FFFFFF" opacity="0"/>
+    <rect id="fade" width="1920" height="1080" fill="#1D2340" opacity="0"/>
+  </g>
+</svg>
+<canvas id="paper" width="1920" height="1080"></canvas>
+<canvas id="fx" width="1920" height="1080"></canvas>
+
+<script src="timeline.js"></script>
+<script>
+// ============================================================
+// Core helpers (halftone-dossier engine, adapted)
+// ============================================================
+const NS = 'http://www.w3.org/2000/svg';
+const C = {
+  paper: '#F1E9D6', navy: '#20263F', blue: '#2E55D6', red: '#C0453B', yellow: '#FFC628',
+  brick: '#B5483F', cream: '#FFF6E4', night: '#161E38', night2: '#2A3560',
+  sage: '#5C7A5E', steel: '#5A6B8C',
+};
+const F = {
+  serif: "'Noto Serif SC'", bagel: "'Bagel Fat One'", mono: "'JetBrains Mono', 'Noto Sans SC'",
+  sans: "'Noto Sans SC'",
+};
+const FPS = 24, DUR = TL.dur;
+
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function txt(parent, str, attrs) { const e = el('text', attrs, parent); e.textContent = str; return e; }
+function tf(e, x = 0, y = 0, s = 1, r = 0, sy) {
+  e.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${r.toFixed(2)}) scale(${s.toFixed(4)} ${(sy ?? s).toFixed(4)})`);
+}
+function op(e, o) { e.setAttribute('opacity', Math.max(0, Math.min(1, o)).toFixed(3)); }
+function show(e, v) { e.style.display = v ? '' : 'none'; }
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, p) => a + (b - a) * p;
+const E = {
+  out: p => 1 - Math.pow(1 - p, 3),
+  in: p => p * p * p,
+  io: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  back: p => { const c = 1.9; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); },
+};
+const pop = (t, t0, d = 0.35) => t < t0 ? 0 : E.back(seg(t, t0, t0 + d));
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+const mctx = document.createElement('canvas').getContext('2d');
+function measure(str, size, family, weight = 900) { mctx.font = `${weight} ${size}px ${family}`; return mctx.measureText(str).width; }
+
+// ---- text registry (for readcheck) ----
+const REG = [];
+const REGK = new Set();
+function regText(node, text, x0, y0, x1, y1, t0, t1) {
+  const k = text + '|' + t0.toFixed(2);
+  if (REGK.has(k)) return; REGK.add(k);
+  REG.push({ node, text, x0, y0, x1, y1, t0, t1 }); return node;
+}
+function regChars(c, text, t0, t1, x0, y0) {
+  // approximate char boxes from the chars() layout
+  let cx = x0;
+  for (const it of c.items) { REG.push({ node: it.g, text: it.t ?? '', x0: cx, y0: y0 - it.size, x1: cx + it.w, y1: y0 + it.size * 0.25, t0, t1 }); cx += it.w; }
+}
+
+// per-char text (overshoot pop-in), optional misregistration shadow
+function chars(parent, str, o) {
+  const { x, y, size, family, weight = 900, fill = C.navy, anchor = 'start', ls = 0, shadow, stroke, sw = 0 } = o;
+  const g = el('g', {}, parent);
+  const arr = [...str];
+  const widths = arr.map(c => measure(c, size, family, weight));
+  const total = widths.reduce((a, b) => a + b, 0) + ls * (arr.length - 1);
+  let cx = anchor === 'middle' ? x - total / 2 : anchor === 'end' ? x - total : x;
+  const items = arr.map((ch, i) => {
+    const cg = el('g', {}, g);
+    const base = { x: 0, y: 0, 'font-size': size, 'font-family': family, 'font-weight': weight, 'text-anchor': 'middle' };
+    if (shadow) txt(cg, ch, { ...base, x: shadow.dx, y: shadow.dy, fill: shadow.fill, class: 'mul' });
+    const st = stroke ? { stroke, 'stroke-width': sw, 'paint-order': 'stroke', 'stroke-linejoin': 'round' } : {};
+    const t1 = txt(cg, ch, { ...base, fill, ...st });
+    const it = { g: cg, x: cx + widths[i] / 2, y, w: widths[i], size, t: ch, el: t1 };
+    cx += widths[i] + ls;
+    tf(cg, it.x, it.y);
+    return it;
+  });
+  return { g, items, total };
+}
+function charsPop(c, t, t0, stagger = 0.05, d = 0.38, from = 60) {
+  c.items.forEach((it, i) => {
+    const s = t0 + i * stagger;
+    const p = seg(t, s, s + d);
+    const h = it.size * 0.35;
+    if (t < s) { op(it.g, 0); return; }
+    op(it.g, 1);
+    const sc = E.back(p);
+    const sq = 1 + 0.25 * Math.sin(p * Math.PI) * (1 - p);
+    it.g.setAttribute('transform', `translate(${it.x} ${it.y + from * (1 - E.out(p))}) translate(0 ${-h}) scale(${(sc / sq).toFixed(3)} ${(sc * sq).toFixed(3)}) translate(0 ${h})`);
+  });
+}
+// static fade-up for body text (fast, per-block); preserves card tilt if any
+function blockUp(b, t, t0, d = 0.4, dy = 26) {
+  if (t < t0) { op(b, 0); return; }
+  const p = seg(t, t0, t0 + d);
+  op(b, p);
+  const [px = 0, py = 0] = b.__pos || [0, 0];
+  tf(b, px, py + dy * (1 - E.out(p)), 1, b.__tilt || 0);
+}
+
+// halftone: f(x,y) -> 0..1 density
+function halftone(parent, { x0 = 0, y0 = 0, w = 1920, h = 1080, step = 22, angle = 15, color, f, maxK = 0.62 }) {
+  const a = angle * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a);
+  const n = Math.ceil(Math.hypot(w, h) / step / 2) + 2;
+  let d = '';
+  for (let i = -n; i <= n; i++) for (let j = -n; j <= n; j++) {
+    const u = i * step, v = j * step;
+    const x = x0 + w / 2 + u * ca - v * sa, y = y0 + h / 2 + u * sa + v * ca;
+    if (x < x0 - step || x > x0 + w + step || y < y0 - step || y > y0 + h + step) continue;
+    const s = clamp(f(x, y)); if (s < 0.05) continue;
+    const r = s * step * maxK;
+    d += `M${(x - r).toFixed(1)} ${y.toFixed(1)}a${r.toFixed(1)} ${r.toFixed(1)} 0 1 0 ${(2 * r).toFixed(1)} 0a${r.toFixed(1)} ${r.toFixed(1)} 0 1 0 ${(-2 * r).toFixed(1)} 0`;
+  }
+  return el('path', { d, fill: color }, parent);
+}
+const radial = (cx, cy, R, pw = 1.2) => (x, y) => Math.pow(clamp(1 - Math.hypot(x - cx, y - cy) / R), pw);
+const edge = (R = 900, pw = 1.6) => (x, y) => Math.pow(clamp(Math.hypot(x - 960, y - 540) / R - 0.35), pw) * 1.3;
+
+function bg(parent, color) { return el('rect', { width: 1920, height: 1080, fill: color }, parent); }
+
+// ---- exhibits & props ----
+function paperCard(parent, x, y, w, h, { tilt = 0, fill = '#FFFDF4', stroke = C.navy, sw = 6, shadow = true } = {}) {
+  const g = el('g', {}, parent);
+  g.__tilt = tilt; g.__pos = [x, y];
+  if (shadow) el('rect', { x: -w / 2 + 10, y: -h / 2 + 10, width: w, height: h, rx: 10, fill: C.navy, opacity: .22 }, g);
+  el('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 10, fill, stroke, 'stroke-width': sw }, g);
+  tf(g, x, y, 1, tilt);
+  return g;
+}
+function chipEl(parent, x, y, label, { fill = C.navy, ink = C.cream, size = 30, pad = 18, mono = false, tilt = 0 } = {}) {
+  const g = el('g', {}, parent);
+  const w = measure(label, size, mono ? F.mono : F.sans, 800) + pad * 2;
+  el('rect', { x: -w / 2, y: -size * 0.78, width: w, height: size * 1.56, rx: 8, fill }, g);
+  const t = txt(g, label, { x: 0, y: size * 0.36, 'font-size': size, 'font-family': mono ? F.mono : F.sans, 'font-weight': mono ? 800 : 900, fill: ink, 'text-anchor': 'middle' });
+  tf(g, x, y, 1, tilt);
+  return { g, t, w };
+}
+function stampEl(parent, str, { size = 200, color = C.red, family = F.sans, padX = 50, padY = 26, border = 12 } = {}) {
+  const g = el('g', {}, parent);
+  const inner = el('g', { filter: 'url(#stampInk)' }, g);
+  const w = measure(str, size, family, 900) + padX * 2, h = size * 1.08 + padY * 2;
+  el('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 22, fill: 'none', stroke: color, 'stroke-width': border }, inner);
+  el('rect', { x: -w / 2 + border * 1.8, y: -h / 2 + border * 1.8, width: w - border * 3.6, height: h - border * 3.6, rx: 12, fill: 'none', stroke: color, 'stroke-width': border * 0.35 }, inner);
+  txt(inner, str, { x: 0, y: size * 0.36, 'font-size': size, 'font-family': family, 'font-weight': 900, fill: color, 'text-anchor': 'middle' });
+  return { g, w, h };
+}
+function stampAnim(s, t, t0, x, y, rot) {
+  if (t < t0 - 0.09) { op(s.g, 0); return; }
+  const p = seg(t, t0 - 0.09, t0);
+  const after = Math.max(0, t - t0);
+  const bounce = 1 + 0.05 * Math.sin(after * 30) * Math.exp(-after * 9);
+  op(s.g, p < 1 ? 0.3 + 0.7 * p : 0.93);
+  tf(s.g, x, y, lerp(2.6, 1, E.in(p)) * bounce, rot);
+}
+// crosshair symbol
+function crosshair(parent, cx, cy, R, { color = C.navy, sw = 10, circ = true } = {}) {
+  const g = el('g', {}, parent);
+  if (circ) el('circle', { cx: 0, cy: 0, r: R, fill: 'none', stroke: color, 'stroke-width': sw }, g);
+  const a = R * 0.62;
+  el('path', { d: `M ${-R - a} 0 L ${R + a} 0 M 0 ${-R - a} L 0 ${R + a}`, stroke: color, 'stroke-width': sw, 'stroke-linecap': 'round' }, g);
+  tf(g, cx, cy);
+  return g;
+}
+// evidence pin
+function pin(parent, x, y) {
+  const g = el('g', {}, parent);
+  el('circle', { cx: 0, cy: 0, r: 14, fill: C.red, stroke: C.navy, 'stroke-width': 5 }, g);
+  el('circle', { cx: -4, cy: -4, r: 4.5, fill: C.cream, opacity: .85 }, g);
+  tf(g, x, y);
+  return g;
+}
+// string between two points
+function stringEl(parent, x1, y1, x2, y2, sag = 40) {
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + sag;
+  return el('path', { d: `M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`, fill: 'none', stroke: C.navy, 'stroke-width': 3.5, opacity: .7 }, parent);
+}
+// typewriter text: reveals chars over time into one <text>; returns update fn
+function typewrite(parent, str, { x, y, size = 34, family = F.mono, weight = 500, fill = C.navy, cpl = 44, t0, dt = 0.028, anchor = 'start', lh = 48, maxLines = 6, width = 760 } = {}) {
+  const g = el('g', {}, parent);
+  const tEls = [txt(g, '', { x, y, 'font-size': size, 'font-family': family, 'font-weight': weight, fill, 'text-anchor': anchor })];
+  for (let i = 1; i < maxLines; i++) tEls.push(txt(g, '', { x, y: y + i * lh, 'font-size': size, 'font-family': family, 'font-weight': weight, fill, 'text-anchor': anchor }));
+  const words = str.split(' ');
+  const lines = []; let cur = '';
+  for (const w of words) {
+    if ((cur + ' ' + w).trim().length > cpl) { lines.push(cur.trim()); cur = w; } else cur += ' ' + w;
+  }
+  if (cur.trim()) lines.push(cur.trim());
+  const total = lines.join(' ').length;
+  return (t) => {
+    const n = Math.floor(Math.max(0, t - t0) / dt);
+    const shown = Math.min(n, total);
+    let rest = shown, li = 0;
+    for (; li < lines.length && li < maxLines; li++) {
+      const take = Math.min(rest, lines[li].length + (li < lines.length - 1 ? 1 : 0));
+      tEls[li].textContent = lines[li].slice(0, take);
+      rest -= take;
+      if (rest <= 0) { li++; break; }
+    }
+    for (; li < maxLines; li++) tEls[li].textContent = '';
+    return shown >= total;
+  };
+}
+// cipher symbol grid (stylized, deterministic)
+const SYMS = ['A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Z','@','#','%','&','+','=','*','~','?','!','/','\\','<','>','^','|',':',';','(',')','[',']','{','}','$'];
+function cipherGrid(parent, { x, y, cols, rows, cell = 40, size = 30, color = C.navy, seed = 7, skip = null, mark = null }) {
+  const g = el('g', {}, parent);
+  const r = rng(seed);
+  const cells = [];
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    if (skip && skip(i, j)) continue;
+    const ch = mark && mark(i, j) ? mark(i, j) : SYMS[Math.floor(r() * SYMS.length)];
+    const t = txt(g, ch, { x: x + i * cell, y: y + j * cell, 'font-size': size, 'font-family': F.mono, 'font-weight': 800, fill: color, 'text-anchor': 'middle' });
+    cells.push(t);
+  }
+  return g;
+}
+
+// ============================================================
+// Stage
+// ============================================================
+const world = document.getElementById('world');
+const cam = document.getElementById('cam');
+const hud = document.getElementById('hud');
+const wipeG = document.getElementById('wipe');
+const flash = document.getElementById('flash');
+const fade = document.getElementById('fade');
+const SC = {}; TL.scenes.forEach(s => SC[s.id] = s);
+const T = id => SC[id].t0, U = id => SC[id].t1;
+const LN = {}; TL.scenes.forEach(s => s.lines.forEach(l => LN[l.id] = l));
+const L0 = id => LN[id].t0;
+const scenes = [];
+function scene(id, build) {
+  const s = SC[id];
+  const g = el('g', {}, world);
+  const rec = { g, t0: s.t0, t1: s.t1 };
+  rec.update = build(g, rec, s);
+  scenes.push(rec);
+  return rec;
+}
+// headline registration helper (idempotent)
+function regH(c, text, t0, t1, x, y, anchor = 'start') {
+  const k = text + '|' + t0.toFixed(2);
+  if (REGK.has(k)) return; REGK.add(k);
+  const w = c.total;
+  const x0 = anchor === 'middle' ? x - w / 2 : anchor === 'end' ? x - w : x;
+  REG.push({ text, x0, y0: y - c.items[0].size, x1: x0 + w, y1: y + c.items[0].size * 0.28, t0, t1 });
+}
+const EV = [];
+const SHAKES = [];
+const FLASHES = [];
+
+function buildAll() {
+  // ---------------- S1 COLD OPEN ----------------
+  scene('S1', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.navy, step: 24, angle: 20, f: edge(820, 1.35), maxK: 0.7 }).setAttribute('class', 'mul');
+    halftone(g, { color: C.red, step: 24, angle: 45, f: radial(960, 470, 620, 1.1), maxK: 0.5 }).setAttribute('class', 'mul');
+    // phase A: crosshair resolves
+    const chG = el('g', {}, g);
+    tf(chG, 960, 470);
+    const ch = crosshair(chG, 0, 0, 150, { color: C.navy, sw: 13 });
+    const dotRing = halftone(chG, { x0: -420, y0: -420, w: 840, h: 840, step: 34, angle: 25, color: C.red, f: radial(0, 0, 430, 1.6), maxK: 0.66 });
+    const chipA = chipEl(g, 960, 40, 'SUMMER 1969', { fill: C.navy, ink: C.cream, size: 34, mono: true });
+    // phase A2: three envelopes
+    const envG = el('g', {}, g);
+    const names = ['SAN FRANCISCO CHRONICLE', 'SAN FRANCISCO EXAMINER', 'VALLEJO TIMES-HERALD'];
+    const envs = names.map((n, i) => {
+      const eg = el('g', {}, envG);
+      el('rect', { x: -230, y: -130, width: 460, height: 260, rx: 12, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, eg);
+      el('path', { d: 'M -230 -130 L 0 40 L 230 -130', fill: 'none', stroke: C.navy, 'stroke-width': 6 }, eg);
+      const wax = el('circle', { cx: 0, cy: 40, r: 44, fill: C.red, stroke: C.navy, 'stroke-width': 5 }, eg);
+      txt(eg, '1/3', { x: 0, y: 56, 'font-size': 40, 'font-family': F.bagel, fill: C.cream, 'text-anchor': 'middle' });
+      txt(eg, n, { x: 0, y: 105, 'font-size': 25, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+      return eg;
+    });
+    // phase B: quote card
+    const qG = paperCard(g, 960, 500, 1150, 380, { tilt: -1.5 });
+    const qTyp = typewrite(qG, '"THIS IS THE ZODIAC SPEAKING."', { x: 0, y: -30, size: 66, cpl: 24, t0: 0, dt: 0.05, anchor: 'middle', family: F.mono, weight: 800, lh: 84 });
+    crosshair(qG, 505, -130, 62, { color: C.red, sw: 8 });
+    txt(qG, 'AUG 4, 1969', { x: 505, y: -10, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.red, 'text-anchor': 'middle' });
+    // phase C: library of evidence
+    const libG = el('g', {}, g);
+    const lh1 = chars(libG, 'A LIBRARY OF EVIDENCE', { x: 960, y: 300, size: 110, family: F.serif, fill: C.navy, anchor: 'middle', shadow: { fill: C.red, dx: 7, dy: 7 } });
+    const items = ['LETTERS', 'FINGERPRINTS', 'HANDWRITING', 'DNA', 'CIPHERS', 'WITNESSES'];
+    const chips = items.map((s, i) => {
+      const cg = el('g', {}, libG);
+      el('rect', { x: -128, y: -44, width: 256, height: 88, rx: 10, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, cg);
+      txt(cg, s, { x: 0, y: 14, 'font-size': 33, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+      return cg;
+    });
+    const stU = stampEl(g, 'UNSOLVED', { size: 170, color: C.red, border: 13 });
+    // reconstruction label
+    const rec1 = chipEl(g, 1740, 1020, 'ILLUSTRATIVE RECONSTRUCTION', { fill: 'none', ink: C.navy, size: 21, mono: true, pad: 6 });
+    REG.push({ text: 'ILLUSTRATIVE RECONSTRUCTION', x0: 1600, y0: 1000, x1: 1880, y1: 1040, t0: T('S1') + 2, t1: U('S1') });
+    return (t) => {
+      // A: crosshair draw-on
+      const pa = seg(t, T('S1') + 0.2, T('S1') + 2.6);
+      ch.setAttribute('stroke-dasharray', 2400); ch.setAttribute('stroke-dashoffset', 2400 * (1 - E.out(pa)));
+      op(dotRing, seg(t, T('S1') + 0.6, T('S1') + 2.2));
+      op(chipA.g, t > T('S1') + 1.6 ? 1 : 0);
+      chipA.g.setAttribute('transform', `translate(960 ${40 + 340 * (1 - E.back(pop(t, T('S1') + 1.6, 0.5)))}) rotate(-2)`);
+      const eStart = L0('s01a') - 0.8;
+      envs.forEach((e, i) => {
+        op(e, t >= eStart ? 1 : 0);
+        tf(e, 410 + i * 550, 760 + 300 * (1 - E.back(pop(t, eStart + i * 0.28, 0.5))), 1, (i - 1) * 3 + Math.sin(t * 1.4 + i) * 0.8);
+      });
+      op(chG, t < L0('s01c') - 0.2 ? 1 : 0);
+      op(envG, t < L0('s01c') - 0.2 && t >= eStart - 0.1 ? 1 : 0);
+      // B: quote
+      op(qG, t >= L0('s01c') - 0.2 && t < L0('s01d') - 0.2 ? 1 : 0);
+      if (t >= L0('s01c') - 0.2 && t < L0('s01d')) qTyp(t);
+      // C: library
+      op(libG, t >= L0('s01d') - 0.2 ? 1 : 0);
+      if (t >= L0('s01d') - 0.2) {
+        charsPop(lh1, t, L0('s01d') - 0.1, 0.024);
+        regH(lh1, 'A LIBRARY OF EVIDENCE', L0('s01d') - 0.1, U('S1'), 960, 300, 'middle');
+        chips.forEach((cg, i) => {
+          const p = pop(t, L0('s01d') + 1.6 + i * 0.22, 0.45);
+          op(cg, t >= L0('s01d') + 1.6 + i * 0.22 ? 1 : 0);
+          tf(cg, 410 + (i % 3) * 550, 540 + Math.floor(i / 3) * 170 + 60 * (1 - p), p, (i % 2 ? 1.6 : -1.6));
+        });
+      }
+      stampAnim(stU, t, U('S1') - 5.6, 960, 810, -7);
+      op(rec1.g, 0.8);
+    };
+  });
+
+  // ---------------- S2 FILE HEADER ----------------
+  scene('S2', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 24, angle: 60, f: radial(0, 1080, 620, 1.2), maxK: 0.55 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'THE FILE OF THE', { x: 120, y: 220, size: 96, family: F.serif, fill: C.navy });
+    const h2 = chars(g, 'ZODIAC KILLER', { x: 120, y: 350, size: 120, family: F.serif, fill: C.navy, shadow: { fill: C.red, dx: 8, dy: 8 } });
+    const card = paperCard(g, 1430, 560, 640, 620, { tilt: 2 });
+    const rows = [['CONFIRMED ATTACKS', '4'], ['DECEASED', '5'], ['SURVIVORS', '2'], ['SUSPECTS NAMED', '1000s'], ['STATUS', 'OPEN']];
+    const rowEls = rows.map((r, i) => {
+      const rg = el('g', {}, card);
+      txt(rg, r[0], { x: -270, y: -190 + i * 100, 'font-size': 33, 'font-family': F.sans, 'font-weight': 900, fill: C.navy });
+      const v = txt(rg, r[1], { x: 270, y: -188 + i * 100, 'font-size': 52, 'font-family': F.bagel, fill: r[1] === 'OPEN' ? C.red : C.navy, 'text-anchor': 'end' });
+      el('path', { d: `M -270 ${-152 + i * 100} L 270 ${-152 + i * 100}`, stroke: C.navy, 'stroke-width': 3, opacity: .3 }, rg);
+      return rg;
+    });
+    txt(card, 'OPUSCAR FILE 002 · SFPD 090068-69', { x: 0, y: 280, 'font-size': 27, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    const st = stampEl(g, 'CASE OPENED', { size: 120, color: C.blue, border: 11 });
+    SHAKES.push([L0('s02b') + 0.6, 10, 0.3]); EV.push({ t: L0('s02b') + 0.6, type: 'stamp' });
+    return (t) => {
+      charsPop(h1, t, L0('s02a'), 0.03);
+      charsPop(h2, t, L0('s02a') + 0.35, 0.035);
+      regH(h1, 'THE FILE OF THE', L0('s02a'), U('S2'), 120, 220);
+      regH(h2, 'ZODIAC KILLER', L0('s02a') + 0.35, U('S2'), 120, 350);
+      blockUp(card, t, L0('s02a') + 0.5, 0.5, 60);
+      rowEls.forEach((r, i) => op(r, seg(t, L0('s02a') + 1.2 + i * 0.14, L0('s02a') + 1.5 + i * 0.14)));
+      stampAnim(st, t, L0('s02b') + 0.6, 430, 700, -8);
+    };
+  });
+
+  // ---------------- S3 THE ATTACKS ----------------
+  scene('S3', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 26, angle: 30, f: edge(860, 1.2), maxK: 0.6 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'FOUR ATTACKS', { x: 120, y: 160, size: 84, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    txt(g, 'NORTHERN CALIFORNIA · DEC 1968 – OCT 1969', { x: 122, y: 208, 'font-size': 30, 'font-family': F.mono, 'font-weight': 800, fill: C.steel });
+    REG.push({ text: 'FOUR ATTACKS', x0: 120, y0: 76, x1: 120 + h1.total, y1: 170, t0: T('S3') + 0.1, t1: U('S3') });
+    REG.push({ text: 'NORTHERN CALIFORNIA · DEC 1968 – OCT 1969', x0: 122, y0: 182, x1: 900, y1: 214, t0: T('S3') + 0.4, t1: U('S3') });
+    // stylized map board
+    const mapG = el('g', {}, g);
+    el('rect', { x: 90, y: 240, width: 1740, height: 780, rx: 14, fill: '#F7F1E0', stroke: C.navy, 'stroke-width': 6 }, mapG);
+    const coast = el('path', { d: 'M 480 240 C 430 420 380 520 430 640 C 480 760 560 830 520 1020 L 90 1020 L 90 240 Z', fill: '#DDE7EF', stroke: C.navy, 'stroke-width': 5 }, mapG);
+    txt(mapG, 'SAN PABLO BAY', { x: 250, y: 560, 'font-size': 30, 'font-family': F.sans, 'font-weight': 900, fill: C.steel, 'text-anchor': 'middle', transform: 'rotate(-90 250 560)' });
+    const locs = {
+      benicia: [940, 560], vallejo: [820, 700], berryessa: [1330, 700], presidio: [560, 830],
+    };
+    txt(mapG, 'BENICIA', { x: 940, y: 522, 'font-size': 27, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+    txt(mapG, 'VALLEJO', { x: 820, y: 662, 'font-size': 27, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+    txt(mapG, 'LAKE BERRYESSA', { x: 1360, y: 662, 'font-size': 27, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+    txt(mapG, 'PRESIDIO HTS · SF', { x: 545, y: 792, 'font-size': 27, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+    txt(mapG, 'STYLIZED MAP — NOT TO SCALE', { x: 1750, y: 990, 'font-size': 21, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'end' });
+    const pins = Object.entries(locs).map(([k, [x, y]]) => {
+      const pg = el('g', {}, mapG);
+      el('circle', { cx: 0, cy: 0, r: 17, fill: C.red, stroke: C.navy, 'stroke-width': 5 }, pg);
+      tf(pg, x, y);
+      return pg;
+    });
+    pins.forEach(p => op(p, 0));
+    const str1 = stringEl(mapG, 940, 560, 820, 700); const str2 = stringEl(mapG, 820, 700, 1330, 700); const str3 = stringEl(mapG, 1330, 700, 560, 830);
+    [str1, str2, str3].forEach(s => op(s, 0));
+    // attack cards
+    const cards = [
+      { k: 'benicia', date: 'DEC 20, 1968', place: 'LAKE HERMAN ROAD, BENICIA', body: 'DAVID FARADAY, 17 · BETTY LOU JENSEN, 16', foot: 'BOTH KILLED — NO MOTIVE, NO SUSPECT' },
+      { k: 'vallejo', date: 'JUL 4, 1969', place: 'BLUE ROCK SPRINGS PARK, VALLEJO', body: 'DARLENE FERRIN, 22 · MICHAEL MAGEAU, 19', foot: 'FERRIN KILLED — MAGEAU SURVIVED' },
+      { k: 'berryessa', date: 'SEP 27, 1969', place: 'LAKE BERRYESSA', body: 'BRYAN HARTNELL, 20 · CECELIA SHEPARD, 22', foot: 'HOODED ATTACKER — SHEPARD DIED NEXT DAY' },
+      { k: 'presidio', date: 'OCT 11, 1969', place: 'PRESIDIO HEIGHTS, SAN FRANCISCO', body: 'PAUL STINE, 29 — CAB DRIVER', foot: 'SHOT; SHIRT PIECE TAKEN BY THE KILLER' },
+    ];
+    const cardEls = cards.map((cd, i) => {
+      const cg = el('g', {}, g);
+      paperCard(cg, 0, 0, 760, 300, { tilt: i % 2 ? 1.2 : -1.2 });
+      txt(cg, cd.date, { x: -340, y: -80, 'font-size': 46, 'font-family': F.bagel, fill: C.red });
+      txt(cg, cd.place, { x: -340, y: -18, 'font-size': 31, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+      txt(cg, cd.body, { x: -340, y: 52, 'font-size': 38, 'font-family': F.sans, 'font-weight': 900, fill: C.navy });
+      txt(cg, cd.foot, { x: -340, y: 112, 'font-size': 27, 'font-family': F.sans, 'font-weight': 500, fill: C.steel });
+      return cg;
+    });
+    const cardPos = [[960, 640], [620, 480], [1300, 500], [1150, 660]];
+    const starts = [L0('s03a') + 1.2, L0('s03b') + 1.0, L0('s03c') + 1.0, L0('s03d') + 1.0];
+    starts.forEach(st3 => SHAKES.push([st3, 7, 0.25]));
+    return (t) => {
+      charsPop(h1, t, T('S3') + 0.1, 0.03);
+      cardEls.forEach((cg, i) => {
+        const vis = t >= starts[i] && (i === 3 || t < starts[i + 1] - 0.4);
+        op(cg, vis ? 1 : 0);
+        if (vis) tf(cg, cardPos[i][0] + 30 * (1 - E.back(pop(t, starts[i], 0.5))), cardPos[i][1], 1, 0);
+      });
+      // pins & strings appear as cards do
+      pins.forEach((p, i) => { if (t >= starts[i] - 0.5) { op(p, 1); if (!p.__sfx) { p.__sfx = 1; EV.push({ t: starts[i] - 0.5, type: 'pin' }); } } });
+      op(str1, t >= starts[1] ? 0.7 : 0); op(str2, t >= starts[2] ? 0.7 : 0); op(str3, t >= starts[3] ? 0.7 : 0);
+    };
+  });
+
+  // ---------------- S4 TOLL & CLAIMS ----------------
+  scene('S4', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.red, step: 26, angle: 20, f: radial(0, 0, 700, 1.2), maxK: 0.5 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'THE TOLL', { x: 120, y: 190, size: 110, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 7, dy: 7 } });
+    const names = ['DAVID FARADAY', 'BETTY LOU JENSEN', 'DARLENE FERRIN', 'CECELIA SHEPARD', 'PAUL STINE'];
+    const nameEls = names.map((n, i) => {
+      const ng = el('g', {}, g);
+      el('rect', { x: -190, y: -52, width: 380, height: 104, rx: 10, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 5 }, ng);
+      el('rect', { x: -190, y: 24, width: 380, height: 28, fill: C.navy }, ng);
+      txt(ng, n, { x: 0, y: 4, 'font-size': 30, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+      txt(ng, 'KILLED', { x: 0, y: 47, 'font-size': 19, 'font-family': F.mono, 'font-weight': 800, fill: C.cream, 'text-anchor': 'middle' });
+      return ng;
+    });
+    const surv = ['MICHAEL MAGEAU — SURVIVED', 'BRYAN HARTNELL — SURVIVED'].map((s, i) => {
+      const sg = el('g', {}, g);
+      el('rect', { x: -280, y: -34, width: 560, height: 68, rx: 10, fill: C.sage, stroke: C.navy, 'stroke-width': 5 }, sg);
+      txt(sg, s, { x: 0, y: 12, 'font-size': 29, 'font-family': F.sans, 'font-weight': 900, fill: C.cream, 'text-anchor': 'middle' });
+      return sg;
+    });
+    // 37 claimed counter
+    const cntG = el('g', {}, g);
+    const cNum = txt(cntG, '0', { x: 960, y: 870, 'font-size': 190, 'font-family': F.bagel, fill: C.red, 'text-anchor': 'middle' });
+    const cLbl = chipEl(g, 960, 950, 'CLAIMED BY THE KILLER — SUPPORTED BY EVIDENCE: 5', { fill: C.navy, ink: C.cream, size: 30, mono: true });
+    const strike = el('path', { d: 'M 700 830 L 1220 910', stroke: C.brick, 'stroke-width': 18, opacity: 0, 'stroke-linecap': 'round' }, cntG);
+    EV.push({ t: L0('s04c') + 3.7, type: 'thud' }); SHAKES.push([L0('s04c') + 3.7, 12, 0.3]);
+    return (t) => {
+      charsPop(h1, t, L0('s04a') - 0.3, 0.035);
+      regH(h1, 'THE TOLL', L0('s04a') - 0.3, U('S4'), 120, 190);
+      nameEls.forEach((n, i) => {
+        const p = pop(t, L0('s04a') + 0.4 + i * 0.55, 0.45);
+        op(n, t >= L0('s04a') + 0.4 + i * 0.55 ? 1 : 0);
+        tf(n, 320 + (i % 3) * 420, 330 + Math.floor(i / 3) * 140 + 50 * (1 - p), p, (i % 2 ? 1.4 : -1.4));
+      });
+      surv.forEach((s, i) => {
+        const p = pop(t, L0('s04a') + 3.4 + i * 0.3, 0.45);
+        op(s, t >= L0('s04a') + 3.4 + i * 0.3 ? 1 : 0);
+        tf(s, 300 + i * 620, 620, p, 0);
+      });
+      op(cntG, t >= L0('s04c') + 0.2 ? 1 : 0);
+      if (t >= L0('s04c') + 0.2 && t < L0('s04c') + 3.2) {
+        const p = seg(t, L0('s04c') + 0.2, L0('s04c') + 3.0);
+        cNum.textContent = String(Math.round(p * 37));
+        if (Math.floor(t * 8) % 2) cNum.setAttribute('fill', C.red); else cNum.setAttribute('fill', C.navy);
+      } else if (t >= L0('s04c') + 3.2) {
+        cNum.textContent = '37'; cNum.setAttribute('fill', C.red);
+        op(strike, seg(t, L0('s04c') + 3.6, L0('s04c') + 3.9) * 0.9);
+      }
+    };
+  });
+
+  // ---------------- S5 THE LETTERS ----------------
+  scene('S5', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 24, angle: 45, f: edge(780, 1.3), maxK: 0.66 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'AUG 1, 1969', { x: 120, y: 170, size: 92, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    const h1b = chars(g, 'THREE LETTERS, ONE CIPHER', { x: 120, y: 296, size: 52, family: F.serif, fill: C.brick });
+    const papers = ['SF CHRONICLE', 'SF EXAMINER', 'VALLEJO TIMES-HERALD'];
+    const npEls = papers.map((p, i) => {
+      const pg = el('g', {}, g);
+      paperCard(pg, 0, 0, 480, 330, { tilt: (i - 1) * 2.2, fill: '#FFFDF4' });
+      txt(pg, p, { x: 0, y: -60, 'font-size': 36, 'font-family': F.serif, fill: C.navy, 'text-anchor': 'middle' });
+      for (let k = 0; k < 5; k++) el('rect', { x: -190, y: -10 + k * 26, width: 380 - (k % 3) * 60, height: 12, fill: C.navy, opacity: .14 }, pg);
+      const s13 = stampEl(pg, '1/3 OF 408', { size: 44, color: C.blue, border: 6, padX: 18, padY: 10 });
+      op(s13.g, 0.93); tf(s13.g, 120, 120, 1, -14);
+      return pg;
+    });
+    const demG = paperCard(g, 960, 640, 1180, 360, { tilt: -0.8 });
+    const demTyp = typewrite(demG, 'PRINT THIS CRYPTOGRAM — OR I GO HUNTING LONE PEOPLE ALL WEEKEND, NIGHT AFTER NIGHT.', { x: 0, y: -80, size: 40, cpl: 30, t0: 0, dt: 0.026, anchor: 'middle', weight: 800, lh: 60 });
+    txt(demG, 'DEMAND PRINTED IN EACH LETTER', { x: 0, y: 120, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    const fpG = paperCard(g, 960, 540, 900, 560, { tilt: 1.2, fill: '#FFFDF4' });
+    txt(fpG, 'THE SAN FRANCISCO CHRONICLE', { x: 0, y: -170, 'font-size': 34, 'font-family': F.serif, fill: C.navy, 'text-anchor': 'middle' });
+    el('path', { d: 'M -380 -130 L 380 -130', stroke: C.navy, 'stroke-width': 4 }, fpG);
+    const zH = chars(fpG, 'ZODIAC', { x: 0, y: 60, size: 150, family: F.serif, fill: C.navy, anchor: 'middle', shadow: { fill: C.red, dx: 6, dy: 6 } });
+    txt(fpG, 'KILLER MAIL PRINTED · POLICE URGE CALM', { x: 0, y: 150, 'font-size': 28, 'font-family': F.sans, 'font-weight': 900, fill: C.steel, 'text-anchor': 'middle' });
+    txt(fpG, 'ILLUSTRATIVE RECONSTRUCTION', { x: 0, y: 236, 'font-size': 20, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    return (t) => {
+      charsPop(h1, t, T('S5') + 0.1, 0.03);
+      charsPop(h1b, t, T('S5') + 0.5, 0.02);
+      regH(h1, 'AUG 1, 1969', T('S5') + 0.1, U('S5'), 120, 170);
+      regH(h1b, 'THREE LETTERS, ONE CIPHER', T('S5') + 0.5, U('S5'), 120, 296);
+      const p0 = L0('s05a') + 0.8;
+      npEls.forEach((pg, i) => {
+        const p = pop(t, p0 + i * 0.3, 0.5);
+        op(pg, t >= p0 + i * 0.3 ? 1 : 0);
+        tf(pg, 500 + i * 460, 470 + 260 * (1 - p), 1, (i - 1) * 2.2);
+      });
+      const d0 = L0('s05b');
+      op(demG, t >= d0 && t < L0('s05c') - 0.3 ? 1 : 0);
+      if (t >= d0 && t < L0('s05c')) demTyp(t);
+      op(fpG, t >= L0('s05c') + 0.4 ? 1 : 0);
+      if (t >= L0('s05c') + 0.4) tf(fpG, 960, 540 + 500 * (1 - E.back(pop(t, L0('s05c') + 0.4, 0.55))), 1, 1.2);
+    };
+  });
+
+  // ---------------- S6 PROOF & THREATS ----------------
+  scene('S6', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.red, step: 26, angle: 55, f: edge(840, 1.25), maxK: 0.62 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'PROOF, AND PROMISES', { x: 120, y: 180, size: 84, family: F.serif, fill: C.navy, shadow: { fill: C.red, dx: 6, dy: 6 } });
+    // shirt swatch exhibit
+    const swG = paperCard(g, 470, 560, 620, 480, { tilt: -2 });
+    const fab = el('g', {}, swG);
+    el('rect', { x: -240, y: -120, width: 440, height: 300, fill: '#AEB9C4' }, fab);
+    for (let i = 0; i < 12; i++) el('path', { d: `M ${-230 + i * 36} -120 L ${-250 + i * 36} 180`, stroke: '#9AA6B2', 'stroke-width': 8 }, fab);
+    el('rect', { x: -240, y: -120, width: 440, height: 300, fill: 'none', stroke: C.navy, 'stroke-width': 5 }, fab);
+    el('path', { d: 'M -240 20 L -140 80 L -170 180 L -240 180 Z', fill: C.paper, stroke: 'none' }, fab); // torn corner
+    el('path', { d: 'M -240 20 L -140 80 L -170 180', fill: 'none', stroke: C.navy, 'stroke-width': 4 }, fab);
+    txt(swG, 'CLOTH ENCLOSED', { x: 0, y: 150, 'font-size': 40, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+    txt(swG, 'PIECE OF PAUL STINE\'S SHIRT', { x: 0, y: 195, 'font-size': 25, 'font-family': F.mono, 'weight': 800, 'font-weight': 800, fill: C.brick, 'text-anchor': 'middle' });
+    txt(swG, 'OCT 13, 1969', { x: 0, y: -185, 'font-size': 46, 'font-family': F.bagel, fill: C.red, 'text-anchor': 'middle' });
+    txt(swG, 'MAILED TO THE CHRONICLE', { x: 0, y: -140, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+    // redaction threat card (native move: redaction prints, lifts one by one)
+    const thG = paperCard(g, 1330, 500, 900, 620, { tilt: 1.5 });
+    const redline = typewrite(thG, 'THE LETTERS THREATENED MORE ATTACKS — AND LISTED BOMBS THAT WERE NEVER FOUND.', { x: 0, y: -200, size: 36, cpl: 24, t0: 0, dt: 0.024, anchor: 'middle', weight: 800, lh: 56 });
+    const bars = ['SCHOOLCHILDREN', 'BOMBS', 'MORE DEATHS'].map((w, i) => {
+      const bw = measure(w, 34, F.sans, 900) + 24;
+      const bg2 = el('g', {}, thG);
+      el('rect', { x: 0, y: 0, width: bw, height: 46, fill: C.navy }, bg2);
+      txt(bg2, w, { x: bw / 2, y: 34, 'font-size': 34, 'font-family': F.sans, 'font-weight': 900, fill: C.cream, 'text-anchor': 'middle' });
+      return bg2;
+    });
+    txt(thG, 'EVERY THREAT CAME WITH THE SAME SIGNATURE', { x: 0, y: 250, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    crosshair(thG, 0, 190, 44, { color: C.red, sw: 7 });
+    return (t) => {
+      charsPop(h1, t, T('S6') + 0.1, 0.025);
+      regH(h1, 'PROOF, AND PROMISES', T('S6') + 0.1, U('S6'), 120, 180);
+      blockUp(swG, t, L0('s06a'), 0.5, 70);
+      op(thG, t >= L0('s06b') - 0.2 ? 1 : 0);
+      if (t >= L0('s06b') - 0.2 && t < L0('s06c')) redline(t);
+      bars.forEach((b, i) => {
+        const t0b = L0('s06b') + 2.2 + i * 1.1;
+        const lift = seg(t, t0b + 2.8, t0b + 3.4);
+        op(b, lift > 0 ? 0.25 : (t >= t0b ? 1 : 0));
+        const bw = measure(['SCHOOLCHILDREN', 'BOMBS', 'MORE DEATHS'][i], 34, F.sans, 900) + 24;
+        tf(b, -bw / 2 - 20, -30 + i * 84 + lift * -34, 1, -1.2 + lift * -6);
+      });
+    };
+  });
+
+  // ---------------- S7 INSIDE THE 408 ----------------
+  scene('S7', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 24, angle: 15, f: radial(1560, 200, 660, 1.1), maxK: 0.5 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'EXHIBIT: THE 408', { x: 120, y: 180, size: 90, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    txt(g, 'ILLUSTRATIVE RECONSTRUCTION OF THE CIPHER GRID', { x: 122, y: 226, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: C.steel });
+    const grid = cipherGrid(g, { x: 260, y: 320, cols: 17, rows: 6, cell: 44, size: 30, color: C.navy, seed: 11 });
+    // homophone explainer card
+    const exG = paperCard(g, 1370, 560, 900, 560, { tilt: 1 });
+    txt(exG, 'HOMOPHONIC SUBSTITUTION', { x: 0, y: -210, 'font-size': 34, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+    txt(exG, 'ONE PLAIN LETTER → SEVERAL SYMBOLS', { x: 0, y: -166, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: C.brick, 'text-anchor': 'middle' });
+    const eRow = el('g', {}, exG);
+    const eBig = txt(eRow, 'E', { x: -250, y: 60, 'font-size': 130, 'font-family': F.mono, 'font-weight': 800, fill: C.blue, 'text-anchor': 'middle' });
+    const syms = ['@', '%', '&'].map((s, i) => {
+      const sg = el('g', {}, eRow);
+      el('rect', { x: -70, y: -55, width: 140, height: 140, rx: 12, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, sg);
+      txt(sg, s, { x: 0, y: 30, 'font-size': 72, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+      return sg;
+    });
+    txt(exG, 'COMMON LETTERS GET EXTRA SYMBOLS, SO FREQUENCY COUNTS FAIL', { x: 0, y: 190, 'font-size': 25, 'font-family': F.sans, 'font-weight': 500, fill: C.steel, 'text-anchor': 'middle' });
+    return (t) => {
+      charsPop(h1, t, T('S7') + 0.1, 0.025);
+      regH(h1, 'EXHIBIT: THE 408', T('S7') + 0.1, U('S7'), 120, 180);
+      const z = lerp(1, 1.06, seg(t, T('S7'), U('S7')));
+      tf(grid, 0, 0, 1);
+      blockUp(exG, t, L0('s07b') - 0.3, 0.5, 60);
+      const eZ = pop(t, L0('s07b') + 0.6, 0.5);
+      syms.forEach((sg, i) => {
+        const p = pop(t, L0('s07b') + 1.1 + i * 0.35, 0.4);
+        op(sg, t >= L0('s07b') + 1.1 + i * 0.35 ? 1 : 0);
+        tf(sg, -60 + i * 160, 0 + 40 * (1 - p), p, (i - 1) * 5);
+      });
+      op(eRow, t >= L0('s07b') + 0.4 ? 1 : 0);
+    };
+  });
+
+  // ---------------- S8 DECODED 1969 ----------------
+  scene('S8', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.red, step: 26, angle: 35, f: edge(860, 1.2), maxK: 0.6 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'SOLVED AT A KITCHEN TABLE', { x: 120, y: 180, size: 74, family: F.serif, fill: C.navy, shadow: { fill: C.red, dx: 6, dy: 6 } });
+    const hardG = paperCard(g, 330, 480, 560, 480, { tilt: -1.6 });
+    txt(hardG, 'DONALD & BETTYE', { x: 0, y: -120, 'font-size': 40, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+    txt(hardG, 'HARDEN · SALINAS, CA', { x: 0, y: -70, 'font-size': 28, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    txt(hardG, 'PENCIL & PAPER', { x: 0, y: 30, 'font-size': 30, 'font-family': F.mono, 'font-weight': 800, fill: C.blue, 'text-anchor': 'middle' });
+    txt(hardG, 'NO COMPUTER', { x: 0, y: 80, 'font-size': 30, 'font-family': F.mono, 'font-weight': 800, fill: C.blue, 'text-anchor': 'middle' });
+    txt(hardG, '≈ 20 HOURS', { x: 0, y: 170, 'font-size': 56, 'font-family': F.bagel, fill: C.navy, 'text-anchor': 'middle' });
+    const solG = paperCard(g, 1180, 560, 1080, 700, { tilt: 0.8, fill: '#FFFDF4' });
+    txt(solG, 'THE MESSAGE — AUG 5, 1969', { x: 0, y: -280, 'font-size': 32, 'font-family': F.sans, 'font-weight': 900, fill: C.brick, 'text-anchor': 'middle' });
+    const solTyp = typewrite(solG, 'I LIKE KILLING BECAUSE IT IS SO MUCH FUN IT IS MORE FUN THAN KILLING WILD GAME IN THE FOREST BECAUSE MAN IS THE MOST DANGEROUS ANIMAL OF ALL', { x: -460, y: -190, size: 34, cpl: 34, t0: 0, dt: 0.022, weight: 800, lh: 52, maxLines: 5, family: F.mono });
+    const tail = el('g', {}, solG);
+    txt(tail, '"I WILL NOT GIVE YOU MY NAME"', { x: 0, y: 190, 'font-size': 44, 'font-family': F.serif, fill: C.red, 'text-anchor': 'middle' });
+    txt(tail, 'FINAL 18 CHARACTERS: NEVER RESOLVED', { x: 0, y: 262, 'font-size': 27, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    const st = stampEl(g, 'DECODED 1969', { size: 120, color: C.red, border: 12 });
+    return (t) => {
+      charsPop(h1, t, T('S8') + 0.1, 0.02);
+      regH(h1, 'SOLVED AT A KITCHEN TABLE', T('S8') + 0.1, U('S8'), 120, 180);
+      blockUp(hardG, t, L0('s08a'), 0.5, 70);
+      op(solG, t >= L0('s08c') - 0.6 ? 1 : 0);
+      if (t >= L0('s08c') - 0.6 && t < L0('s08d') + 6) solTyp(t);
+      op(tail, t >= L0('s08d') - 0.2 ? 1 : 0);
+      blockUp(tail, t, L0('s08d') - 0.2, 0.5, 30);
+      stampAnim(st, t, L0('s08d') + 5.4, 470, 900, -8);
+    };
+  });
+
+  // ---------------- S9 THE 340 ----------------
+  scene('S9', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.navy, step: 26, angle: 60, f: edge(800, 1.3), maxK: 0.68 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'NOV 8, 1969', { x: 120, y: 170, size: 92, family: F.serif, fill: C.navy, shadow: { fill: C.red, dx: 6, dy: 6 } });
+    const h1b = chars(g, 'A SECOND CIPHER: THE 340', { x: 120, y: 296, size: 52, family: F.serif, fill: C.brick });
+    const gridG = paperCard(g, 560, 590, 760, 620, { tilt: -1.4, fill: '#FFFDF4' });
+    cipherGrid(gridG, { x: -250, y: -230, cols: 14, rows: 9, cell: 38, size: 26, color: C.navy, seed: 23 });
+    txt(gridG, '340 CHARACTERS', { x: 0, y: 270, 'font-size': 30, 'font-family': F.mono, 'font-weight': 800, fill: C.brick, 'text-anchor': 'middle' });
+    txt(gridG, 'ILLUSTRATIVE RECONSTRUCTION', { x: 0, y: 306, 'font-size': 19, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    // 51 years counter
+    const cntG = el('g', {}, g);
+    const cNum = txt(cntG, '0', { x: 1370, y: 560, 'font-size': 260, 'font-family': F.bagel, fill: C.red, 'text-anchor': 'middle' });
+    txt(cntG, 'YEARS UNSOLVED', { x: 1370, y: 640, 'font-size': 40, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+    const tried = ['NSA', 'FBI', 'GENERATIONS OF HOBBYISTS'].map((s, i) => {
+      const tg = el('g', {}, cntG);
+      const w = measure(s, 30, F.sans, 900) + 44;
+      el('rect', { x: -w / 2, y: -30, width: w, height: 60, rx: 10, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 5 }, tg);
+      txt(tg, s, { x: 0, y: 11, 'font-size': 30, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+      return tg;
+    });
+    return (t) => {
+      charsPop(h1, t, T('S9') + 0.1, 0.03);
+      charsPop(h1b, t, T('S9') + 0.5, 0.02);
+      regH(h1, 'NOV 8, 1969', T('S9') + 0.1, U('S9'), 120, 170);
+      regH(h1b, 'A SECOND CIPHER: THE 340', T('S9') + 0.5, U('S9'), 120, 296);
+      blockUp(gridG, t, L0('s09a') + 0.6, 0.5, 70);
+      op(cntG, t >= L0('s09c') - 0.4 ? 1 : 0);
+      if (t >= L0('s09c') - 0.4 && t < L0('s09c') + 2.4) {
+        const p = seg(t, L0('s09c') - 0.4, L0('s09c') + 2.0);
+        cNum.textContent = String(Math.round(E.out(p) * 51));
+        if (Math.floor(t * 10) % 2) cNum.setAttribute('fill', C.red); else cNum.setAttribute('fill', C.navy);
+      } else if (t >= L0('s09c') + 2.4) cNum.textContent = '51';
+      tried.forEach((tg, i) => {
+        const p = pop(t, L0('s09b') + 0.5 + i * 0.5, 0.45);
+        op(tg, t >= L0('s09b') + 0.5 + i * 0.5 ? 1 : 0);
+        tf(tg, 1370, 760 + i * 90 + 50 * (1 - p), p, 0);
+      });
+    };
+  });
+
+  // ---------------- S10 THE SOLVERS ----------------
+  scene('S10', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 24, angle: 30, f: radial(960, 1080, 800, 1.0), maxK: 0.55 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'AMATEURS — IN THE BEST SENSE', { x: 960, y: 220, size: 78, family: F.serif, fill: C.navy, anchor: 'middle', shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    const people = [
+      { n: 'DAVID ORANCHAK', r: 'WEB DESIGNER · VIRGINIA, US', f: 'US', x: 480 },
+      { n: 'SAM BLAKE', r: 'MATHEMATICIAN · AUSTRALIA', f: 'AU', x: 960 },
+      { n: 'JARL VAN EYCKE', r: 'CODE-BREAKER · BELGIUM', f: 'BE', x: 1440 },
+    ];
+    const cards = people.map((p) => {
+      const pg = paperCard(g, p.x, 560, 480, 480, { tilt: 0 });
+      el('circle', { cx: 0, cy: -110, r: 84, fill: C.cream, stroke: C.navy, 'stroke-width': 6 }, pg);
+      txt(pg, p.f, { x: 0, y: -84, 'font-size': 52, 'font-family': F.bagel, fill: C.blue, 'text-anchor': 'middle' });
+      txt(pg, p.n, { x: 0, y: 60, 'font-size': 40, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+      txt(pg, p.r, { x: 0, y: 116, 'font-size': 25, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+      txt(pg, 'DEC 5, 2020', { x: 0, y: 190, 'font-size': 30, 'font-family': F.bagel, fill: C.red, 'text-anchor': 'middle' });
+      return pg;
+    });
+    const st = stampEl(g, 'CONFIRMED · FBI', { size: 60, color: C.blue, border: 8, padX: 28 });
+    op(st.g, 0); // placed per-frame
+    FLASHES.push([L0('s10b') + 0.5], [L0('s10b') + 0.9]);
+    return (t) => {
+      charsPop(h1, t, T('S10') + 0.1, 0.02);
+      regH(h1, 'AMATEURS — IN THE BEST SENSE', T('S10') + 0.1, U('S10'), 960, 220, 'middle');
+      cards.forEach((pg, i) => {
+        const p = pop(t, L0('s10a') + 0.6 + i * 0.4, 0.55);
+        op(pg, t >= L0('s10a') + 0.6 + i * 0.4 ? 1 : 0);
+        tf(pg, 480 + i * 480, 560 + 400 * (1 - p), p, (i - 1) * 1.8);
+      });
+      if (t >= L0('s10b') + 0.5) { op(st.g, 0.93); tf(st.g, 960, 900 + Math.sin(t * 2) * 4, 1, -4); } else op(st.g, 0);
+    };
+  });
+
+  // ---------------- S11 HOW IT BROKE ----------------
+  scene('S11', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 26, angle: 40, f: edge(860, 1.2), maxK: 0.6 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'TWO PUZZLES, STACKED', { x: 120, y: 180, size: 84, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    // transposition diagram
+    const dg = paperCard(g, 480, 520, 720, 640, { tilt: -1, fill: '#FFFDF4' });
+    txt(dg, 'STEP 1 — WRITE THE MESSAGE', { x: 0, y: -250, 'font-size': 28, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+    txt(dg, 'STEP 2 — READ IT DIAGONALLY (TRANSPOSITION)', { x: 0, y: -208, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: C.brick, 'text-anchor': 'middle' });
+    const gcols = 10, grows = 5, cell = 40, gx = -180, gy = -140;
+    const gl = el('g', {}, dg);
+    for (let j = 0; j < grows; j++) for (let i = 0; i < gcols; i++) {
+      el('rect', { x: gx + i * cell, y: gy + j * cell, width: cell - 4, height: cell - 4, fill: (i + j * 2) % 7 ? C.cream : C.yellow, stroke: C.navy, 'stroke-width': 2 }, gl);
+    }
+    const diag = el('path', { d: `M ${gx} ${gy + (grows - 1) * cell + cell} L ${gx + (gcols - 1) * cell} ${gy} L ${gx + gcols * cell} ${gy + 6}`, fill: 'none', stroke: C.red, 'stroke-width': 7, 'stroke-linecap': 'round' }, dg);
+    txt(dg, 'THE SHUFFLE BROKE EVERY FREQUENCY COUNT SINCE 1969', { x: 0, y: 250, 'font-size': 25, 'font-family': F.sans, 'font-weight': 500, fill: C.steel, 'text-anchor': 'middle' });
+    // hill climb card
+    const hc = paperCard(g, 1330, 520, 900, 660, { tilt: 1.2, fill: '#FFFDF4' });
+    txt(hc, 'STEP 3 — HILL-CLIMB SEARCH', { x: 0, y: -270, 'font-size': 30, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+    txt(hc, 'MILLIONS OF NEAR-MISS KEYS, KEEPING WHATEVER LOOKS MORE LIKE ENGLISH', { x: 0, y: -224, 'font-size': 23, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    // sparkline
+    const spark = el('path', { d: 'M -360 180 C -300 175 -280 150 -240 150 C -200 150 -190 120 -150 118 C -110 116 -100 80 -60 76 C -20 72 0 40 40 36 C 90 30 120 10 180 -60 L 340 -150', fill: 'none', stroke: C.blue, 'stroke-width': 7, 'stroke-linecap': 'round' }, hc);
+    const spLen = 1600;
+    spark.setAttribute('stroke-dasharray', spLen); spark.setAttribute('stroke-dashoffset', spLen);
+    txt(hc, 'SCORE →', { x: 340, y: -110, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.blue, 'text-anchor': 'end' });
+    const dateChip = chipEl(g, 1330, 900, 'DEC 5, 2020 — THE KEY HELD', { fill: C.red, ink: C.cream, size: 34, mono: true });
+    return (t) => {
+      charsPop(h1, t, T('S11') + 0.1, 0.025);
+      regH(h1, 'TWO PUZZLES, STACKED', T('S11') + 0.1, U('S11'), 120, 180);
+      blockUp(dg, t, L0('s11a'), 0.5, 70);
+      const dd = seg(t, L0('s11a') + 1.2, L0('s11a') + 3.4);
+      diag.setAttribute('stroke-dasharray', 900); diag.setAttribute('stroke-dashoffset', 900 * (1 - E.out(dd)));
+      op(diag, dd > 0 ? 1 : 0);
+      blockUp(hc, t, L0('s11c') - 0.6, 0.5, 70);
+      const sp = seg(t, L0('s11c') + 0.6, L0('s11c') + 3.6);
+      spark.setAttribute('stroke-dashoffset', spLen * (1 - E.io(sp)));
+      op(dateChip.g, t >= L0('s11c') + 3.8 ? 1 : 0);
+      dateChip.g.setAttribute('transform', `translate(1330 ${900 + 60 * (1 - E.back(pop(t, L0('s11c') + 3.8, 0.5)))}) rotate(-1.5)`);
+    };
+  });
+
+  // ---------------- S12 WHAT IT SAID ----------------
+  scene('S12', (g) => {
+    bg(g, C.night);
+    halftone(g, { color: C.night2, step: 26, angle: 20, f: edge(760, 1.1), maxK: 0.7 });
+    const h1 = chars(g, 'THE 340 SAID', { x: 960, y: 190, size: 96, family: F.serif, fill: C.cream, anchor: 'middle' });
+    const qG = el('g', {}, g);
+    el('rect', { x: 210, y: 260, width: 1500, height: 460, rx: 16, fill: '#10162B', stroke: C.night2, 'stroke-width': 5 }, qG);
+    const qTyp = typewrite(qG, '"I HOPE YOU ARE HAVING LOTS OF FUN IN TRYING TO CATCH ME... I AM NOT AFRAID OF THE GAS CHAMBER BECAUSE IT WILL SEND ME TO PARADICE ALL THE SOONER."', { x: 960, y: 360, size: 46, cpl: 38, t0: 0, dt: 0.03, anchor: 'middle', weight: 500, lh: 74, maxLines: 5, fill: C.cream, family: F.mono });
+    txt(qG, '— SOLUTION CONFIRMED BY THE FBI, DEC 2020', { x: 960, y: 680, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: '#8FA0C9', 'text-anchor': 'middle' });
+    const noName = chars(g, 'NO NAME.', { x: 960, y: 880, size: 130, family: F.serif, fill: C.red, anchor: 'middle', shadow: { fill: C.night2, dx: 8, dy: 8 } });
+    return (t) => {
+      charsPop(h1, t, T('S12') + 0.1, 0.03);
+      regH(h1, 'THE 340 SAID', T('S12') + 0.1, U('S12'), 960, 190, 'middle');
+      op(qG, t >= L0('s12a') - 0.4 ? 1 : 0);
+      if (t >= L0('s12a') - 0.4 && t < L0('s12b') + 3) qTyp(t);
+      op(noName.g, t >= L0('s12c') - 0.2 ? 1 : 0);
+      if (t >= L0('s12c') - 0.2) {
+        charsPop(noName, t, L0('s12c') - 0.1, 0.05);
+        if (t < L0('s12c') + 1.4 && !noName.__s) { noName.__s = 1; SHAKES.push([L0('s12c'), 10, 0.3]); }
+      }
+      regH(noName, 'NO NAME.', L0('s12c'), U('S12'), 960, 880, 'middle');
+    };
+  });
+
+  // ---------------- S13 WHY NO NAME ----------------
+  scene('S13', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.navy, step: 26, angle: 65, f: edge(820, 1.25), maxK: 0.66 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'NOT A CONFESSION', { x: 120, y: 200, size: 96, family: F.serif, fill: C.navy, shadow: { fill: C.red, dx: 6, dy: 6 } });
+    const h1b = chars(g, 'A STAGE.', { x: 120, y: 330, size: 130, family: F.serif, fill: C.brick });
+    const rows = [['THE 408', 'PROMISED A NAME — DELIVERED A TAUNT'], ['THE 340', 'NEVER EVEN MADE THE PROMISE']];
+    const rowEls = rows.map(([a, b], i) => {
+      const rg = el('g', {}, g);
+      el('rect', { x: 0, y: 0, width: 1420, height: 150, rx: 14, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, rg);
+      txt(rg, a, { x: 40, y: 62, 'font-size': 52, 'font-family': F.bagel, fill: C.blue });
+      txt(rg, b, { x: 40, y: 118, 'font-size': 34, 'font-family': F.sans, 'font-weight': 900, fill: C.navy });
+      txt(rg, 'NAME: [ REDACTED BY THE KILLER HIMSELF ]', { x: 1380, y: 66, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.brick, 'text-anchor': 'end' });
+      return rg;
+    });
+    const foot = chars(g, 'FRONT PAGES · FEAR · THE SPECTACLE OF EXPERTS LOSING', { x: 960, y: 920, size: 40, family: F.serif, fill: C.navy, anchor: 'middle' });
+    return (t) => {
+      charsPop(h1, t, T('S13') + 0.1, 0.03);
+      charsPop(h1b, t, T('S13') + 0.5, 0.04);
+      regH(h1, 'NOT A CONFESSION', T('S13') + 0.1, U('S13'), 120, 200);
+      regH(h1b, 'A STAGE.', T('S13') + 0.5, U('S13'), 120, 330);
+      rowEls.forEach((rg, i) => {
+        const p = pop(t, L0('s13b') + i * 0.9, 0.5);
+        op(rg, t >= L0('s13b') + i * 0.9 ? 1 : 0);
+        tf(rg, 250, 460 + i * 190 + 60 * (1 - p), 1, 0);
+      });
+      op(foot.g, t >= L0('s13c') - 0.2 ? 1 : 0);
+      if (t >= L0('s13c') - 0.2) charsPop(foot, t, L0('s13c') - 0.1, 0.012);
+      regH(foot, 'FRONT PAGES · FEAR · THE SPECTACLE OF EXPERTS LOSING', L0('s13c'), U('S13'), 960, 920, 'middle');
+    };
+  });
+
+  // ---------------- S14 Z-13 ----------------
+  scene('S14', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 24, angle: 25, f: radial(300, 1000, 700, 1.1), maxK: 0.55 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'APR 20, 1970', { x: 120, y: 170, size: 90, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    const h1b = chars(g, '"MY NAME IS" + 13 SYMBOLS', { x: 120, y: 292, size: 50, family: F.serif, fill: C.brick });
+    const zG = paperCard(g, 960, 560, 1240, 480, { tilt: -1, fill: '#FFFDF4' });
+    txt(zG, 'MY NAME IS', { x: -540, y: 20, 'font-size': 64, 'font-family': F.serif, fill: C.navy });
+    const zSyms = ['Ⓐ', '⑧', '⊕', '△', '◮', '⊘', '⊞', '◭', '◮', '⑨', '⊖', '⊕', '◮'];
+    const zEls = zSyms.map((s, i) => txt(zG, s, { x: 30 + i * 48, y: 20, 'font-size': 58, 'font-family': F.mono, 'font-weight': 800, fill: (i === 2 || i === 6) ? C.red : C.navy, 'text-anchor': 'middle' }));
+    txt(zG, 'Z-13 · THE ONLY CIPHER THAT SEEMS TO OFFER A NAME', { x: 0, y: 160, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    const why = ['TOO SHORT TO VERIFY', 'THOUSANDS OF FITS', 'NEVER CONFIRMABLE'].map((s, i) => {
+      const wg = el('g', {}, zG);
+      el('rect', { x: -210, y: -34, width: 420, height: 68, rx: 10, fill: C.navy }, wg);
+      txt(wg, s, { x: 0, y: 12, 'font-size': 30, 'font-family': F.sans, 'font-weight': 900, fill: C.cream, 'text-anchor': 'middle' });
+      return wg;
+    });
+    const st = stampEl(g, 'UNRESOLVED', { size: 130, color: C.red, border: 13 });
+    return (t) => {
+      charsPop(h1, t, T('S14') + 0.1, 0.03);
+      charsPop(h1b, t, T('S14') + 0.5, 0.02);
+      regH(h1, 'APR 20, 1970', T('S14') + 0.1, U('S14'), 120, 170);
+      regH(h1b, '"MY NAME IS" + 13 SYMBOLS', T('S14') + 0.5, U('S14'), 120, 292);
+      blockUp(zG, t, L0('s14a') + 0.8, 0.5, 70);
+      zEls.forEach((z, i) => {
+        const p = pop(t, L0('s14a') + 1.6 + i * 0.09, 0.3);
+        op(z, t >= L0('s14a') + 1.6 + i * 0.09 ? 1 : 0);
+        z.setAttribute('y', String(20 + 26 * (1 - p)));
+      });
+      why.forEach((wg, i) => {
+        const p = pop(t, L0('s14b') + 0.4 + i * 0.5, 0.4);
+        op(wg, t >= L0('s14b') + 0.4 + i * 0.5 ? 1 : 0);
+        tf(wg, -300 + i * 310, -150, p, 0);
+      });
+      stampAnim(st, t, L0('s14c') + 0.4, 1500, 300, -9);
+      SHAKES.push([L0('s14c') + 0.4, 9, 0.3]); EV.push({ t: L0('s14c') + 0.4, type: 'stamp' });
+    };
+  });
+
+  // ---------------- S15 Z-32 ----------------
+  scene('S15', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.sage, step: 26, angle: 50, f: edge(860, 1.15), maxK: 0.55 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'JUNE 1970', { x: 120, y: 170, size: 90, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    const h1b = chars(g, 'A MAP, A MARK — AND A BOMB NEVER FOUND', { x: 120, y: 290, size: 38, family: F.serif, fill: C.brick });
+    const mapG = paperCard(g, 700, 660, 1000, 640, { tilt: -1.2, fill: '#F3EFDC' });
+    el('path', { d: 'M -420 -260 C -300 -220 -160 -240 -40 -200 C 80 -160 140 -40 260 0 C 360 34 420 120 400 260', fill: 'none', stroke: C.steel, 'stroke-width': 5, 'stroke-dasharray': '16 12' }, mapG);
+    el('path', { d: 'M -420 60 C -280 30 -140 60 -20 110 C 100 160 180 250 220 320', fill: 'none', stroke: C.steel, 'stroke-width': 4, 'stroke-dasharray': '12 10', opacity: .7 }, mapG);
+    txt(mapG, 'PHILLIPS 66 ROAD MAP', { x: -340, y: -300, 'font-size': 30, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    txt(mapG, 'ILLUSTRATIVE RECONSTRUCTION', { x: 0, y: 300, 'font-size': 20, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    const xmark = crosshair(mapG, 40, -40, 60, { color: C.red, sw: 10 });
+    txt(mapG, 'MT. DIABLO', { x: 130, y: -80, 'font-size': 28, 'font-family': F.mono, 'font-weight': 800, fill: C.red });
+    const z32 = paperCard(g, 1480, 470, 760, 560, { tilt: 1.4, fill: '#FFFDF4' });
+    const z32cells = cipherGrid(z32, { x: -330, y: -190, cols: 8, rows: 4, cell: 44, size: 30, color: C.navy, seed: 41 });
+    txt(z32, 'Z-32 · 32 SYMBOLS', { x: 0, y: 130, 'font-size': 32, 'font-family': F.mono, 'font-weight': 800, fill: C.brick, 'text-anchor': 'middle' });
+    txt(z32, '"WHERE THE BOMB IS SET"', { x: 0, y: 200, 'font-size': 30, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+    const foot = chars(g, 'THE BOMB WAS NEVER FOUND. THE CIPHER WAS NEVER VERIFIED.', { x: 960, y: 990, size: 42, family: F.serif, fill: C.navy, anchor: 'middle' });
+    return (t) => {
+      charsPop(h1, t, T('S15') + 0.1, 0.03);
+      charsPop(h1b, t, T('S15') + 0.5, 0.015);
+      regH(h1, 'JUNE 1970', T('S15') + 0.1, U('S15'), 120, 170);
+      regH(h1b, 'A MAP, A MARK — AND A BOMB NEVER FOUND', T('S15') + 0.5, U('S15'), 120, 290);
+      blockUp(mapG, t, L0('s15a') + 0.6, 0.5, 70);
+      const xz = pop(t, L0('s15a') + 2.2, 0.4);
+      op(xmark, t >= L0('s15a') + 2.2 ? 1 : 0);
+      xmark.setAttribute('transform', `translate(${40} ${-40}) scale(${Math.max(xz, 0.01)}) rotate(${(1 - xz) * 90})`);
+      blockUp(z32, t, L0('s15a') + 1.2, 0.5, 70);
+      op(foot.g, t >= L0('s15b') + 0.4 ? 1 : 0);
+      if (t >= L0('s15b') + 0.4) charsPop(foot, t, L0('s15b') + 0.5, 0.014);
+      regH(foot, 'THE BOMB WAS NEVER FOUND. THE CIPHER WAS NEVER VERIFIED.', L0('s15b') + 0.4, U('S15'), 960, 990, 'middle');
+    };
+  });
+
+  // ---------------- S16 THE SUSPECTS ----------------
+  scene('S16', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.navy, step: 26, angle: 35, f: edge(840, 1.25), maxK: 0.6 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'THOUSANDS OF NAMES', { x: 120, y: 180, size: 84, family: F.serif, fill: C.navy, shadow: { fill: C.red, dx: 6, dy: 6 } });
+    const h1b = chars(g, 'A HANDFUL OF CASE FILES. NO CONVICTION.', { x: 120, y: 260, size: 40, family: F.serif, fill: C.brick });
+    // Allen folder
+    const alG = el('g', {}, g);
+    el('rect', { x: 100, y: 320, width: 860, height: 640, rx: 14, fill: '#E9B949', stroke: C.navy, 'stroke-width': 7 }, alG);
+    el('rect', { x: 120, y: 380, width: 820, height: 560, rx: 8, fill: C.yellow, stroke: C.navy, 'stroke-width': 5 }, alG);
+    txt(alG, 'ARthur LEIGH ALLEN', { x: 160, y: 450, 'font-size': 52, 'font-family': F.serif, fill: C.navy });
+    txt(alG, 'VALLEJO · THE MOST HEAVILY INVESTIGATED SUSPECT', { x: 160, y: 500, 'font-size': 25, 'font-family': F.mono, 'font-weight': 800, fill: C.brick });
+    const alFacts = ['SEARCHED BY POLICE — 1991', 'OWNED A ZODIAC-BRAND CROSSHAIR WATCH', 'NEVER CHARGED — DENIED EVERYTHING', 'DIED AUG 26, 1992', 'DNA ON A 2002 LETTER SEAL: REPORTED EXCLUDED'];
+    const alEls = alFacts.map((f, i) => {
+      const fg = el('g', {}, alG);
+      el('rect', { x: 0, y: 0, width: 740, height: 72, rx: 8, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 4 }, fg);
+      txt(fg, f, { x: 24, y: 46, 'font-size': 26, 'font-family': F.sans, 'font-weight': 900, fill: C.navy });
+      return fg;
+    });
+    txt(alG, 'A WATCH LOGO IS NOT EVIDENCE. A SEARCH IS NOT A VERDICT.', { x: 160, y: 932, 'font-size': 27, 'font-family': F.sans, 'font-weight': 900, fill: C.brick });
+    // other folders
+    const others = ['RICHARD GAIKOWSKI', 'LAWRENCE KANE', 'EARL VAN BEST JR.', 'DOZENS MORE…'].map((n, i) => {
+      const og = el('g', {}, g);
+      el('rect', { x: 0, y: 0, width: 700, height: 108, rx: 10, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, og);
+      txt(og, n, { x: 28, y: 44, 'font-size': 33, 'font-family': F.sans, 'font-weight': 900, fill: C.navy });
+      txt(og, 'A BOOK, A FILM, OR A THEORY — NO ESTABLISHING EVIDENCE', { x: 28, y: 84, 'font-size': 22, 'font-family': F.mono, 'font-weight': 800, fill: C.steel });
+      return og;
+    });
+    return (t) => {
+      charsPop(h1, t, T('S16') + 0.1, 0.025);
+      charsPop(h1b, t, T('S16') + 0.5, 0.015);
+      regH(h1, 'THOUSANDS OF NAMES', T('S16') + 0.1, U('S16'), 120, 180);
+      regH(h1b, 'A HANDFUL OF CASE FILES. NO CONVICTION.', T('S16') + 0.5, U('S16'), 120, 260);
+      const z = lerp(1, 1.05, seg(t, T('S16'), U('S16')));
+      tf(alG, 0, 0, 1);
+      blockUp(alG, t, L0('s16b'), 0.5, 60);
+      alEls.forEach((fg, i) => {
+        const p = pop(t, L0('s16b') + 1.0 + i * 0.5, 0.4);
+        op(fg, t >= L0('s16b') + 1.0 + i * 0.5 ? 1 : 0);
+        tf(fg, 160, 538 + i * 74 + 30 * (1 - p), 1, 0);
+      });
+      others.forEach((og, i) => {
+        const p = pop(t, L0('s16d') + 0.3 + i * 0.4, 0.45);
+        op(og, t >= L0('s16d') + 0.3 + i * 0.4 ? 1 : 0);
+        tf(og, 1090, 360 + i * 140 + 50 * (1 - p), p, (i % 2 ? 1.2 : -1.2));
+      });
+    };
+  });
+
+  // ---------------- S17 2021 REJECTED ----------------
+  scene('S17', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.red, step: 24, angle: 20, f: radial(960, 300, 800, 1.0), maxK: 0.5 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'OCT 2021', { x: 960, y: 200, size: 110, family: F.serif, fill: C.navy, anchor: 'middle' });
+    const headG = paperCard(g, 960, 480, 1240, 360, { tilt: -1.2, fill: '#FFFDF4' });
+    txt(headG, 'A GROUP ANNOUNCES A NAME:', { x: 0, y: -80, 'font-size': 36, 'font-family': F.sans, 'font-weight': 900, fill: C.steel, 'text-anchor': 'middle' });
+    const bigName = chars(headG, '"THE CASE BREAKERS": GARY FRANCIS POSTE', { x: 0, y: 60, size: 46, family: F.serif, fill: C.navy, anchor: 'middle', shadow: { fill: C.yellow, dx: 5, dy: 5 } });
+    txt(headG, 'THE ANNOUNCEMENT MADE INTERNATIONAL HEADLINES', { x: 0, y: 140, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.steel, 'text-anchor': 'middle' });
+    const fbi = el('g', {}, g);
+    el('rect', { x: 310, y: 720, width: 1300, height: 130, rx: 14, fill: C.navy }, fbi);
+    txt(fbi, 'FBI: THE CASE REMAINS OPEN — NO NEW INFORMATION', { x: 960, y: 782, 'font-size': 40, 'font-family': F.sans, 'font-weight': 900, fill: C.cream, 'text-anchor': 'middle' });
+    txt(fbi, 'INVESTIGATORS REJECTED THE CLAIM', { x: 960, y: 826, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: '#F0B9B2', 'text-anchor': 'middle' });
+    const st = stampEl(g, 'REJECTED', { size: 150, color: C.red, border: 14 });
+    return (t) => {
+      charsPop(h1, t, T('S17') + 0.1, 0.03);
+      regH(h1, 'OCT 2021', T('S17') + 0.1, U('S17'), 960, 200, 'middle');
+      blockUp(headG, t, L0('s17a') + 0.4, 0.5, 60);
+      op(bigName.g, t >= L0('s17a') + 0.8 ? 1 : 0);
+      if (t >= L0('s17a') + 0.8) charsPop(bigName, t, L0('s17a') + 0.9, 0.012);
+      op(fbi, t >= L0('s17b') + 0.4 ? 1 : 0);
+      tf(fbi, 0, 0, 1);
+      blockUp(fbi, t, L0('s17b') + 0.4, 0.5, 40);
+      stampAnim(st, t, L0('s17b') + 2.4, 1380, 420, -10);
+      SHAKES.push([L0('s17b') + 2.4, 14, 0.4]); EV.push({ t: L0('s17b') + 2.4, type: 'stamp', big: 1 });
+    };
+  });
+
+  // ---------------- S18 ERA LIMITS ----------------
+  scene('S18', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.navy, step: 26, angle: 55, f: edge(860, 1.2), maxK: 0.62 }).setAttribute('class', 'mul');
+    const big = el('g', {}, g);
+    txt(big, '1969', { x: 1700, y: 820, 'font-size': 620, 'font-family': F.bagel, fill: '#E4D9BC', 'text-anchor': 'end' });
+    const h1 = chars(g, 'START WITH THE YEAR', { x: 120, y: 190, size: 84, family: F.serif, fill: C.navy, shadow: { fill: C.red, dx: 6, dy: 6 } });
+    const tools = [
+      ['DNA PROFILING', 'FIRST U.S. FORENSIC DNA CONVICTION WAS DECADES AWAY'],
+      ['CAMERA GRIDS', 'NO CCTV NETWORKS TO CONSULT'],
+      ['CELL-SITE RECORDS', 'NO MOBILE DATA OF ANY KIND'],
+      ['SEARCH DATABASES', 'PRINTS & HANDWRITING COMPARED BY HAND'],
+    ];
+    const toolEls = tools.map(([a, b], i) => {
+      const tg = el('g', {}, g);
+      el('rect', { x: 0, y: 0, width: 1180, height: 150, rx: 12, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, tg);
+      txt(tg, a, { x: 36, y: 60, 'font-size': 46, 'font-family': F.sans, 'font-weight': 900, fill: C.navy });
+      txt(tg, b, { x: 36, y: 112, 'font-size': 25, 'font-family': F.mono, 'font-weight': 800, fill: C.steel });
+      const strike = el('path', { d: `M 20 118 L 1160 26`, stroke: C.brick, 'stroke-width': 14, 'stroke-linecap': 'round' }, tg);
+      strike.setAttribute('stroke-dasharray', 1300); strike.setAttribute('stroke-dashoffset', 1300);
+      return { tg, strike };
+    });
+    return (t) => {
+      charsPop(h1, t, T('S18') + 0.1, 0.025);
+      regH(h1, 'START WITH THE YEAR', T('S18') + 0.1, U('S18'), 120, 190);
+      op(big, seg(t, T('S18') + 0.2, T('S18') + 0.8) * 0.9);
+      toolEls.forEach(({ tg, strike }, i) => {
+        const p = pop(t, L0('s18a') + 0.6 + i * 0.7, 0.45);
+        op(tg, t >= L0('s18a') + 0.6 + i * 0.7 ? 1 : 0);
+        tf(tg, 140, 290 + i * 172 + 50 * (1 - p), 1, 0);
+        const sp = seg(t, L0('s18a') + 1.5 + i * 0.7, L0('s18a') + 2.1 + i * 0.7);
+        strike.setAttribute('stroke-dashoffset', String(1300 * (1 - E.out(sp))));
+        if (sp > 0 && sp < 0.2 && !strike.__s) { strike.__s = 1; EV.push({ t: L0('s18a') + 1.5 + i * 0.7, type: 'strike' }); }
+      });
+    };
+  });
+
+  // ---------------- S19 EVIDENCE & BIAS ----------------
+  scene('S19', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.steel, step: 26, angle: 30, f: edge(880, 1.15), maxK: 0.55 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'THE EVIDENCE THAT REMAINS', { x: 120, y: 180, size: 74, family: F.serif, fill: C.navy, shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    const cards = [
+      { t: 'FINGERPRINTS', s: 'NO MATCH — EVER', x: 460, y: 460 },
+      { t: 'HANDWRITING', s: 'HUNDREDS OF ENVELOPES, NO MATCH', x: 1100, y: 460 },
+      { t: 'THE SKETCH', s: 'A WITNESS FACE — NO NAME', x: 460, y: 750 },
+      { t: 'THE DNA', s: 'DEGRADED, MIXED, WAITING ON A CLEAN SAMPLE', x: 1100, y: 750 },
+    ];
+    const cardEls = cards.map((cd) => {
+      const cg = el('g', {}, g);
+      el('rect', { x: -280, y: -120, width: 560, height: 240, rx: 12, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, cg);
+      txt(cg, cd.t, { x: 0, y: -55, 'font-size': 42, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+      el('path', { d: 'M -230 -20 L 230 -20', stroke: C.navy, 'stroke-width': 3, opacity: .25 }, cg);
+      txt(cg, cd.s, { x: 0, y: 40, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.brick, 'text-anchor': 'middle' });
+      return cg;
+    });
+    // confirmation bias card
+    const bias = paperCard(g, 960, 990, 1560, 150, { tilt: 0, fill: C.navy });
+    const biasT = chars(bias, 'CERTAINTY IS EASY. VERIFICATION IS RARE.', { x: 0, y: 20, size: 44, family: F.serif, fill: C.cream, anchor: 'middle' });
+    return (t) => {
+      charsPop(h1, t, T('S19') + 0.1, 0.02);
+      regH(h1, 'THE EVIDENCE THAT REMAINS', T('S19') + 0.1, U('S19'), 120, 180);
+      cardEls.forEach((cg, i) => {
+        const p = pop(t, L0('s18b') - 0.2 + (i % 2) * 0.3 + Math.floor(i / 2) * 0.55, 0.5);
+        const t0i = L0('s18b') - 0.2 + (i % 2) * 0.3 + Math.floor(i / 2) * 0.55;
+        op(cg, t >= t0i ? 1 : 0);
+        tf(cg, cards[i].x, cards[i].y + 60 * (1 - p), p, (i % 2 ? 1.4 : -1.4));
+      });
+      op(bias, t >= L0('s19c') - 0.3 ? 1 : 0);
+      blockUp(bias, t, L0('s19c') - 0.3, 0.5, 40);
+      if (t >= L0('s19c') - 0.3) { charsPop(biasT, t, L0('s19c') - 0.2, 0.012); }
+      regH(biasT, 'CERTAINTY IS EASY. VERIFICATION IS RARE.', L0('s19c') - 0.2, U('S19'), 960, 1010, 'middle');
+    };
+  });
+
+  // ---------------- S21 EVIDENCE AUDIT ----------------
+  scene('S21', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.blue, step: 26, angle: 45, f: radial(0, 0, 700, 1.1), maxK: 0.5 }).setAttribute('class', 'mul');
+    const h1 = chars(g, 'WHAT THE EVIDENCE ACTUALLY SUPPORTS', { x: 960, y: 150, size: 62, family: F.serif, fill: C.navy, anchor: 'middle', shadow: { fill: C.yellow, dx: 5, dy: 5 } });
+    const cols = [
+      { t: 'CONFIRMED', c: C.sage, x: 380, rows: ['4 ATTACKS · 1968–69', '5 KILLED · 2 SURVIVORS', 'LETTERS AUTHENTICATED BY CRIME DETAILS', '2 CIPHERS SOLVED & VERIFIED', '2 CIPHERS UNSOLVED', '37 VICTIMS CLAIMED — UNSUPPORTED'] },
+      { t: 'DISPUTED', c: C.blue, x: 960, rows: ['RIVERSIDE, 1966 LINK — NEVER ADOPTED', 'THE 1974 LETTERS — AUTHENTICITY DEBATED', 'UNCONFIRMED VICTIM CLAIMS'] },
+      { t: 'UNKNOWN', c: C.red, x: 1540, rows: ['HIS NAME', 'HIS FACE, BEYOND A SKETCH', 'WHY HE STOPPED'] },
+    ];
+    const colEls = cols.map((cd) => {
+      const cg = el('g', {}, g);
+      el('rect', { x: -270, y: -60, width: 540, height: 760, rx: 14, fill: '#FFFDF4', stroke: C.navy, 'stroke-width': 6 }, cg);
+      el('rect', { x: -270, y: -60, width: 540, height: 110, rx: 14, fill: cd.c }, cg);
+      el('rect', { x: -270, y: 20, width: 540, height: 30, fill: cd.c }, cg);
+      txt(cg, cd.t, { x: 0, y: 14, 'font-size': 48, 'font-family': F.sans, 'font-weight': 900, fill: C.cream, 'text-anchor': 'middle' });
+      const rowEls = cd.rows.map((r, i) => {
+        const rg = el('g', {}, cg);
+        const words = r.split(' '); const l1 = []; const l2 = [];
+        let cur = l1;
+        for (const w of words) { if ((cur.join(' ') + ' ' + w).length > 26 && cur === l1) cur = l2; cur.push(w); }
+        txt(rg, l1.join(' '), { x: 0, y: 30, 'font-size': 26, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+        if (l2.length) txt(rg, l2.join(' '), { x: 0, y: 66, 'font-size': 26, 'font-family': F.sans, 'font-weight': 900, fill: C.navy, 'text-anchor': 'middle' });
+        return rg;
+      });
+      return { cg, rowEls };
+    });
+    return (t) => {
+      charsPop(h1, t, T('S21') + 0.1, 0.014);
+      regH(h1, 'WHAT THE EVIDENCE ACTUALLY SUPPORTS', T('S21') + 0.1, U('S21'), 960, 150, 'middle');
+      colEls.forEach((col, ci) => {
+        const c0 = L0('s21b') + ci * 2.2;
+        const p = pop(t, c0, 0.5);
+        op(col.cg, t >= c0 ? 1 : 0);
+        tf(col.cg, cols[ci].x, 560 + 80 * (1 - p), 1, (ci - 1) * 1.2);
+        col.rowEls.forEach((rg, i) => {
+          const rp = pop(t, c0 + 0.6 + i * 0.28, 0.35);
+          op(rg, t >= c0 + 0.6 + i * 0.28 ? 1 : 0);
+          tf(rg, 0, 62 + i * 106 + 24 * (1 - rp), 1, 0);
+        });
+      });
+    };
+  });
+
+  // ---------------- S22 THE ANSWER ----------------
+  scene('S22', (g) => {
+    bg(g, C.paper);
+    halftone(g, { color: C.navy, step: 26, angle: 25, f: edge(900, 1.1), maxK: 0.6 }).setAttribute('class', 'mul');
+    const l1 = chars(g, 'THE LETTERS ARE REAL.', { x: 960, y: 300, size: 76, family: F.serif, fill: C.navy, anchor: 'middle' });
+    const l2 = chars(g, 'THE CIPHERS ARE READABLE.', { x: 960, y: 420, size: 76, family: F.serif, fill: C.navy, anchor: 'middle' });
+    const l3 = chars(g, 'THE DNA IS TESTABLE.', { x: 960, y: 540, size: 76, family: F.serif, fill: C.navy, anchor: 'middle' });
+    const l4 = chars(g, 'AND THE NAME NEVER APPEARS.', { x: 960, y: 720, size: 92, family: F.serif, fill: C.red, anchor: 'middle', shadow: { fill: C.yellow, dx: 6, dy: 6 } });
+    return (t) => {
+      const z = lerp(1.06, 1.0, E.out(seg(t, T('S22'), T('S22') + 4)));
+      tf(g, 960 - 960 * z, 540 - 540 * z, z);
+      charsPop(l1, t, L0('s22a'), 0.02);
+      charsPop(l2, t, L0('s22a') + 2.2, 0.02);
+      charsPop(l3, t, L0('s22a') + 4.2, 0.02);
+      op(l4.g, t >= L0('s22b') - 0.3 ? 1 : 0);
+      if (t >= L0('s22b') - 0.3) charsPop(l4, t, L0('s22b') - 0.2, 0.022);
+      regH(l1, 'THE LETTERS ARE REAL.', L0('s22a'), U('S22'), 960, 300, 'middle');
+      regH(l2, 'THE CIPHERS ARE READABLE.', L0('s22a') + 2.2, U('S22'), 960, 420, 'middle');
+      regH(l3, 'THE DNA IS TESTABLE.', L0('s22a') + 4.2, U('S22'), 960, 540, 'middle');
+      regH(l4, 'AND THE NAME NEVER APPEARS.', L0('s22b') - 0.2, U('S22'), 960, 720, 'middle');
+    };
+  });
+
+  // ---------------- S23 CASE STATUS ----------------
+  scene('S23', (g) => {
+    bg(g, C.night);
+    halftone(g, { color: C.night2, step: 26, angle: 20, f: edge(780, 1.1), maxK: 0.68 });
+    // folder sliding to drawer
+    const folder = el('g', {}, g);
+    el('path', { d: 'M -470 -200 L -170 -200 L -130 -240 L 60 -240 L 100 -200 L 470 -200 L 470 230 L -470 230 Z', fill: '#E9B949', stroke: C.navy, 'stroke-width': 7, 'stroke-linejoin': 'round' }, folder);
+    el('rect', { x: -470, y: -160, width: 940, height: 390, fill: C.yellow, stroke: C.navy, 'stroke-width': 7 }, folder);
+    el('rect', { x: -430, y: 30, width: 860, height: 110, fill: C.cream, stroke: C.navy, 'stroke-width': 5 }, folder);
+    txt(folder, 'OPUSCAR FILE 002 · THE ZODIAC KILLER', { x: -400, y: 78, 'font-size': 31, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    txt(folder, 'FIVE DECEASED · TWO SURVIVORS · NO IDENTIFICATION', { x: -400, y: 122, 'font-size': 26, 'font-family': F.sans, 'font-weight': 900, fill: C.navy });
+    const st = stampEl(g, 'OPEN', { size: 190, color: C.red, border: 15 });
+    const line = chars(g, 'CASE STATUS', { x: 960, y: 880, size: 54, family: F.mono, fill: '#8FA0C9', anchor: 'middle', ls: 6 });
+    return (t) => {
+      const slide = seg(t, U('S23') - 3.4, U('S23') - 1.2);
+      tf(folder, 960, lerp(430, 1500, E.in(slide)), 1, -2);
+      const lp = seg(t, T('S23') + 0.6, T('S23') + 1.4);
+      op(line.g, lp); line.g.setAttribute('transform', `translate(960 ${880 + 20 * (1 - lp)})`);
+      regH(line, 'CASE STATUS', T('S23') + 0.6, U('S23') - 3.2, 960, 880, 'middle');
+      stampAnim(st, t, L0('s23b') + 0.4, 960, 500, -6);
+    };
+  });
+
+  // ---------------- S24 END CARD ----------------
+  scene('S24', (g) => {
+    bg(g, C.night);
+    halftone(g, { color: C.night2, step: 26, angle: 40, f: edge(860, 1.05), maxK: 0.6 });
+    const t1 = txt(g, 'THE ZODIAC KILLER', { x: 960, y: 330, 'font-size': 96, 'font-family': F.serif, 'font-weight': 900, fill: C.cream, 'text-anchor': 'middle' });
+    const t2 = txt(g, 'THE CIPHERS, THE LETTERS, AND THE KILLER NOBODY COULD IDENTIFY', { x: 960, y: 410, 'font-size': 34, 'font-family': F.sans, 'font-weight': 900, fill: '#8FA0C9', 'text-anchor': 'middle' });
+    crosshair(g, 960, 570, 66, { color: C.red, sw: 9 });
+    const t3 = txt(g, 'FULL SOURCE LIST AND CHAPTER TIMESTAMPS IN THE DESCRIPTION', { x: 960, y: 700, 'font-size': 30, 'font-family': F.mono, 'font-weight': 800, fill: C.cream, 'text-anchor': 'middle' });
+    const t4 = txt(g, 'OPUSCAR FILE 002 · DRAWN AND SCORED ENTIRELY IN CODE', { x: 960, y: 780, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: '#8FA0C9', 'text-anchor': 'middle' });
+    const t5 = txt(g, 'A LEMO-OPUSCAR PRODUCTION', { x: 960, y: 950, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: '#5F6F98', 'text-anchor': 'middle', 'letter-spacing': 3 });
+    return (t) => {
+      const p = seg(t, T('S24'), T('S24') + 0.8);
+      op(t1, p); op(t2, p); op(t3, seg(t, T('S24') + 0.5, T('S24') + 1.2)); op(t4, seg(t, T('S24') + 0.7, T('S24') + 1.4)); op(t5, seg(t, T('S24') + 1, T('S24') + 1.8));
+      REG.push({ text: 'THE ZODIAC KILLER', x0: 960 - 500, y0: 240, x1: 960 + 500, y1: 340, t0: T('S24') + 0.2, t1: DUR });
+    };
+  });
+
+  // ---------------- caption bar (carries the spoken line) ----------------
+  const capG = el('g', {}, world);
+  const capInner = el('g', {}, capG);
+  const capShadow = el('rect', { rx: 14, fill: C.red, class: 'mul' }, capInner);
+  const capBg = el('rect', { rx: 14, fill: C.navy }, capInner);
+  const capL1 = el('text', { 'font-size': 36, 'font-family': F.sans, 'font-weight': 900, 'text-anchor': 'middle' }, capInner);
+  const capL2 = el('text', { 'font-size': 36, 'font-family': F.sans, 'font-weight': 900, 'text-anchor': 'middle' }, capInner);
+  const KW = new Set(['ZODIAC', 'KILLER', 'CROSSHAIR', '408', '340', 'Z-13', 'Z-32', 'FIVE', 'TWO', 'DNA', 'FBI', 'NSA', 'UNSOLVED', 'NAME', '37', '51', '1969', '1968', '2020', '1970', 'DECODED', 'OPEN', 'KILL', 'KILLING', 'SLAVES', 'CODES', 'LETTERS', 'CIPHER', 'CIPHERS', 'ATTACKS', 'SURVIVORS', 'VICTIMS', 'EVIDENCE', 'FINGERPRINTS', 'HANDWRITING', 'CONFIRMED', 'DISPUTED', 'UNKNOWN', 'PARADICE', 'SALINAS', 'BERRYESSA', 'VALLEJO', 'BENICIA', 'ALLEN', 'POSTE', 'RIVERSIDE', 'SPEAKING', 'THOUSANDS', 'DECADES', 'VERIFICATION', 'CERTAINTY', 'AMATEURS', 'ORANCHAK', 'BLAKE', 'EYCKE']);
+  let curCue = -1;
+  function captionUpdate(t) {
+    const cs = TL.cues;
+    let idx = -1;
+    for (let i = 0; i < cs.length; i++) { if (t >= cs[i].t0 && t < cs[i].t1) { idx = i; break; } }
+    if (idx === curCue) return;
+    curCue = idx;
+    if (idx < 0) { op(capG, 0); return; }
+    const c = cs[idx];
+    op(capG, 1);
+    const words = c.text.split(' ');
+    // build tspans with keyword highlight
+    const mk = (elText, lineWords) => {
+      elText.textContent = '';
+      lineWords.forEach((w, i) => {
+        const sp = document.createElementNS(NS, 'tspan');
+        const core = w.replace(/[^A-Z0-9-]/g, '');
+        sp.setAttribute('fill', KW.has(core) ? C.yellow : C.cream);
+        sp.textContent = w + (i < lineWords.length - 1 ? ' ' : '');
+        elText.appendChild(sp);
+      });
+    };
+    const full = measure(c.text, 36, F.sans, 900);
+    if (full <= 1560 || c.text.length < 52) {
+      capL1.setAttribute('y', 0); capL2.setAttribute('y', -9999);
+      capL2.textContent = '';
+      mk(capL1, words);
+      var w1 = Math.max(full, measure(c.text, 36, F.sans, 900));
+      capInner.setAttribute('transform', `translate(960 996)`);
+      capBg.setAttribute('x', -w1 / 2 - 34); capBg.setAttribute('y', -46); capBg.setAttribute('width', w1 + 68); capBg.setAttribute('height', 92);
+      capShadow.setAttribute('x', -w1 / 2 - 26); capShadow.setAttribute('y', -38); capShadow.setAttribute('width', w1 + 68); capShadow.setAttribute('height', 92);
+    } else {
+      // split into two balanced lines
+      let best = Math.floor(words.length / 2), bestD = 1e9;
+      for (let i = 2; i < words.length - 1; i++) {
+        const a = words.slice(0, i).join(' '), b = words.slice(i).join(' ');
+        const wA = measure(a, 36, F.sans, 900), wB = measure(b, 36, F.sans, 900);
+        const d = Math.abs(wA - wB);
+        if (d < bestD && Math.max(wA, wB) <= 1560) { bestD = d; best = i; }
+      }
+      const A = words.slice(0, best).join(' '), B = words.slice(best).join(' ');
+      mk(capL1, A.split(' ')); mk(capL2, B.split(' '));
+      capL1.setAttribute('y', -24); capL2.setAttribute('y', 26);
+      const w1 = Math.max(measure(A, 36, F.sans, 900), measure(B, 36, F.sans, 900));
+      capInner.setAttribute('transform', `translate(960 996)`);
+      capBg.setAttribute('x', -w1 / 2 - 34); capBg.setAttribute('y', -74); capBg.setAttribute('width', w1 + 68); capShadow.setAttribute('width', w1 + 68); capBg.setAttribute('height', 148);
+      capShadow.setAttribute('x', -w1 / 2 - 26); capShadow.setAttribute('y', -66); capShadow.setAttribute('height', 148);
+    }
+  }
+
+  // ---------------- HUD ----------------
+  const hudG = el('g', {}, hud);
+  const caseNo = txt(hudG, 'OPUSCAR FILE 002 · SFPD 090068-69', { x: 60, y: 62, 'font-size': 22, 'font-family': F.mono, 'font-weight': 800 });
+  const chip = el('g', {}, hudG);
+  const chipBg = el('rect', { x: 60, y: 76, height: 40, rx: 6 }, chip);
+  const chipA = txt(chip, '', { x: 74, y: 104, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800 });
+  const chipB = txt(chip, '', { y: 104, 'font-size': 24, 'font-family': F.sans, 'font-weight': 900 });
+  const date = el('g', {}, hudG);
+  const dateBg = el('rect', { x: 1650, y: 40, width: 220, height: 50, rx: 8, fill: 'none', 'stroke-width': 4 }, date);
+  const rec = el('circle', { cx: 1686, cy: 65, r: 9, fill: C.red }, date);
+  const dateT = txt(date, 'FILE 002 · 1968-69', { x: 1688, y: 74, 'font-size': 19, 'font-family': F.mono, 'font-weight': 800 });
+  const DARKS = new Set(['S12', 'S23', 'S24']);
+  function hudUpdate(t) {
+    const s = SC[TL.scenes.find(sc => t >= sc.t0 && t < sc.t1)?.id];
+    show(hudG, !!s && s.id !== 'S24');
+    if (!s) return;
+    const dark = DARKS.has(s.id);
+    const ink = dark ? '#C9D4F0' : C.navy;
+    caseNo.setAttribute('fill', ink);
+    chipBg.setAttribute('fill', dark ? '#10162B' : C.navy);
+    chipA.textContent = s.chip; chipA.setAttribute('fill', dark ? '#F0B9B2' : C.yellow);
+    chipB.textContent = s.title; chipB.setAttribute('fill', dark ? C.cream : C.cream);
+    const wa = measure(s.chip, 24, F.mono, 800), wb = measure(s.title, 24, F.sans, 900);
+    chipB.setAttribute('x', 74 + wa + 14);
+    chipBg.setAttribute('width', wa + wb + 42);
+    dateBg.setAttribute('stroke', ink); dateT.setAttribute('fill', ink);
+    op(rec, Math.floor(t * 2) % 2 ? 0.25 : 1);
+  }
+
+  // ---------------- dot wipes ----------------
+  const dotsG = el('g', {}, wipeG);
+  const wipeDots = [];
+  for (let y = 0; y <= 1080 + 96; y += 96) for (let x = 0; x <= 1920 + 96; x += 96) {
+    wipeDots.push({ el: el('circle', { cx: x, cy: y, r: 0 }, dotsG), x, y });
+  }
+  const HARD = new Set(['S9', 'S18', 'S24']);
+  const WCOLORS = [C.yellow, C.blue, C.red, C.night, C.sage, C.brick, C.night2, C.steel];
+  const WIPES = TL.scenes.filter(s => s.id !== 'S1' && !HARD.has(s.id)).map((s, i) => [s.t0, WCOLORS[i % WCOLORS.length]]);
+  WIPES.forEach(([cut]) => EV.push({ t: cut - 0.18, type: 'whoosh' }));
+  function wipeUpdate(t) {
+    const w = WIPES.find(([b]) => Math.abs(t - b) < 0.22);
+    show(dotsG, !!w);
+    if (!w) return;
+    dotsG.setAttribute('fill', w[1]);
+    const u = (t - w[0] + 0.22) / 0.44;
+    wipeDots.forEach(d => {
+      const delay = (d.x / 1920 * 0.6 + d.y / 1080 * 0.4) * 0.35;
+      const p = clamp((u - delay) / 0.65);
+      const r = Math.sin(p * Math.PI) * 74;
+      d.el.setAttribute('r', r.toFixed(1));
+    });
+  }
+
+  // ---------------- paper & grain ----------------
+  function buildPaper() {
+    const cv = document.getElementById('paper'), ctx = cv.getContext('2d');
+    const img = ctx.createImageData(1920, 1080);
+    const r = rng(3);
+    const small = document.createElement('canvas'); small.width = 96; small.height = 54;
+    const sctx = small.getContext('2d'); const sim = sctx.createImageData(96, 54);
+    for (let i = 0; i < sim.data.length; i += 4) { const v = 242 + r() * 13; sim.data[i] = sim.data[i + 1] = sim.data[i + 2] = v; sim.data[i + 3] = 255; }
+    sctx.putImageData(sim, 0, 0);
+    ctx.imageSmoothingEnabled = true; ctx.drawImage(small, 0, 0, 1920, 1080);
+    const base = ctx.getImageData(0, 0, 1920, 1080);
+    for (let i = 0; i < base.data.length; i += 4) {
+      const n = (r() - 0.5) * 26;
+      base.data[i] = clamp(base.data[i] + n, 0, 255);
+      base.data[i + 1] = clamp(base.data[i + 1] + n, 0, 255);
+      base.data[i + 2] = clamp(base.data[i + 2] + n - 4, 0, 255);
+    }
+    ctx.putImageData(base, 0, 0);
+    const gr = ctx.createRadialGradient(960, 540, 400, 960, 540, 1150);
+    gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(1, 'rgba(120,100,80,0.35)');
+    ctx.fillStyle = gr; ctx.fillRect(0, 0, 1920, 1080);
+    ctx.strokeStyle = 'rgba(140,120,100,0.18)'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(960, 0); ctx.lineTo(962, 1080); ctx.stroke();
+  }
+  function drawFx(frame) {
+    const cv = document.getElementById('fx'), ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, 1920, 1080);
+    const r = rng(1000 + Math.floor(frame / 2));
+    ctx.fillStyle = 'rgba(255,248,235,0.75)';
+    for (let i = 0; i < 420; i++) {
+      const x = r() * 1920, y = r() * 1080, s = 0.6 + r() * 1.8;
+      ctx.beginPath(); ctx.arc(x, y, s, 0, 7); ctx.fill();
+    }
+    ctx.fillStyle = 'rgba(29,35,64,0.25)';
+    for (let i = 0; i < 70; i++) { ctx.beginPath(); ctx.arc(r() * 1920, r() * 1080, 0.6 + r() * 1.3, 0, 7); ctx.fill(); }
+  }
+
+  // ---------------- render ----------------
+  buildPaper();
+  const boilT = document.getElementById('boilT');
+  // counter ticks + stamp EVs from static times
+  [['s04c', 0.2, 3.0, 0.28], ['s09c', -0.4, 2.0, 0.24]].forEach(([lid, a, b, step]) => {
+    for (let x = a; x < b; x += step) EV.push({ t: L0(lid) + x, type: 'tick' });
+  });
+  EV.push({ t: L0('s08d') + 5.4, type: 'stamp', big: 1 });
+  EV.push({ t: U('S23') - 3.4, type: 'drawer' });
+  EV.push({ t: L0('s23b') + 0.4, type: 'stamp', big: 1 });
+  EV.push({ t: L0('s05c') + 0.4, type: 'paper' });
+  EV.push({ t: U('S1') - 5.6, type: 'stamp', big: 1 });
+  FLASHES.forEach(f => EV.push({ t: f[0], type: 'shutter' }));
+
+  function render(t) {
+    const frame = Math.round(t * FPS);
+    boilT.setAttribute('seed', 1 + (Math.floor(t * 10) % 40));
+    for (const s of scenes) {
+      const on = t >= s.t0 && t < s.t1;
+      show(s.g, on);
+      if (on) s.update(t);
+    }
+    let dx = 0, dy = 0;
+    for (const [t0, a, d] of SHAKES) {
+      if (t >= t0 && t < t0 + d) { const k = 1 - (t - t0) / d; dx += a * k * k * Math.sin(t * 91 + t0); dy += a * k * k * Math.cos(t * 77 + t0 * 3); }
+    }
+    const pulse = 1 + 0.004 * Math.exp(-((t % 1.2) / 0.07));
+    cam.setAttribute('transform', `translate(${(dx + 960 * (1 - pulse)).toFixed(2)} ${(dy + 540 * (1 - pulse)).toFixed(2)}) scale(${pulse.toFixed(4)})`);
+    let fl = 0;
+    for (const f of FLASHES) if (t >= f[0] && t < f[0] + 0.3) fl = Math.max(fl, 0.5 * Math.pow(1 - (t - f[0]) / 0.3, 2));
+    op(flash, fl);
+    op(fade, Math.max(seg(t, DUR - 0.9, DUR - 0.15), t >= T('S23') ? seg(t, U('S23') - 1.0, U('S23') - 0.2) * 0 : 0));
+    op(fade, seg(t, DUR - 0.9, DUR - 0.15));
+    hudUpdate(t);
+    wipeUpdate(t);
+    captionUpdate(t);
+    drawFx(frame);
+  }
+
+  // ---------------- init ----------------
+  async function init() {
+    const all = document.documentElement.innerHTML;
+    const fams = ['900 50px "Noto Serif SC"', '400 50px "Bagel Fat One"', '800 50px "JetBrains Mono"', '500 50px "JetBrains Mono"', '900 50px "Noto Sans SC"', '500 50px "Noto Sans SC"'];
+    const sample = all.replace(/[\x00-\x2f]/g, '') + 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    await Promise.all(fams.map(f => document.fonts.load(f, sample)));
+    await document.fonts.ready;
+    // caption registration for readcheck
+    TL.cues.forEach(c => {
+      REG.push({ text: c.text, x0: 260, y0: 920, x1: 1660, y1: 1050, t0: c.t0, t1: c.t1 });
+    });
+    window.DUR = DUR;
+    window.EV = EV;
+    window.TEXTS = (t) => REG.filter(r => t >= r.t0 && t < r.t1).map(r => ({ id: (r.text || 'x').slice(0, 24), text: r.text, x0: r.x0, y0: r.y0, x1: r.x1, y1: r.y1 }));
+    window.render = render;
+    const q = new URLSearchParams(location.search);
+    if (q.has('t')) { render(parseFloat(q.get('t'))); }
+    window.READY = true;
+  }
+  init();
+}
+
+// bootstrap: preload fonts against the whole page source, then build
+(async () => {
+  const all = document.documentElement.innerHTML;
+  const fams = ['900 50px "Noto Serif SC"', '400 50px "Bagel Fat One"', '800 50px "JetBrains Mono"', '500 50px "JetBrains Mono"', '900 50px "Noto Sans SC"', '500 50px "Noto Sans SC"'];
+  const sample = all.replace(/[\x00-\x2f]/g, '') + 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  await Promise.all(fams.map(f => document.fonts.load(f, sample)));
+  await document.fonts.ready;
+  buildAll();
+})();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,38 @@
+name: Build video
+on:
+  workflow_dispatch:
+    inputs:
+      film:
+        description: "Film folder under films/ (e.g. video-002-zodiac)"
+        required: true
+        default: video-002-zodiac
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Clone this studio
+        run: git clone --depth 1 "https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git" studio
+      - name: Clone Lemo-Opuscar library
+        run: git clone --depth 1 https://github.com/lemomo-ai/lemo-opuscar.git opuscar
+      - name: Install deps (core + voice)
+        working-directory: opuscar
+        run: sh plugin/skills/lemo-opuscar/scripts/setup.sh deps voice
+      - name: Build film (render + mix + mux)
+        working-directory: opuscar
+        env:
+          LIB: ${{ github.workspace }}/opuscar
+        run: sh "studio/films/${{ github.event.inputs.film }}/build.sh"
+      - name: Collect delivery package
+        run: |
+          mkdir -p dist
+          cp opuscar/films/${{ github.event.inputs.film }}/out/*.mp4 dist/ || true
+          cp opuscar/films/${{ github.event.inputs.film }}/*.srt dist/ || true
+          cp opuscar/films/${{ github.event.inputs.film }}/poster.jpg dist/ || true
+          cp opuscar/films/${{ github.event.inputs.film }}/*.md dist/ || true
+          ls -la dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.film }}-build
+          path: dist

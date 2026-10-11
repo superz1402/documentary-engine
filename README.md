@@ -1,0 +1,43 @@
+# Opuscar Studio — Video Library
+
+A private production studio: every documentary produced with the [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) pipeline lives here. **Each new video is published as a GitHub Release** — no per-video repositories to manage.
+
+## Library
+
+| Video | Title | Runtime | Release |
+|---|---|---|---|
+| 002 | The Zodiac Killer: The Ciphers, the Letters, and the Killer Nobody Could Identify | 17:23 | [video-002-zodiac v1.0.0](../../releases/tag/video-002-zodiac-v1.0.0) |
+
+## Layout
+
+```
+films/
+  video-002-zodiac/       # one folder per video: source + delivery package
+    index.html            # the film (render(t) page, halftone-dossier engine)
+    timeline.js           # narration-locked scene timeline (generated)
+    lines.json            # narration script (TTS + subtitle text)
+    mix.py                # score + foley + voice mix
+    build.sh              # one-command rebuild
+    render_range.mjs      # resumable range renderer for constrained hosts
+    zodiac-002.srt        # subtitles
+    chapters.txt          # YouTube chapter timestamps
+    youtube.md            # title / description / tags package
+    SOURCES.md            # fact-check sources
+    CREDITS               # third-party assets & licences
+    TREATMENT.md          # direction document
+    poster.jpg / thumbnail_1280x720.jpg
+.github/workflows/build.yml  # manual CI build -> renders the film, uploads artifact
+```
+
+## Rebuild
+
+```sh
+sh plugin/skills/lemo-opuscar/scripts/setup.sh deps voice   # once (Lemo-Opuscar library)
+LIB=<opuscar-library-path> sh films/video-002-zodiac/build.sh
+```
+
+Or run the **Build video** workflow (Actions → Build video → Run) and collect the artifact.
+
+## Release convention
+
+Tag `video-NNN-<slug>-vMAJOR.MINOR` per video; assets attached: the film `.mp4`, `.srt`, poster, thumbnail, chapters, `youtube.md`, `SOURCES.md`.

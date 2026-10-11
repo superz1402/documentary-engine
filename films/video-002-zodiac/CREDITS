@@ -1,0 +1,33 @@
+CREDITS — The Zodiac Killer: The Ciphers, the Letters, and the Killer Nobody Could Identify
+(Opuscar File 002 · a Lemo-Opuscar production)
+
+FILM
+  Written, drawn, animated, scored and mixed by an AI agent in code
+  (canvas/SVG frames rendered headlessly, synthesized score & foley, offline neural TTS).
+  Style: Halftone Dossier (Lemo-Opuscar film-style library, MIT).
+
+TYPEFACES (Google Fonts, SIL Open Font License; self-hosted in fonts/)
+  Noto Serif SC (900)  — headlines          https://fonts.google.com/noto/specimen/Noto+Serif+SC
+  Bagel Fat One        — display numerals   https://fonts.google.com/specimen/Bagel+Fat+One
+  JetBrains Mono (500/800) — data/HUD       https://www.jetbrains.com/lp/mono/ (OFL)
+  Noto Sans SC (500/900) — captions/stamps   https://fonts.google.com/noto/specimen/Noto+Sans+SC
+
+VOICE
+  "am_michael" — Kokoro-82M v1.0 ONNX neural TTS (Apache-2.0)
+  https://github.com/thewh1teagle/kokoro-onnx
+  Verification: faster-whisper ASR pass over every line (MIT).
+
+TOOLCHAIN (MIT / Apache-2.0)
+  Lemo-Opuscar pipeline (frame renderer, mux, subtitles): https://github.com/lemomo-ai/lemo-opuscar
+  Playwright (Apache-2.0) + Chromium Headless Shell, ffmpeg (LGPL/GPL build), Python scientific stack
+  (numpy BSD, scipy BSD, soundfile LGPL-2.1, pillow HPND).
+
+AUDIO
+  All music and sound effects are synthesized procedurally (numpy) for this film — no samples.
+
+FACTUAL MATERIAL
+  Historical facts, dates, cipher plaintexts and case status per SOURCES.md in this folder.
+  All period artifacts shown are illustrative reconstructions; no archival photo or police
+  document is reproduced. Disputed connections are labeled as disputed.
+
+No third-party copyrighted work is reproduced in this film.

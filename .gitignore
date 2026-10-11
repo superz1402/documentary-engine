@@ -1,0 +1,7 @@
+out/
+stills/
+vo/
+asr_out.txt
+*.mp4
+*.wav
+__pycache__/
