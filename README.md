@@ -1,6 +1,6 @@
 # Opuscar Studio — Video Library
 
-A private production studio: every documentary produced with the [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) pipeline lives here. **Each new video is published as a GitHub Release** — no per-video repositories to manage.
+A public production studio: every documentary produced with the [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) pipeline lives here. **Each new video is published as a GitHub Release** — no per-video repositories to manage. Release assets (MP4, subtitles, poster, metadata) are freely downloadable..
 
 ## Library
 
