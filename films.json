@@ -1,0 +1,42 @@
+{
+  "studio": "Opuscar Studio",
+  "updated": "2026-10-12",
+  "films": [
+    {
+      "id": "video-002-zodiac",
+      "no": "002",
+      "title": "The Zodiac Killer",
+      "subtitle": "The Ciphers, the Letters, and the Killer Nobody Could Identify",
+      "tagline": "He left investigators a library of evidence \u2014 everything except an identity.",
+      "runtime": "17:23",
+      "year": "2026",
+      "tags": ["TRUE CRIME", "COLD CASE", "CIPHERS", "INVESTIGATION"],
+      "poster": "assets/video-002-zodiac/poster.jpg",
+      "thumb": "assets/video-002-zodiac/thumb.jpg",
+      "trailer": "assets/video-002-zodiac/zodiac-002-trailer.mp4",
+      "trailer_len": "1:09",
+      "chapters": [
+        ["0:00", "The Letters Arrive"],
+        ["1:35", "The Attacks: 1968\u20131969"],
+        ["3:55", "\u201cThis Is the Zodiac Speaking\u201d"],
+        ["5:39", "The 408 Cipher: Solved in 1969"],
+        ["7:26", "The 340 Cipher: 51 Years Unsolved"],
+        ["8:41", "How the 340 Was Broken"],
+        ["10:54", "The Unsolved Short Ciphers"],
+        ["12:08", "The Suspects"],
+        ["13:48", "Why the Case Still Fails"],
+        ["15:23", "What the Evidence Proves"]
+      ],
+      "release": {
+        "tag": "video-002-zodiac-v1.0.0",
+        "url": "https://github.com/superz1402/opuscar-studio/releases/tag/video-002-zodiac-v1.0.0",
+        "film_url": "https://github.com/superz1402/opuscar-studio/releases/download/video-002-zodiac-v1.0.0/zodiac-002.mp4",
+        "film_size": "1.24 GB",
+        "srt_url": "https://github.com/superz1402/opuscar-studio/releases/download/video-002-zodiac-v1.0.0/zodiac-002.srt",
+        "sources_url": "https://github.com/superz1402/opuscar-studio/blob/main/films/video-002-zodiac/SOURCES.md"
+      },
+      "status": "released"
+    }
+  ],
+  "next": { "no": "003", "status": "IN PRODUCTION" }
+}
