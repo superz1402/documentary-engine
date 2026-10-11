@@ -30,14 +30,14 @@ jobs:
         working-directory: opuscar
         env:
           LIB: ${{ github.workspace }}/opuscar
-        run: sh "studio/films/${{ github.event.inputs.film }}/build.sh"
+        run: sh "${{ github.workspace }}/studio/films/${{ github.event.inputs.film }}/build.sh"
       - name: Collect delivery package
         run: |
           mkdir -p dist
-          cp opuscar/films/${{ github.event.inputs.film }}/out/*.mp4 dist/ || true
-          cp opuscar/films/${{ github.event.inputs.film }}/*.srt dist/ || true
-          cp opuscar/films/${{ github.event.inputs.film }}/poster.jpg dist/ || true
-          cp opuscar/films/${{ github.event.inputs.film }}/*.md dist/ || true
+          cp studio/films/${{ github.event.inputs.film }}/out/*.mp4 dist/ || true
+          cp studio/films/${{ github.event.inputs.film }}/*.srt dist/ || true
+          cp studio/films/${{ github.event.inputs.film }}/poster.jpg dist/ || true
+          cp studio/films/${{ github.event.inputs.film }}/*.md dist/ || true
           ls -la dist
       - uses: actions/upload-artifact@v4
         with:
