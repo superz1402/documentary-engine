@@ -26,6 +26,11 @@ jobs:
       - name: Install deps (core + voice)
         working-directory: opuscar
         run: sh plugin/skills/lemo-opuscar/scripts/setup.sh deps voice
+      - name: Generate narration (TTS + ASR check)
+        working-directory: opuscar
+        run: |
+          FILM="${{ github.workspace }}/studio/films/${{ github.event.inputs.film }}"
+          .venv/bin/python core/tts/tts.py "$FILM/lines.json" "$FILM/vo"
       - name: Build film (render + mix + mux)
         working-directory: opuscar
         env:
