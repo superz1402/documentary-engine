@@ -10,10 +10,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
+    permissions:
+      contents: read
     steps:
       - name: Clone this studio
-        run: git clone --depth 1 "https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git" studio
+        run: git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" studio
       - name: Clone Lemo-Opuscar library
         run: git clone --depth 1 https://github.com/lemomo-ai/lemo-opuscar.git opuscar
       - name: Install deps (core + voice)
