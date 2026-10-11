@@ -1,0 +1,551 @@
+[
+ {
+  "id": "s01a",
+  "scene": "S1",
+  "text": "In the mountains above Bergen, Norway, there is a valley called Isdalen — the Ice Valley. In late November 1970, it gave up one of the strangest cases in European criminal history.",
+  "say": "In the mountains above Bergen, Norway, there is a valley called Isdalen — the Ice Valley. In late November nineteen seventy, it gave up one of the strangest cases in European criminal history.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "In the mountains above Bergen, Norway, there is a valley called Isdalen — the Ice Valley. In late November 1970, it gave up one of the strangest cases in European criminal history."
+ },
+ {
+  "id": "s01b",
+  "scene": "S1",
+  "text": "A woman was found dead on the valley floor. She had burned. And someone had carefully removed every trace of who she was — from her clothes, her belongings, and her luggage.",
+  "say": "A woman was found dead on the valley floor. She had burned. And someone had carefully removed every trace of who she was — from her clothes, her belongings, and her luggage.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s01c",
+  "scene": "S1",
+  "text": "She carried no name. Instead she left the opposite of a confession: eight false identities, a coded notebook, and a set of clues so strange that investigators have argued about them for more than fifty years.",
+  "say": "She carried no name. Instead she left the opposite of a confession: eight false identities, a coded notebook, and a set of clues so strange that investigators have argued about them for more than fifty years.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s01d",
+  "scene": "S1",
+  "text": "This is the file of the Isdal Woman. Not a story about who killed her. A story about a woman who erased herself — and the questions that erasure left behind.",
+  "say": "This is the file of the Isdal Woman. Not a story about who killed her. A story about a woman who erased herself — and the questions that erasure left behind.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "This is the file of the Isdal Woman. Not a story about who killed her. A story about a woman who erased herself — and the questions that erasure left behind."
+ },
+ {
+  "id": "s02a",
+  "scene": "S2",
+  "text": "Bergen police opened the case under a dry bureaucratic label: number 134, of 1970. Half a century later, the file is still open.",
+  "say": "Bergen police opened the case under a dry bureaucratic label: number one hundred and thirty four, of nineteen seventy. Half a century later, the file is still open.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "Bergen police opened the case under a dry bureaucratic label: number 134, of 1970. Half a century later, the file is still open."
+ },
+ {
+  "id": "s02b",
+  "scene": "S2",
+  "text": "The question at the centre of it has never changed. Who checked into Norway's hotels under eight different names — and why did she need all of them?",
+  "say": "The question at the centre of it has never changed. Who checked into Norway's hotels under eight different names — and why did she need all of them?",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s03a",
+  "scene": "S3",
+  "text": "It was a Sunday morning, the twenty-ninth of November 1970. A father and his two young daughters were hiking the foothills below the north face of Ulriken, one of Bergen's seven mountains.",
+  "say": "It was a Sunday morning, the twenty ninth of November nineteen seventy. A father and his two young daughters were hiking the foothills below the north face of Ulriken, one of Bergen's seven mountains.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "It was a Sunday morning, the twenty-ninth of November 1970. A father and his two young daughters were hiking the foothills below the north face of Ulriken, one of Bergen's seven mountains."
+ },
+ {
+  "id": "s03b",
+  "scene": "S3",
+  "text": "The valley between the slopes had a second name — Death Valley — earned by medieval history and by accidents on its treacherous scree. That morning it lived up to neither. It simply held something no one expected.",
+  "say": "The valley between the slopes had a second name — Death Valley — earned by medieval history and by accidents on its treacherous scree. That morning it lived up to neither. It simply held something no one expected.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s03c",
+  "scene": "S3",
+  "text": "Among the rocks, the family found the body of a woman. She was lying on her back. There was evidence of a small fire nearby. The front of her body and her clothing had been burned; her face could not be recognised.",
+  "say": "Among the rocks, the family found the body of a woman. She was lying on her back. There was evidence of a small fire nearby. The front of her body and her clothing had been burned; her face could not be recognised.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s03d",
+  "scene": "S3",
+  "text": "The daughters were walked home. The police were called. Within hours, the valley floor had become a scene of evidence.",
+  "say": "The daughters were walked home. The police were called. Within hours, the valley floor had become a scene of evidence.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s04a",
+  "scene": "S4",
+  "text": "Around her lay a strange inventory. An empty bottle of St. Hallvard liqueur. Two plastic water bottles. A plastic passport holder — empty.",
+  "say": "Around her lay a strange inventory. An empty bottle of Saint Hallvard liqueur. Two plastic water bottles. A plastic passport holder — empty.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "Around her lay a strange inventory. An empty bottle of Saint Hallvard liqueur. Two plastic water bottles. A plastic passport holder — empty."
+ },
+ {
+  "id": "s04b",
+  "scene": "S4",
+  "text": "Rubber boots. A woollen jumper. A scarf. Nylon stockings. An umbrella. A purse, a matchbox, a watch, two earrings, and a ring.",
+  "say": "Rubber boots. A woollen jumper. A scarf. Nylon stockings. An umbrella. A purse, a matchbox, a watch, two earrings, and a ring.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s04c",
+  "scene": "S4",
+  "text": "Beneath her body, a fur hat would later test positive for petrol. Around it, the traces of burned paper.",
+  "say": "Beneath her body, a fur hat would later test positive for petrol. Around it, the traces of burned paper.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s04d",
+  "scene": "S4",
+  "text": "And one detail above all: on nearly every item, the labels, marks and name-tags had been removed or rubbed away. Not lost. Removed.",
+  "say": "And one detail above all: on nearly every item, the labels, marks and name-tags had been removed or rubbed away. Not lost. Removed.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s05a",
+  "scene": "S5",
+  "text": "At the Gades Institute in Bergen, the post-mortem built a medical timeline. The woman had died from a combination of sleeping tablets and carbon monoxide.",
+  "say": "At the Gahdes Institute in Bergen, the post mortem built a medical timeline. The woman had died from a combination of sleeping tablets and carbon monoxide.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "At the Gades Institute in Bergen, the post-mortem built a medical timeline. The woman had died from a combination of sleeping tablets and carbon monoxide."
+ },
+ {
+  "id": "s05b",
+  "scene": "S5",
+  "text": "Her blood held the equivalent of fifty to seventy Fenemal tablets — a barbiturate that brings sleep, then stops the lungs. Twelve more pills were found beside the body.",
+  "say": "Her blood held the equivalent of fifty to seventy Fenemal tablets — a barbiturate that brings sleep, then stops the lungs. Twelve more pills were found beside the body.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s05c",
+  "scene": "S5",
+  "text": "Soot in her airways showed she was still alive as the fire reached her. A bruise on her neck could have come from a fall — or from a blow. The report could not say which.",
+  "say": "Soot in her airways showed she was still alive as the fire reached her. A bruise on her neck could have come from a fall — or from a blow. The report could not say which.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s05d",
+  "scene": "S5",
+  "text": "Her dental work was so distinctive that investigators removed her teeth and jaw for examination. That decision would matter, decades later.",
+  "say": "Her dental work was so distinctive that investigators removed her teeth and jaw for examination. That decision would matter, decades later.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s06a",
+  "scene": "S6",
+  "text": "Three days after the discovery, two suitcases were located at Bergen railway station, left behind as if their owner had simply stepped away.",
+  "say": "Three days after the discovery, two suitcases were located at Bergen railway station, left behind as if their owner had simply stepped away.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s06b",
+  "scene": "S6",
+  "text": "Inside: clothing, shoes, wigs, make-up, eczema cream, maps and timetables. Coins from Belgium, Britain and Switzerland. A pair of ordinary glasses — and sunglasses whose partial fingerprints matched the dead woman.",
+  "say": "Inside: clothing, shoes, wigs, make up, eczema cream, maps and timetables. Coins from Belgium, Britain and Switzerland. A pair of ordinary glasses — and sunglasses whose partial fingerprints matched the dead woman.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s06c",
+  "scene": "S6",
+  "text": "Sewn into the lining of one suitcase, police found five hundred Deutsche Marks — real money in 1970, left deliberately or forgotten.",
+  "say": "Sewn into the lining of one suitcase, police found five hundred Deutsche Marks — real money in nineteen seventy, left deliberately or forgotten.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "Sewn into the lining of one suitcase, police found five hundred Deutsche Marks — real money in 1970, left deliberately or forgotten."
+ },
+ {
+  "id": "s06d",
+  "scene": "S6",
+  "text": "And again, the same signature. Every identification mark on every item — inside and out — had been cut away or filed off.",
+  "say": "And again, the same signature. Every identification mark on every item — inside and out — had been cut away or filed off.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s07a",
+  "scene": "S7",
+  "text": "The trail led back through Bergen's hotels to the Hotel Hordaheimen. The woman had stayed there in mid-November 1970, in room 407.",
+  "say": "The trail led back through Bergen's hotels to the Hotel Hordahimen. The woman had stayed there in mid November nineteen seventy, in room four oh seven.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "The trail led back through Bergen's hotels to the Hotel Hordaheimen. The woman had stayed there in mid-November 1970, in room 407."
+ },
+ {
+  "id": "s07b",
+  "scene": "S7",
+  "text": "Staff remembered a woman about five feet four, dark brown hair, small brown eyes, good-looking. She kept to her room. She seemed, one account says, to be on guard.",
+  "say": "Staff remembered a woman about five feet four, dark brown hair, small brown eyes, good looking. She kept to her room. She seemed, one account says, to be on guard.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s07c",
+  "scene": "S7",
+  "text": "She told people she was a travelling saleswoman — sometimes an antiquities dealer. Witnesses noted wigs. More than one person remembered the smell of garlic.",
+  "say": "She told people she was a travelling saleswoman — sometimes an antiquities dealer. Witnesses noted wigs. More than one person remembered the smell of garlic.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s07d",
+  "scene": "S7",
+  "text": "On the twenty-third of November she paid her bill in cash, asked for a taxi, and checked out. She was last seen alive that day. What happened in the six days after that is not recorded anywhere.",
+  "say": "On the twenty third of November she paid her bill in cash, asked for a taxi, and checked out. She was last seen alive that day. What happened in the six days after that is not recorded anywhere.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "On the twenty-third of November she paid her bill in cash, asked for a taxi, and checked out. She was last seen alive that day. What happened in the six days after that is not recorded anywhere."
+ },
+ {
+  "id": "s08a",
+  "scene": "S8",
+  "text": "Her hotel registration forms read like a cast of characters. Genevieve Lancier of Leuven. Claudia Tielt of Brussels. Claudia Nielsen. Vera Jarle. Fenella Lorck. Elisabeth Leenhower of Ostend.",
+  "say": "Her hotel registration forms read like a cast of characters. Genevieve Lancier of Leuven. Claudia Tielt of Brussels. Claudia Nielsen. Vera Jarle. Fenella Lorck. Elisabeth Leenhower of Ostend.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s08b",
+  "scene": "S8",
+  "text": "Eight or more names, on handwritten forms filled out in French and German. Occupations and birthdays changed from form to form. One thing never did: she always gave her nationality as Belgian.",
+  "say": "Eight or more names, on handwritten forms filled out in French and German. Occupations and birthdays changed from form to form. One thing never did: she always gave her nationality as Belgian.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s08c",
+  "scene": "S8",
+  "text": "Later, investigators checked the addresses. Almost every street name on the forms was false — several, it turned out, did not exist at all.",
+  "say": "Later, investigators checked the addresses. Almost every street name on the forms was false — several, it turned out, did not exist at all.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s08d",
+  "scene": "S8",
+  "text": "Many of the names were saints' names. Whether that was devotion, habit, or a private joke, no one has ever established.",
+  "say": "Many of the names were saints' names. Whether that was devotion, habit, or a private joke, no one has ever established.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s09a",
+  "scene": "S9",
+  "text": "In one suitcase, police found a small notepad. Its pages carried entries in code — letters and figures in rows that looked like nonsense.",
+  "say": "In one suitcase, police found a small notepad. Its pages carried entries in code — letters and figures in rows that looked like nonsense.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s09b",
+  "scene": "S9",
+  "text": "Investigators cracked it. The code was simple: letter substitutions that opened onto dates and place names. It was a travel log, written in a private shorthand.",
+  "say": "Investigators cracked it. The code was simple: letter substitutions that opened onto dates and place names. It was a travel log, written in a private shorthand.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s09c",
+  "scene": "S9",
+  "text": "What the notebook establishes is a route. What it does not establish is a reason. The entries map where she went — not who she met, and not why she travelled.",
+  "say": "What the notebook establishes is a route. What it does not establish is a reason. The entries map where she went — not who she met, and not why she travelled.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s09d",
+  "scene": "S9",
+  "text": "It is the pattern of a person managing her own secrecy. Analysts agree on that much. Beyond it, the code keeps its silence.",
+  "say": "It is the pattern of a person managing her own secrecy. Analysts agree on that much. Beyond it, the code keeps its silence.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s10a",
+  "scene": "S10",
+  "text": "Reconstructed from the code, the receipts and the hotel forms, her last months look like this: Oslo. Trondheim. Stavanger. Then Bergen — twice — and at least one trip through Paris.",
+  "say": "Reconstructed from the code, the receipts and the hotel forms, her last months look like this: Oslo. Trondheim. Stavanger. Then Bergen — twice — and at least one trip through Paris.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s10b",
+  "scene": "S10",
+  "text": "In Stavanger, a shoe salesman remembered selling rubber boots to a well-dressed woman. In Bergen, a witness overheard her speaking German with a man in a hotel. Others recalled Flemish, or careful, broken English.",
+  "say": "In Stavanger, a shoe salesman remembered selling rubber boots to a well dressed woman. In Bergen, a witness overheard her speaking German with a man in a hotel. Others recalled Flemish, or careful, broken English.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s10c",
+  "scene": "S10",
+  "text": "She changed hotel rooms after checking in. She watched the street from windows, witnesses said. Every habit pointed the same direction: this was a woman practised at not being found.",
+  "say": "She changed hotel rooms after checking in. She watched the street from windows, witnesses said. Every habit pointed the same direction: this was a woman practised at not being found.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s11a",
+  "scene": "S11",
+  "text": "The investigation ran for months and consumed enormous police resources. Interpol circulated the composite sketches across Europe.",
+  "say": "The investigation ran for months and consumed enormous police resources. Interpol circulated the composite sketches across Europe.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s11b",
+  "scene": "S11",
+  "text": "No missing-person report matched her. No family ever came forward. In 1971, Bergen police closed the case with a verdict of probable suicide.",
+  "say": "No missing person report matched her. No family ever came forward. In nineteen seventy one, Bergen police closed the case with a verdict of probable suicide.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "No missing-person report matched her. No family ever came forward. In 1971, Bergen police closed the case with a verdict of probable suicide."
+ },
+ {
+  "id": "s11c",
+  "scene": "S11",
+  "text": "The woman who could not be named was buried on the fifth of February 1971, in a zinc coffin, in Bergen's Mollendal cemetery. Sixteen police officers attended.",
+  "say": "The woman who could not be named was buried on the fifth of February nineteen seventy one, in a zinc coffin, in Bergen's Mollen-dahl cemetery. Sixteen police officers attended.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "The woman who could not be named was buried on the fifth of February 1971, in a zinc coffin, in Bergen's Mollendal cemetery. Sixteen police officers attended."
+ },
+ {
+  "id": "s11d",
+  "scene": "S11",
+  "text": "The verdict settled the file. It never settled the argument.",
+  "say": "The verdict settled the file. It never settled the argument.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s12a",
+  "scene": "S12",
+  "text": "Take the official verdict seriously, because the evidence allows it. The toxicology supports a self-administered overdose. The scene held no weapon and no sign of struggle.",
+  "say": "Take the official verdict seriously, because the evidence allows it. The toxicology supports a self administered overdose. The scene held no weapon and no sign of struggle.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s12b",
+  "scene": "S12",
+  "text": "The erased identity fits one reading: a person preparing to disappear. Cutting labels, paying cash, false names — the logistics of someone who did not want to be traced, in life or in death.",
+  "say": "The erased identity fits one reading: a person preparing to disappear. Cutting labels, paying cash, false names — the logistics of someone who did not want to be traced, in life or in death.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s12c",
+  "scene": "S12",
+  "text": "But it explains the method, not the planning. Why travel a thousand kilometres to die in a valley? Why the notebook of dates and places no one was ever meant to read?",
+  "say": "But it explains the method, not the planning. Why travel a thousand kilometres to die in a valley? Why the notebook of dates and places no one was ever meant to read?",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s13a",
+  "scene": "S13",
+  "text": "Other details pull the other way. The bruise on the neck. A position and a fire that a deeply sedated person may not have managed alone.",
+  "say": "Other details pull the other way. The bruise on the neck. A position and a fire that a deeply sedated person may not have managed alone.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s13b",
+  "scene": "S13",
+  "text": "In 1991, a taxi driver came forward anonymously. He said that on that November day, a man had joined the woman in his cab for the ride to the railway station.",
+  "say": "In nineteen ninety one, a taxi driver came forward anonymously. He said that on that November day, a man had joined the woman in his cab for the ride to the railway station.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "In 1991, a taxi driver came forward anonymously. He said that on that November day, a man had joined the woman in his cab for the ride to the railway station."
+ },
+ {
+  "id": "s13c",
+  "scene": "S13",
+  "text": "In 2005, a Bergen hiker reported a sighting from five days before the body was found: the woman, dressed for the city, walking ahead of two men in coats. He said he was told to forget it; no formal record was made.",
+  "say": "In two thousand and five, a Bergen hiker reported a sighting from five days before the body was found: the woman, dressed for the city, walking ahead of two men in coats. He said he was told to forget it; no formal record was made.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "In 2005, a Bergen hiker reported a sighting from five days before the body was found: the woman, dressed for the city, walking ahead of two men in coats. He said he was told to forget it; no formal record was made."
+ },
+ {
+  "id": "s13d",
+  "scene": "S13",
+  "text": "None of this is evidence of murder. It is evidence of people who were never found — and of a scene that always allowed more than one story.",
+  "say": "None of this is evidence of murder. It is evidence of people who were never found — and of a scene that always allowed more than one story.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s14a",
+  "scene": "S14",
+  "text": "Then there is the theory everyone has heard. The Cold War context: a woman with false names moving through a NATO country. The codes. The discipline. The silence.",
+  "say": "Then there is the theory everyone has heard. The Cold War context: a woman with false names moving through a NATO country. The codes. The discipline. The silence.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s14b",
+  "scene": "S14",
+  "text": "Journalists noted that some of her movements coincided with missile testing areas on Norway's coast — and a fisherman placed her near one such zone. It is a suggestive pattern, and nothing more.",
+  "say": "Journalists noted that some of her movements coincided with missile testing areas on Norway's coast — and a fisherman placed her near one such zone. It is a suggestive pattern, and nothing more.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s14c",
+  "scene": "S14",
+  "text": "Here is what the file does not contain: not one document placing her in any intelligence service. Not one witness naming an agency. Bergen police never adopted the spy theory.",
+  "say": "Here is what the file does not contain: not one document placing her in any intelligence service. Not one witness naming an agency. Bergen police never adopted the spy theory.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s14d",
+  "scene": "S14",
+  "text": "It remains exactly what it was in 1970 — a story that fits the shape of the clues, but none of the facts in the file prove it. Hold it lightly.",
+  "say": "It remains exactly what it was in nineteen seventy — a story that fits the shape of the clues, but none of the facts in the file prove it. Hold it lightly.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "It remains exactly what it was in 1970 — a story that fits the shape of the clues, but none of the facts in the file prove it. Hold it lightly."
+ },
+ {
+  "id": "s15a",
+  "scene": "S15",
+  "text": "In 2016, Bergen police reopened the case, and the media brought new attention. NRK commissioned six new sketches, shown to people who had actually seen her.",
+  "say": "In twenty sixteen, Bergen police reopened the case, and the media brought new attention. N R K commissioned six new sketches, shown to people who had actually seen her.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "In 2016, Bergen police reopened the case, and the media brought new attention. NRK commissioned six new sketches, shown to people who had actually seen her."
+ },
+ {
+  "id": "s15b",
+  "scene": "S15",
+  "text": "The BBC and Norway's NRK turned the case into the podcast Death in Ice Valley, and listeners around the world began sending new leads.",
+  "say": "The B B C and Norway's N R K turned the case into the podcast Death in Ice Valley, and listeners around the world began sending new leads.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "The BBC and Norway's NRK turned the case into the podcast Death in Ice Valley, and listeners around the world began sending new leads."
+ },
+ {
+  "id": "s15c",
+  "scene": "S15",
+  "text": "The reinvestigation gathered what the 1970s could not: fresh interviews, digital restorations of the sketches, and the first full re-examination of the preserved evidence.",
+  "say": "The reinvestigation gathered what the nineteen seventies could not: fresh interviews, digital restorations of the sketches, and the first full re examination of the preserved evidence.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "The reinvestigation gathered what the 1970s could not: fresh interviews, digital restorations of the sketches, and the first full re-examination of the preserved evidence."
+ },
+ {
+  "id": "s16a",
+  "scene": "S16",
+  "text": "Modern forensics went to work on what 1970 had preserved. Isotope testing on her teeth — kept separately since the autopsy — placed her birth around 1930, in or near Nuremberg, in southern Germany.",
+  "say": "Modern forensics went to work on what nineteen seventy had preserved. Isotope testing on her teeth — kept separately since the autopsy — placed her birth around nineteen thirty, in or near Nuremberg, in southern Germany.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "Modern forensics went to work on what 1970 had preserved. Isotope testing on her teeth — kept separately since the autopsy — placed her birth around 1930, in or near Nuremberg, in southern Germany."
+ },
+ {
+  "id": "s16b",
+  "scene": "S16",
+  "text": "The same analysis suggested she moved as a child to France, or the French-German border region — which matched earlier handwriting analysis pointing to a French education.",
+  "say": "The same analysis suggested she moved as a child to France, or the French German border region — which matched earlier handwriting analysis pointing to a French education.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s16c",
+  "scene": "S16",
+  "text": "Her DNA pointed to a maternal line found in south-eastern Europe or south-western Asia. Genetic genealogist Colleen Fitzpatrick of the DNA Doe Project joined the effort.",
+  "say": "Her DNA pointed to a maternal line found in south eastern Europe or south western Asia. Genetic genealogist Colleen Fitzpatrick of the DNA Doe Project joined the effort.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s16d",
+  "scene": "S16",
+  "text": "Even her dentist seemed to have been abroad: the dental work matched practices in central or southern Europe, East Asia — or South America. Every answer opened another map.",
+  "say": "Even her dentist seemed to have been abroad: the dental work matched practices in central or southern Europe, East Asia — or South America. Every answer opened another map.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s17a",
+  "scene": "S17",
+  "text": "So strip away fifty years of folklore. Here is what the evidence supports: a woman in her thirties or forties, born around 1930, travelling alone under false names with great care.",
+  "say": "So strip away fifty years of folklore. Here is what the evidence supports: a woman in her thirties or forties, born around nineteen thirty, travelling alone under false names with great care.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "So strip away fifty years of folklore. Here is what the evidence supports: a woman in her thirties or forties, born around 1930, travelling alone under false names with great care."
+ },
+ {
+  "id": "s17b",
+  "scene": "S17",
+  "text": "Confirmed: the medical cause of death, the dates, the hotels, the aliases, the coded notebook, the 1971 verdict of probable suicide — and the 2016 reopening that changed none of it.",
+  "say": "Confirmed: the medical cause of death, the dates, the hotels, the aliases, the coded notebook, the nineteen seventy one verdict of probable suicide — and the twenty sixteen reopening that changed none of it.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "Confirmed: the medical cause of death, the dates, the hotels, the aliases, the coded notebook, the 1971 verdict of probable suicide — and the 2016 reopening that changed none of it."
+ },
+ {
+  "id": "s17c",
+  "scene": "S17",
+  "text": "Disputed: the neck injury. The two-men sighting. The taxi passenger. Whether any second person was ever at the valley floor.",
+  "say": "Disputed: the neck injury. The two men sighting. The taxi passenger. Whether any second person was ever at the valley floor.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s17d",
+  "scene": "S17",
+  "text": "Unknown: her name. Her home country — likely southern Germany or the French border region, but never proven. Why she erased her identity. And whether anyone helped her die — or helped her erase.",
+  "say": "Unknown: her name. Her home country — likely southern Germany or the French border region, but never proven. Why she erased her identity. And whether anyone helped her die — or helped her erase.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s18a",
+  "scene": "S18",
+  "text": "She lies in a zinc coffin in Bergen, in ground that has held her for over fifty years. Somewhere, there may be a family archive, a birth record, a name on a page — that no one has checked.",
+  "say": "She lies in a zinc coffin in Bergen, in ground that has held her for over fifty years. Somewhere, there may be a family archive, a birth record, a name on a page — that no one has checked.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "s18b",
+  "scene": "S18",
+  "text": "The Isdal Woman. Case 134, of 1970. Case status: open.",
+  "say": "The Isdal Woman. Case one thirty four, of nineteen seventy. Case status: open.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "The Isdal Woman. Case 134, of 1970. Case status: open."
+ },
+ {
+  "id": "s18c",
+  "scene": "S18",
+  "text": "Full source list and chapter timestamps are in the description below.",
+  "say": "Full source list and chapter timestamps are in the description below.",
+  "voice": "am_michael",
+  "speed": 0.95
+ }
+]

@@ -1,0 +1,167 @@
+[
+ {
+  "id": "A1",
+  "scene": "A",
+  "text": "Two suitcases sat at Bergen railway station. Their owner never came back for them.",
+  "say": "Two suitcases sat at Bergen railway station. Their owner never came back for them.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "A2",
+  "scene": "A",
+  "text": "Inside: wigs, make-up, maps — and coins from three countries.",
+  "say": "Inside: wigs, make up, maps — and coins from three countries.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "A3",
+  "scene": "A",
+  "text": "Every label. Every name-tag. Cut away, or rubbed off. On purpose.",
+  "say": "Every label. Every name tag. Cut away, or rubbed off. On purpose.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "A4",
+  "scene": "A",
+  "text": "Sewn into one lining: five hundred Deutsch Marks. Left behind.",
+  "say": "Sewn into one lining: five hundred Deutsch Marks. Left behind.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "A5",
+  "scene": "A",
+  "text": "The woman who owned them was found dead in the Ice Valley, in November 1970. This is the Isdal Woman — the full film is one click away.",
+  "say": "The woman who owned them was found dead in the Ice Valley, in November nineteen seventy. This is the Isdal Woman — the full film is one click away.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "The woman who owned them was found dead in the Ice Valley, in November 1970. This is the Isdal Woman — the full film is one click away."
+ },
+ {
+  "id": "B1",
+  "scene": "B",
+  "text": "She wrote in code. Police cracked it in 1970 — and it only made things stranger.",
+  "say": "She wrote in code. Police cracked it in nineteen seventy — and it only made things stranger.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "She wrote in code. Police cracked it in 1970 — and it only made things stranger."
+ },
+ {
+  "id": "B2",
+  "scene": "B",
+  "text": "The notebook decoded to dates and place names: Oslo. Trondheim. Stavanger. Bergen.",
+  "say": "The notebook decoded to dates and place names: Oslo. Trondheim. Stavanger. Bergen.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "B3",
+  "scene": "B",
+  "text": "Her hotel forms used at least eight false names — always Belgian, always a different birthday.",
+  "say": "Her hotel forms used at least eight false names — always Belgian, always a different birthday.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "B4",
+  "scene": "B",
+  "text": "And almost every street she wrote down turned out not to exist.",
+  "say": "And almost every street she wrote down turned out not to exist.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "B5",
+  "scene": "B",
+  "text": "The notebook maps a route. It never explains a reason. The full film — The Isdal Woman — is one click away.",
+  "say": "The notebook maps a route. It never explains a reason. The full film — The Isdal Woman — is one click away.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "C1",
+  "scene": "C",
+  "text": "False names. Codes. A NATO country in 1970. Was the Isdal Woman a spy?",
+  "say": "False names. Codes. A NATO country in nineteen seventy. Was the Isdal Woman a spy?",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "False names. Codes. A NATO country in 1970. Was the Isdal Woman a spy?"
+ },
+ {
+  "id": "C2",
+  "scene": "C",
+  "text": "Her travels seemed to brush past missile testing zones on Norway's coast.",
+  "say": "Her travels seemed to brush past missile testing zones on Norway's coast.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "C3",
+  "scene": "C",
+  "text": "But here is what the case file does not contain: one single document tying her to any intelligence service.",
+  "say": "But here is what the case file does not contain: one single document tying her to any intelligence service.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "C4",
+  "scene": "C",
+  "text": "Bergen police never adopted the spy theory. The evidence never earned it.",
+  "say": "Bergen police never adopted the spy theory. The evidence never earned it.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "C5",
+  "scene": "C",
+  "text": "The truth may be quieter — and stranger. The full film — The Isdal Woman — is one click away.",
+  "say": "The truth may be quieter — and stranger. The full film — The Isdal Woman — is one click away.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "D1",
+  "scene": "D",
+  "text": "In 2017, science finally spoke. Her teeth said: born around 1930, in or near Nuremberg, Germany.",
+  "say": "In twenty seventeen, science finally spoke. Her teeth said: born around nineteen thirty, in or near Nuremberg, Germany.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "In 2017, science finally spoke. Her teeth said: born around 1930, in or near Nuremberg, Germany."
+ },
+ {
+  "id": "D2",
+  "scene": "D",
+  "text": "Isotopes said she grew up in France, or on its border.",
+  "say": "Isotopes said she grew up in France, or on its border.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "D3",
+  "scene": "D",
+  "text": "Her DNA points to a maternal line from south-eastern Europe, or south-western Asia.",
+  "say": "Her D N A points to a maternal line from south eastern Europe, or south western Asia.",
+  "voice": "am_michael",
+  "speed": 0.95,
+  "asr": "Her DNA points to a maternal line from south-eastern Europe, or south-western Asia."
+ },
+ {
+  "id": "D4",
+  "scene": "D",
+  "text": "Fifty-five years later, we know where she was from. We still do not know who she was.",
+  "say": "Fifty five years later, we know where she was from. We still do not know who she was.",
+  "voice": "am_michael",
+  "speed": 0.95
+ },
+ {
+  "id": "D5",
+  "scene": "D",
+  "text": "The case is still open. Watch the full film — The Isdal Woman.",
+  "say": "The case is still open. Watch the full film — The Isdal Woman.",
+  "voice": "am_michael",
+  "speed": 0.95
+ }
+]
