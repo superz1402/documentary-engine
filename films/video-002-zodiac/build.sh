@@ -8,7 +8,7 @@ export LIB
 cd "$LIB"
 
 # 1. timeline (only if missing: narration + durations must exist)
-[ -f "$HERE/timeline.js" ] || "$HERE/../.."//.venv/bin/python "$HERE/gen_timeline.py" || true
+if [ ! -f "$HERE/timeline.js" ]; then "$LIB/.venv/bin/python" "$HERE/gen_timeline.py"; fi
 
 # 2. picture
 node core/render/events.mjs "$HERE"
@@ -17,6 +17,9 @@ node core/render/video.mjs "$HERE" --fps 24 --workers 2 --out "$HERE/out/video.m
 # 3. audio mix (score + foley + voice)
 "$LIB/.venv/bin/python" "$HERE/mix.py"
 
-# 4. mux
-sh core/render/mux.sh "$HERE/out/video.mp4" "$HERE/out/mix.wav" "$HERE/out/zodiac-002.mp4" 24 6
+# 4. mux (two-pass loudness trim; video is already CRF 14 -> stream copy)
+ffmpeg -y -loglevel error -i "$HERE/out/mix.wav" -filter:a ebur128=peak=true -f null - 2>&1 | grep -A4 "Summary:" | awk '/I:/{print "loudness", $2, "LUFS"}'
+ffmpeg -y -loglevel error -i "$HERE/out/video.mp4" -i "$HERE/out/mix.wav" \
+  -filter:a "volume=1.2dB,alimiter=limit=0.8709:level=false" -map 0:v -map 1:a \
+  -c:v copy -c:a aac -b:a 256k -movflags +faststart -shortest "$HERE/out/zodiac-002.mp4"
 echo "BUILD DONE: $HERE/out/zodiac-002.mp4"
