@@ -1,5 +1,5 @@
 {
-  "studio": "Opuscar Studio",
+  "studio": "The Documentary Engine",
   "updated": "2026-10-12",
   "films": [
     {
@@ -142,17 +142,48 @@
       ],
       "release": {
         "tag": "video-003-isdal-v1.0.0",
-        "url": "https://github.com/superz1402/opuscar-studio/releases/tag/video-003-isdal-v1.0.0",
-        "film_url": "https://github.com/superz1402/opuscar-studio/releases/download/video-003-isdal-v1.0.0/isdal-003.mp4",
+        "url": "https://github.com/superz1402/documentary-engine/releases/tag/video-003-isdal-v1.0.0",
+        "film_url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-v1.0.0/isdal-003.mp4",
         "film_size": "294 MB",
-        "srt_url": "https://github.com/superz1402/opuscar-studio/releases/download/video-003-isdal-v1.0.0/isdal-003.srt",
-        "sources_url": "https://github.com/superz1402/opuscar-studio/blob/main/films/video-003-isdal/SOURCES.md"
+        "srt_url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-v1.0.0/isdal-003.srt",
+        "sources_url": "https://github.com/superz1402/documentary-engine/blob/main/films/video-003-isdal/SOURCES.md"
       },
-      "status": "released"
+      "status": "released",
+      "shorts": {
+        "version": "v2 — real archival plates",
+        "release_tag": "video-003-isdal-shorts-v2.0.0",
+        "items": [
+          {
+            "id": "A",
+            "title": "The Strange Suitcases",
+            "file": "isdal-short-A-v2.mp4",
+            "url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-shorts-v2.0.0/isdal-short-A-v2.mp4"
+          },
+          {
+            "id": "B",
+            "title": "The Notebook and the Travel Trail",
+            "file": "isdal-short-B-v2.mp4",
+            "url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-shorts-v2.0.0/isdal-short-B-v2.mp4"
+          },
+          {
+            "id": "C",
+            "title": "Was She a Spy?",
+            "file": "isdal-short-C-v2.mp4",
+            "url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-shorts-v2.0.0/isdal-short-C-v2.mp4"
+          },
+          {
+            "id": "D",
+            "title": "The Identity That Remains Unknown",
+            "file": "isdal-short-D-v2.mp4",
+            "url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-shorts-v2.0.0/isdal-short-D-v2.mp4"
+          }
+        ]
+      }
     }
   ],
   "next": {
     "no": "003",
     "status": "IN PRODUCTION"
-  }
+  },
+  "site_note": "Repo renamed from opuscar-studio to documentary-engine (old URLs redirect)."
 }

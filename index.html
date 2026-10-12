@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Opuscar Studio — Documentary Library</title>
+<title>The Documentary Engine — Documentary Library</title>
 <meta name="description" content="A documentary studio. Every film ships as a GitHub Release: full MP4, subtitles, chapter timestamps and sources.">
-<meta property="og:title" content="Opuscar Studio — Documentary Library">
+<meta property="og:title" content="The Documentary Engine — Documentary Library">
 <meta property="og:description" content="Investigative documentaries built end-to-end by an autonomous pipeline. Watch the trailers, download the films.">
 <meta property="og:image" content="assets/video-002-zodiac/thumb.jpg">
 <meta property="og:type" content="website">
@@ -146,7 +146,7 @@ footer .row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
     <nav>
       <a href="#library">LIBRARY</a>
       <a href="#about">PIPELINE</a>
-      <a href="https://github.com/superz1402/opuscar-studio" target="_blank" rel="noopener">GITHUB</a>
+      <a href="https://github.com/superz1402/documentary-engine" target="_blank" rel="noopener">GITHUB</a>
     </nav>
   </div>
 </header>
@@ -182,7 +182,7 @@ footer .row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 <footer>
   <div class="wrap row">
     <div>OPUSCAR STUDIO — FILMS RENDERED FROM <a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">LEMO-OPUSCAR</a></div>
-    <div><a href="https://github.com/superz1402/opuscar-studio" target="_blank" rel="noopener">GITHUB</a> · CASE STATUS: OPEN</div>
+    <div><a href="https://github.com/superz1402/documentary-engine" target="_blank" rel="noopener">GITHUB</a> · CASE STATUS: OPEN</div>
   </div>
 </footer>
 
@@ -215,6 +215,12 @@ fetch('films.json').then(r=>r.json()).then(DATA=>{
           <a class="btn ghost" href="${f.release.srt_url}">SUBTITLES (.SRT)</a>
           <a class="btn ghost" href="${f.release.sources_url}" target="_blank" rel="noopener">SOURCES</a>
         </div>
+        ${f.shorts ? `<div class="actions shortsrow" style="margin-top:10px">
+          <a class="btn ghost" href="${f.shorts.items[0].url}">SHORT A · ${f.shorts.items[0].title}</a>
+          <a class="btn ghost" href="${f.shorts.items[1].url}">SHORT B · ${f.shorts.items[1].title}</a>
+          <a class="btn ghost" href="${f.shorts.items[2].url}">SHORT C · ${f.shorts.items[2].title}</a>
+          <a class="btn ghost" href="${f.shorts.items[3].url}">SHORT D · ${f.shorts.items[3].title}</a>
+        </div>` : ''}
         <div class="chapters">
           <div class="chapsh">CHAPTERS — IN THE FULL FILM</div>
           <div class="chlist">${f.chapters.map(c=>`<div><b>${c[0]}</b><i></i><span>${c[1]}</span></div>`).join('')}</div>
