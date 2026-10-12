@@ -31,11 +31,22 @@ Researched against primary police reporting, BBC/NRK's Death in Ice Valley, and 
 • BBC News (2017): Isdal Woman — the mystery death haunting Norway
 • BBC World Service & NRK: Death in Ice Valley (2018)
 • Wikipedia: Isdal Woman (synthesis, with citations to Norwegian reporting)
-• Full ledger: github.com/superz1402/opuscar-studio → films/video-003-isdal/SOURCES.md
+• Full ledger: github.com/superz1402/documentary-engine → films/video-003-isdal/SOURCES.md
 
 🔎 This film distinguishes confirmed facts from disputed claims and hypotheses. Nothing is presented as proof that the Isdal Woman was a spy, or that she was murdered.
 
 #isdalwoman #documentary #truecrime #coldcase #norway
+
+🖼 IMAGE CREDITS (shorts v2 archival plates — all Wikimedia Commons, license-checked)
+• Bergen Railway Station — Bahnfrend, CC BY-SA 4.0
+• 500-DeutscheMark note — Dr. Thomas Liptak, CC BY-SA 4.0
+• Bergen 1970 / Trondheim 1970 — Municipal Archives of Trondheim, CC BY 2.0
+• Isdalen valley views — Aqwis (CC BY-SA 3.0); Nasjonalbiblioteket (Public domain)
+• Norwegian topo map 1970 — USGS, Public domain
+• Oslo 1970 — Fortepan, CC BY-SA 3.0 · Nuremberg — PiotrPiotrPl, CC BY-SA 4.0
+• Møllendal cemetery — Reinhardheydt, Public domain
+• "Isdalen at Svartediket" — Johan Christian Dahl, 1842, Public domain (National Museum, Oslo)
+Full ledger with source links: films/video-003-isdal/stills/credits.json
 
 ## Tags
 isdal woman, isdalskvinnen, unsolved mystery, cold case documentary, norway cold case, death in ice valley, bergen politi, true crime documentary, unidentified woman, unidentified decedent, 1970 cold case, spy mystery, bergen norway

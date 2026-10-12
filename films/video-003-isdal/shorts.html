@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Isdal Shorts</title>
+<title>Isdal Shorts v2 — Documentary Engine</title>
 <link rel="stylesheet" href="fonts.css">
 <style>
   html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0C141F; }
@@ -19,6 +19,9 @@
       <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="3" seed="21" result="g"/>
       <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 5.9" result="gm"/>
       <feComposite in="d" in2="gm" operator="in"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#050A10" flood-opacity="0.45"/>
     </filter>
     <clipPath id="frameClip"><rect width="1080" height="1920"/></clipPath>
   </defs>
@@ -40,6 +43,8 @@ const D = SDATA[WHICH], DUR = D.dur;
 const PARTN = { A: 1, B: 2, C: 3, D: 4 }[WHICH];
 const PARTT = { A: 'THE STRANGE SUITCASES', B: 'THE NOTEBOOK & THE TRAVEL TRAIL',
                 C: 'WAS SHE A SPY?', D: 'THE IDENTITY THAT REMAINS UNKNOWN' }[WHICH];
+const world = document.getElementById('world');
+const defs = document.querySelector('defs');
 
 const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag);
   for (const k in attrs || {}) e.setAttribute(k, attrs[k]); (parent || world).appendChild(e); return e; };
@@ -106,6 +111,24 @@ function stamp(parent,x,y,str,size,col,opt={}) {
   T(g,0,size*.34,str,size,col,{f:F.mono,w:700,a:'middle',ls:size*.12});
   return g;
 }
+function chip(parent,x,y,str,col,opt={}) {
+  const size = opt.size||22, wpx = str.length*size*.58+size*1.4;
+  const g = el('g',{transform:`translate(${x},${y})`,opacity:opt.o==null?1:opt.o},parent);
+  rect(g,-wpx/2,-size*.82,wpx,size*1.64,'rgba(12,20,31,0.0)',{stroke:col,sw:2,rx:size*.4});
+  T(g,0,size*.32,str,size,col,{f:F.mono,w:700,a:'middle',ls:1.5});
+  return g;
+}
+function pin(g,x,y,col) {
+  circ(g,x,y+7,9,'rgba(5,10,16,0.35)');
+  circ(g,x,y,10,col); circ(g,x-3,y-3,3.2,'rgba(255,255,255,0.75)');
+}
+function tape(g,x,y,ang,opt={}) {
+  const t = el('g',{transform:`translate(${x},${y}) rotate(${ang})`,opacity:(opt.o==null?.85:opt.o)},g);
+  rect(t,-62,-17,124,34,'rgba(235,240,244,0.42)',{rx:2});
+  rect(t,-62,-17,10,34,'rgba(235,240,244,0.22)',{rx:2});
+  rect(t,52,-17,10,34,'rgba(235,240,244,0.22)',{rx:2});
+  return t;
+}
 
 // paper grain (static)
 const paperC = document.getElementById('paper').getContext('2d');
@@ -134,7 +157,7 @@ function drawFX(t) {
   fxctx.globalAlpha = 1;
 }
 
-// ---------- chrome ----------
+// ---------- chrome / captions / CTA ----------
 function chrome(t) {
   const g = el('g',{},world);
   const u = ease(seg(t,0,.5));
@@ -166,105 +189,334 @@ function captions(t) {
   rect(c,40,y0,14,bh,C.red,{rx:6});
   linesArr.forEach((ln,i)=>T(c,W/2,y0+70+i*lh,ln,44,C.cream,{f:F.sans,w:700,a:'middle',ls:.5}));
 }
-
-// ---------- per-short visuals ----------
-function vSuitcase(g, cx, cy, s, lt) {
-  const u = ease(seg(lt,.6,1.3));
-  const gg = el('g',{opacity:u,transform:`translate(${cx},${cy+ (1-u)*40}) scale(${s*lerp(1.15,1,u)})`},g);
-  rect(gg,-300,-200,600,400,C.frost,{rx:18,stroke:C.ice,sw:4});
-  rect(gg,-300,-200,600,80,C.ice,{rx:18,stroke:C.ice,sw:3});
-  line(gg,-300,-120,300,-120,C.ice,3);
-  rect(gg,-56,-96,44,30,C.amber,{rx:4,stroke:C.ink,sw:2});
-  rect(gg,12,-96,44,30,C.amber,{rx:4,stroke:C.ink,sw:2});
-  path(gg,'M-60,-200 C-60,-256 60,-256 60,-200','none',0,{fill:'none',stroke:C.ice,sw:8});
-  line(gg,150,60,150,140,C.red,6);
-  poly(gg,[[150,60],[210,40],[210,150]],C.steel,2.5,{fill:C.paper,o:.9});
-  T(gg,150,196,'LABEL CUT',22,C.red,{f:F.mono,w:700,a:'middle',ls:3});
-  return gg;
+function endCard(t) {
+  const last = D.lines[D.lines.length-1];
+  const cu = ease(seg(t, last.t1 + .15, last.t1 + .75));
+  if (cu <= 0) return;
+  const dark = WHICH !== 'B';
+  const cg = el('g',{opacity:cu,transform:`translate(${W/2},${940+(1-cu)*46}) scale(${lerp(.92,1,cu)})`},world);
+  rect(cg,-440,-160,880,320,dark?'rgba(12,20,31,0.92)':'rgba(12,20,31,0.92)',{rx:18,stroke:C.amber,sw:3});
+  T(cg,0,-84,'WATCH THE FULL FILM',46,C.amber,{f:F.mono,w:700,a:'middle',ls:4});
+  T(cg,0,-16,'THE ISDAL WOMAN — 13:53',40,C.cream,{f:F.serif,w:700,a:'middle'});
+  line(cg,-200,26,200,26,C.red,4);
+  T(cg,0,78,'THE DOCUMENTARY ENGINE · LINK IN DESCRIPTION',24,C.ice,{f:F.mono,a:'middle',ls:2});
+  T(cg,0,132,'REAL CASE FILES · SOURCES IN DESCRIPTION',18,C.steel,{f:F.mono,a:'middle',ls:1.5});
 }
-function vNotebook(g, cx, cy, lt) {
-  const u = ease(seg(lt,.6,1.3));
-  const gg = el('g',{opacity:u,transform:`translate(${cx},${cy})`},g);
-  rect(gg,-330,-260,660,520,C.cream,{rx:12,stroke:C.steel,sw:2});
-  const rnd = R(11);
+
+// ---------- PHOTO PLATES ----------
+function drawPhoto(parent, b, t, a) {
+  const {id, w, h, cy, rot=0} = b, cx = W/2;
+  const p = seg(t, b.t0, b.t1);
+  const inU = ease(seg(t, b.t0-.35, b.t0+.3));
+  const g = el('g',{opacity:a, filter:'url(#soft)',
+    transform:`translate(${cx},${cy}) rotate(${rot}) scale(${lerp(.96,1,pop(inU))})`},parent);
+  const mw = w+56, mh = h+52+66;
+  rect(g,-mw/2,-mh/2,mw,mh,C.cream,{rx:4});
+  // photo with ken-burns
+  const kb = 1.055 + 0.085*p, drift = Math.sin(p*Math.PI*.9)*9;
+  const clip = el('clipPath',{id:'pc_'+id+PARTN},defs);
+  el('rect',{x:-w/2,y:-h/2,width:w,height:h},clip);
+  const ig = el('g',{'clip-path':`url(#pc_${id}${PARTN})`},g);
+  const xf = `scale(${kb}) translate(${drift},${drift*.55})`;
+  if (b.id2) {
+    el('image',{href:`stills/${b.id}.jpg`,x:-w/2,y:-h/2,width:w,height:h,
+      preserveAspectRatio:'xMidYMid slice',transform:xf},ig);
+    const mid = b.t0 + (b.t1-b.t0)*.5;
+    const u2 = ease(seg(t, mid, mid+.65));
+    if (u2 > 0) el('image',{href:`stills/${b.id2}.jpg`,x:-w/2,y:-h/2,width:w,height:h,
+      preserveAspectRatio:'xMidYMid slice',transform:xf,opacity:u2},ig);
+  } else {
+    el('image',{href:`stills/${id}.jpg`,x:-w/2,y:-h/2,width:w,height:h,
+      preserveAspectRatio:'xMidYMid slice',transform:xf},ig);
+  }
+  rect(g,-w/2,-h/2,w,h,'none',{stroke:'rgba(19,32,46,0.4)',sw:2});
+  // caption band on the mat
+  T(g,0,h/2+40,b.caption,26,C.ink,{f:F.mono,w:700,a:'middle',ls:1.5});
+  T(g,0,h/2+70,b.tag,15,C.steel,{f:F.mono,a:'middle',ls:1});
+  // tape corners
+  tape(g,-mw/2+74,-mh/2+8,rot-9);
+  tape(g, mw/2-74,-mh/2+8,rot+9);
+  decorations(g, b, t, w, h);
+}
+function decorations(g, b, t, w, h) {
+  const u = k => ease(seg(t, b.t0+.3+k*.3, b.t0+.65+k*.3));
+  if (b.id === 'station') {
+    if (u(0)>0) { const tg = el('g',{opacity:u(0),transform:`translate(${w/2-10},${-h/2+34}) rotate(8)`},g);
+      rect(tg,-92,-26,184,52,C.cream,{stroke:C.steel,sw:2,rx:4});
+      T(tg,0,-4,'PROPERTY:',15,C.steel,{f:F.mono,a:'middle',ls:2});
+      T(tg,0,16,'UNCLAIMED',17,C.red,{f:F.mono,w:700,a:'middle',ls:2}); }
+  }
+  if (b.id === 'dm500') {
+    line(g,-w/2+26,-h/2+26,w/2-26,-h/2+26,C.red,2.5,{o:.85,dash:'7 6'});
+    if (u(0)>0) chip(g,0,-h/2-56,'SEWN INTO THE LINING',C.amber,{o:u(0)});
+  }
+  if (b.id === 'isdalen_hist') {
+    if (u(0)>0) { const mid = b.t0 + (b.t1-b.t0)*.5, sw = seg(t, mid, mid+.65);
+      const cg2 = el('g',{opacity:u(0)*(1-sw*.0)},g);
+      chip(cg2,-w/2+150,-h/2-52,'ISDALEN — 29 NOV 1970',C.red,{o:1}); }
+  }
+  if (b.id === 'stavanger_map' && b.pins) {
+    const pts = [[-140,-300,'OSLO'],[-40,-80,'TRONDHEIM'],[-170,180,'STAVANGER'],[120,300,'BERGEN']];
+    path(g,`M${pts[0][0]},${pts[0][1]} L${pts[1][0]},${pts[1][1]} L${pts[2][0]},${pts[2][1]} L${pts[3][0]},${pts[3][1]}`,
+      C.red,3.5,{o:.9,dash:'2 9'});
+    pts.forEach((p,i)=>{ if (u(i)<=0) return;
+      const pg = el('g',{opacity:u(i),transform:`translate(${p[0]},${p[1]}) scale(${lerp(1.6,1,pop(u(i)))})`},g);
+      pin(pg,0,0,C.red);
+      const lg = el('g',{opacity:u(i),transform:`translate(${p[0]+(p[0]<40?-16:16)},${p[1]-18})`},g);
+      T(lg,p[0]<40?0:0,0,p[2],19,C.ink,{f:F.mono,w:700,a:'middle',ls:1.5});
+      rect(lg,-(p[2].length*6.4)-10,-18,p[2].length*12.8+20,26,C.cream,{rx:4,o:.9});
+      T(lg,0,0,p[2],19,C.ink,{f:F.mono,w:700,a:'middle',ls:1.5}); });
+  }
+  if (b.id === 'oslo1970' && b.codes) {
+    const rows = [['C 7 — 12.10','NOT FOUND'],['D 3 — 24.10','NOT FOUND'],['E 9 — 21.11','NOT FOUND'],['F 2 — 18.11','NOT FOUND']];
+    const cg2 = el('g',{opacity:1,transform:`translate(${w/2-165},${40})`},g);
+    rect(cg2,-140,-150,290,330,'rgba(243,246,248,0.94)',{rx:6,stroke:C.steel,sw:2});
+    T(cg2,0,-116,'STREETS SHE WROTE',17,C.steel,{f:F.mono,w:700,a:'middle',ls:1});
+    rows.forEach((r,i)=>{ const u1=u(i); if (u1<=0) return;
+      const rg = el('g',{opacity:u1,transform:`translate(0,${-70+i*56})`},cg2);
+      T(rg,-110,0,r[0],18,C.ink,{f:F.mono,ls:1});
+      T(rg,-110,24,r[1],14,C.red,{f:F.mono,w:700,ls:2}); });
+  }
+  if (b.id === 'trondheim_air' && b.why) {
+    if (u(0)>0) { const wg = el('g',{opacity:u(0),transform:`translate(${w/2-150},${-40}) scale(${lerp(1.8,1,pop(u(0)))})`},g);
+      T(wg,0,0,'WHY?',92,C.red,{f:F.serif,w:700,a:'middle',filter:'url(#stampInk)'}); }
+  }
+  if (b.id === 'bergen1970' && b.chips) {
+    b.chips.forEach((s,i)=>{ if (u(i)<=0) return;
+      chip(g,(i-1)*225,h/2+150,s,C.ice,{o:u(i),size:21}); });
+  }
+  if (b.id === 'nuremberg' && b.chip) {
+    if (u(0)>0) chip(g,0,-h/2-52,b.chip,C.amber,{o:u(0)});
+  }
+  if (b.id === 'mollendal' && b.q) {
+    if (u(0)>0) { const qg = el('g',{opacity:u(0),transform:`translate(0,${-h/2-64})`},g);
+      T(qg,0,0,'NAME: UNKNOWN — 1970 → TODAY',22,C.red,{f:F.mono,w:700,a:'middle',ls:2}); }
+  }
+}
+</script>
+<script>
+// ---------- VECTOR SCENES (clipboard collage) ----------
+function board(g, x, y, w, h, title) {
+  rect(g,x-w/2,y-h/2,w,h,'#16283A',{rx:10,stroke:C.steel,sw:2});
+  rect(g,x-70,y-h/2-22,140,42,C.steel,{rx:6});
+  circ(g,x,y-h/2-1,10,C.paper);
+  if (title) T(g,x,y-h/2+46,title,20,C.amber,{f:F.mono,w:700,a:'middle',ls:3});
+}
+function vItems(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.3, b.t0+.7+k*.3));
+  const bg = el('g',{transform:`translate(${W/2},960)`},g);
+  board(bg,0,0,760,900,'RECOVERED FROM THE SUITCASES');
+  const items = [['WIGS','M0-60,20 C-60,-30 60,-30 60,20 Z'],['MAKE-UP',''],['MAPS',''],['COINS · 3 COUNTRIES','']];
+  const pos = [[-180,-160],[180,-160],[-180,180],[180,180]];
+  items.forEach((it,i)=>{ const u1 = u(i); if (u1<=0) return;
+    const cg = el('g',{opacity:u1,transform:`translate(${pos[i][0]},${pos[i][1]}) scale(${lerp(1.25,1,pop(u1))})`},bg);
+    rect(cg,-150,-140,300,280,C.frost,{rx:10,stroke:C.steel,sw:2});
+    if (i===0) path(cg,'M-70,60 C-70,-30 70,-30 70,60 M-70,60 L70,60','none',0,{fill:'none',stroke:C.blue,sw:5});
+    if (i===1) { rect(cg,-14,-70,28,90,C.red,{rx:8}); rect(cg,-8,-100,16,34,C.amber,{rx:4}); }
+    if (i===2) { poly(cg,[[-80,-50],[0,-70],[80,-50],[80,60],[0,40],[-80,60]],C.blue,3,{fill:C.paper}); line(cg,0,-70,0,40,C.blue,3); }
+    if (i===3) { circ(cg,-30,0,32,C.amber,{stroke:C.ink,sw:3}); circ(cg,34,10,26,C.amber,{stroke:C.ink,sw:3}); circ(cg,10,-38,20,C.amber,{stroke:C.ink,sw:3}); }
+    T(cg,0,105,it[0],21,C.ink,{f:F.mono,w:700,a:'middle',ls:1.5});
+  });
+}
+function vLabels(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.3, b.t0+.7+k*.3));
+  const bg = el('g',{transform:`translate(${W/2},960)`},g);
+  board(bg,0,0,760,760,'EVERY LABEL — REMOVED');
+  const cg = el('g',{opacity:u(0),transform:`translate(0,-20)`},bg);
+  // label with cut corner
+  rect(cg,-250,-160,500,240,C.cream,{rx:6,stroke:C.steel,sw:2});
+  for (let i=0;i<5;i++) line(cg,-210,-110+i*38,210,-110+i*38,C.steel,1.5,{o:.5});
+  path(cg,'M250,-160 L250,-40 L150,-160','none',0,{fill:C.paper,o:1});
+  path(cg,'M250,-160 L250,-40 L150,-160',C.red,3);
+  // scissors
+  const sg = el('g',{opacity:u(1),transform:`translate(120,-40) rotate(-28)`},cg);
+  line(sg,-46,-26,46,26,C.red,6); line(sg,-46,26,46,-26,C.red,6);
+  circ(sg,-58,-34,11,'none',{stroke:C.red,sw:6}); circ(sg,-58,34,11,'none',{stroke:C.red,sw:6});
+  // rubbed-off patch
+  const rg = el('g',{opacity:u(2),transform:`translate(-120,40)`},cg);
+  rect(rg,-90,-40,180,80,C.frost,{rx:8});
+  path(rg,'M-60,-20 C-30,-34 30,-26 60,-18','rgba(78,99,119,0.5)',2);
+  path(rg,'M-55,0 C-20,-12 25,-2 55,6','rgba(78,99,119,0.4)',2);
+  if (u(3)>0) stamp(bg,0,270,'CUT AWAY — ON PURPOSE',30,C.red,{ang:-4,o:u(3)});
+}
+function vCipher(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.3, b.t0+.7+k*.3));
+  const bg = el('g',{transform:`translate(${W/2},940)`},g);
+  rect(bg,-340,-430,680,860,C.cream,{rx:10,stroke:C.steel,sw:2,filter:'url(#soft)'});
+  tape(bg,-250,-430+8,-14); tape(bg,250,-430+8,14);
+  T(bg,0,-370,'HOTEL NOTEBOOK — HANDOVER CODE',19,C.steel,{f:F.mono,w:700,a:'middle',ls:1.5});
   const dec = [['C 7 — 12.10','OSLO'],['D 3 — 24.10','TRONDHEIM'],['E 9 — 21.11','STAVANGER'],['F 2 — 18.11','BERGEN']];
+  const rnd = R(11);
   for (let r=0;r<4;r++){
     let s=''; for (let k=0;k<8;k++) s += String.fromCharCode(65+Math.floor(rnd()*26));
-    const u1 = ease(seg(lt,.9+r*.28,1.25+r*.28));
-    T(gg,-290,-160+r*90,s,34,C.ink,{f:F.mono,ls:5,o:u1});
-    const u2 = ease(seg(lt,1.5+r*.28,1.85+r*.28));
-    if (u2>0){ T(gg,60,-160+r*90,'→ '+dec[r][1],32,C.red,{f:F.serif,w:700,o:u2}); }
-    line(gg,-290,-130+r*90,290,-130+r*90,C.steel,1.2,{o:.5});
+    const u1 = ease(seg(t,b.t0+.5+r*.3,b.t0+.85+r*.3));
+    const rg = el('g',{opacity:u1,transform:`translate(0,${-280+r*118})`},bg);
+    T(rg,-290,0,s,34,C.ink,{f:F.mono,ls:5});
+    T(rg,-290,30,dec[r][0],20,C.steel,{f:F.mono,ls:2});
+    const u2 = ease(seg(t,b.t0+1.1+r*.3,b.t0+1.45+r*.3));
+    if (u2>0){ T(rg,60,10,'→ '+dec[r][1],32,C.red,{f:F.serif,w:700}); }
+    line(bg,-290,-232+r*118,290,-232+r*118,C.steel,1.2,{o:.4});
   }
-  return gg;
+  const mg = el('g',{opacity:u(4),transform:`translate(40,-215)`},bg);
+  circ(mg,0,0,64,'none',{stroke:C.blue,sw:5,o:.85});
+  line(mg,44,44,110,110,C.blue,7);
+  if (u(5)>0) stamp(bg,0,352,'DECODED — 1970',26,C.red,{ang:-4,o:u(5)});
 }
-function vSpy(g, cx, cy, lt, t) {
-  const u = ease(seg(lt,.6,1.2));
-  const gg = el('g',{opacity:u},g);
-  rect(gg,cx-330,cy-230,660,460,C.ink,{rx:14});
-  T(gg,cx,cy-160,'THE CONTEXT — 1970',26,C.amber,{f:F.mono,w:700,a:'middle',ls:3});
-  T(gg,cx,cy-96,'A NATO COUNTRY.',40,C.cream,{f:F.serif,w:700,a:'middle'});
-  T(gg,cx,cy-40,'FALSE NAMES. CODES.',40,C.cream,{f:F.serif,w:700,a:'middle'});
-  path(gg,`M${cx-290},${cy+180} C${cx-140},${cy+120} ${cx+40},${cy+110} ${cx+240},${cy+150} L${cx+240},${cy+210} L${cx-290},${cy+210} Z`,'none',0,{fill:'rgba(94,134,168,0.3)'});
-  T(gg,cx,cy+200,'MISSILE TEST ZONES — NORWEGIAN COAST',20,C.ice,{f:F.mono,w:700,a:'middle'});
-  const u2 = seg(lt,2.4,2.9);
-  if (u2>0){
-    const sg = el('g',{opacity:ease(u2),transform:`translate(${cx},${cy+40}) scale(${lerp(1.5,1,pop(u2))})`,filter:'url(#stampInk)'},gg);
-    stamp(sg,0,0,'NOT IN THE FILE',40,C.red,{ang:-6});
+function vAliases(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.24, b.t0+.66+k*.24));
+  const bg = el('g',{transform:`translate(${W/2},960)`},g);
+  if (b.photo) {
+    const pw = b.photo.w, ph = b.photo.h, px = 250, py = -380;
+    const pg = el('g',{opacity:ease(seg(t,b.t0+.2,b.t0+.55)), filter:'url(#soft)',
+      transform:`translate(${px},${py}) rotate(${b.photo.rot})`},bg);
+    rect(pg,-pw/2-20,-ph/2-20,pw+40,ph+40,C.cream,{rx:4});
+    el('image',{href:`stills/${b.photo.id}.jpg`,x:-pw/2,y:-ph/2,width:pw,height:ph,
+      preserveAspectRatio:'xMidYMid slice'},pg);
+    rect(pg,-pw/2,-ph/2,pw,ph,'none',{stroke:'rgba(19,32,46,0.4)',sw:2});
+    tape(pg,-pw/2+50,-ph/2-8,-12);
+    T(pg,0,ph/2+18,b.photo.caption,14,C.ink,{f:F.mono,w:700,a:'middle'});
   }
-  return gg;
-}
-function vIdentity(g, cx, cy, lt) {
-  const u = ease(seg(lt,.6,1.2));
-  const gg = el('g',{opacity:u,transform:`translate(${cx},${cy})`},g);
-  const rows = [['BORN ≈ 1930','IN OR NEAR NUREMBERG',C.red,1.0],['CHILDHOOD','FRANCE / THE BORDER REGION',C.amber,1.8],
-                ['mtDNA H24','S-E EUROPE / S-W ASIA',C.blue,2.6]];
-  rows.forEach((r,i)=>{
-    const u2 = ease(seg(lt,r[3],r[3]+.5));
-    if (u2<=0) return;
-    const rg = el('g',{opacity:u2,transform:`translate(0,${-210+i*150+(1-u2)*24})`},gg);
-    rect(rg,-330,0,660,120,C.cream,{rx:10,stroke:r[2],sw:2.5});
-    rect(rg,-330,0,16,120,r[2],{rx:4});
-    T(rg,-290,52,r[0],34,C.ink,{f:F.mono,w:700});
-    T(rg,-290,96,r[1],24,C.steel,{f:F.sans,w:700});
+  const cards = [['GENEVIEVE LANCIER','LEUVEN'],['CLAUDIA TIELT','BRUSSELS'],['CLAUDIA NIELSEN','BRUSSELS'],
+                 ['VERA JARLE','ANTWERP'],['FENELLA LORCK','—'],['ELISABETH LEENHOWER','OSTEND'],
+                 ['ALEXIA ZARNE-MERCHEZ','BRUSSELS'],['CLAUDIA TIELT (II)','BRUSSELS']];
+  cards.forEach((cd,i)=>{ const u1 = u(i); if (u1<=0) return;
+    const col = i % 4, row = Math.floor(i / 4);
+    const ang = (col-1.5)*2.5 + (row? -1.5: 1.5);
+    const cg = el('g',{opacity:u1,transform:`translate(${-285+col*190},${-60+row*175}) rotate(${ang}) scale(${lerp(1.3,1,pop(u1))})`},bg);
+    rect(cg,-90,-66,180,132,C.cream,{rx:6,stroke:C.steel,sw:2});
+    T(cg,0,-24,cd[0],13.5,C.ink,{f:F.mono,w:700,a:'middle',ls:.3});
+    T(cg,0,2,cd[1],12,C.steel,{f:F.mono,a:'middle',ls:1});
+    T(cg,0,42,'B. 19??',13,C.red,{f:F.mono,w:700,a:'middle',ls:1});
   });
-  return gg;
+  if (u(8)>0) { const sg = el('g',{opacity:u(8)},bg);
+    stamp(sg,-40,-150,'AT LEAST EIGHT FALSE NAMES',25,C.red,{ang:-3,o:u(8)});
+    chip(sg,-40,300,'ALWAYS BELGIAN · ALWAYS A DIFFERENT BIRTHDAY',C.ink,{o:u(8),size:18}); }
 }
-function mountains(g) {
-  path(g,`M0,1560 L0,1440 L160,1250 L320,1420 L500,1180 L660,1390 L830,1200 L980,1400 L1080,1300 L1080,1920 L0,1920 Z`,'none',0,{fill:'#0F1B29',o:.9});
-  path(g,`M0,1660 L0,1560 L200,1400 L420,1600 L640,1420 L860,1620 L1080,1470 L1080,1920 L0,1920 Z`,'none',0,{fill:'#0A121D'});
+function vCoast(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.35, b.t0+.75+k*.35));
+  const bg = el('g',{transform:`translate(${W/2},940)`},g);
+  rect(bg,-380,-420,760,760,'#16283A',{rx:14,stroke:C.steel,sw:2});
+  T(bg,0,-370,'THE CONTEXT — 1970',22,C.amber,{f:F.mono,w:700,a:'middle',ls:3});
+  T(bg,0,-316,'A NATO COUNTRY.',38,C.cream,{f:F.serif,w:700,a:'middle'});
+  T(bg,0,-262,'FALSE NAMES. CODES.',38,C.cream,{f:F.serif,w:700,a:'middle'});
+  path(bg,`M-330,180 C-140,120 40,110 240,150 L240,210 L-330,210 Z`,'none',0,{fill:'rgba(94,134,168,0.3)'});
+  if (u(0)>0){ const z1 = el('g',{opacity:u(0)},bg);
+    circ(z1,-150,160,54,C.red,{o:.18}); circ(z1,120,175,40,C.red,{o:.18});
+    T(z1,-150,166,'ZONE A',17,C.ice,{f:F.mono,w:700,a:'middle'});
+    T(z1,120,181,'ZONE B',17,C.ice,{f:F.mono,w:700,a:'middle'});
+    T(z1,0,244,'MISSILE TEST ZONES — NORWEGIAN COAST',18,C.ice,{f:F.mono,w:700,a:'middle'}); }
+  if (u(1)>0){ const mg = el('g',{opacity:u(1),transform:`translate(240,-160) rotate(18) scale(${lerp(1.5,1,pop(u(1)))})`},bg);
+    path(mg,'M-70,0 L40,-13 L70,0 L40,13 Z',C.ice,3,{fill:C.steel});
+    path(mg,'M40,-13 L58,-38 L64,-6','none',0,{fill:C.steel,stroke:C.ice,sw:2.5});
+    path(mg,'M40,13 L58,38 L64,6','none',0,{fill:C.steel,stroke:C.ice,sw:2.5});
+    line(mg,-100,0,-70,0,C.ice,4,{dash:'4 5'}); }
+  if (u(2)>0) stamp(bg,0,330,'NOT IN THE FILE',38,C.red,{ang:-6,o:u(2)});
+}
+function vFolder(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.35, b.t0+.75+k*.35));
+  const bg = el('g',{transform:`translate(${W/2},940)`},g);
+  rect(bg,-360,-300,720,560,C.cream,{rx:10,stroke:C.steel,sw:2.5,filter:'url(#soft)'});
+  rect(bg,-360,-300,240,70,C.steel,{rx:10});
+  rect(bg,-360,-270,240,40,C.steel);
+  T(bg,-240,-252,'CASE FILE 134/70',19,C.paper,{f:F.mono,w:700,a:'middle',ls:1});
+  const rows = [['INTELLIGENCE LINKS','—'],['AGENCY CONTACTS','—'],['TASKING / CODE NAMES','—']];
+  rows.forEach((r,i)=>{ const u1 = u(i); if (u1<=0) return;
+    const rg = el('g',{opacity:u1,transform:`translate(0,${-140+i*92})`},bg);
+    T(rg,-310,0,r[0],22,C.ink,{f:F.mono,w:700,ls:1});
+    rect(rg,-310,16,540,30,C.steel,{o:.25,rx:4});
+    T(rg,250,0,'0',34,C.red,{f:F.mono,w:700,a:'middle'}); });
+  if (u(3)>0) { const ng = el('g',{opacity:u(3),transform:`translate(0,190) scale(${lerp(1.6,1,pop(u(3)))})`},bg);
+    T(ng,0,0,'ZERO DOCUMENTS',44,C.red,{f:F.mono,w:700,a:'middle',ls:3,filter:'url(#stampInk)'}); }
+}
+function vLedger(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.35, b.t0+.75+k*.35));
+  const bg = el('g',{transform:`translate(${W/2},930)`},g);
+  T(bg,0,-330,'WHAT THE EVIDENCE SAYS',24,C.amber,{f:F.mono,w:700,a:'middle',ls:3});
+  const rows = [['“SPY” THEORY','NOT SUPPORTED',C.red],['POLICE CONCLUSION','NEVER ADOPTED',C.amber],
+                ['THE EVIDENCE','NEVER EARNED IT',C.ice]];
+  rows.forEach((r,i)=>{ const u1 = u(i); if (u1<=0) return;
+    const rg = el('g',{opacity:u1,transform:`translate(0,${-220+i*140})`},bg);
+    rect(rg,-360,-54,720,108,'#16283A',{rx:10,stroke:r[2],sw:2.5});
+    rect(rg,-360,-54,14,108,r[2],{rx:4});
+    T(rg,-320,-4,r[0],27,C.cream,{f:F.mono,w:700,ls:1});
+    T(rg,-320,34,r[1],20,r[2],{f:F.mono,w:700,ls:2}); });
+  if (u(3)>0) stamp(bg,0,270,'THE EVIDENCE NEVER EARNED IT',28,C.red,{ang:-4,o:u(3)});
+}
+function vFrance(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.35, b.t0+.75+k*.35));
+  const bg = el('g',{transform:`translate(${W/2},930)`},g);
+  T(bg,0,-380,'ISOTOPES — WHERE SHE GREW UP',22,C.amber,{f:F.mono,w:700,a:'middle',ls:2.5});
+  const fr = el('g',{opacity:u(0),transform:`translate(-40,40)`},bg);
+  path(fr,'M-150,-240 L-40,-260 L60,-220 L150,-190 L170,-90 L120,20 L150,150 L40,240 L-60,200 L-140,90 L-190,-30 L-160,-140 Z',
+    C.ice,4,{fill:'rgba(94,134,168,0.18)'});
+  const hg = el('g',{opacity:u(1)},fr);
+  path(hg,'M60,-220 L150,-190 L170,-90 L120,20','none',0,{stroke:C.red,sw:14,o:.28});
+  if (u(1)>0) { chip(hg,110,-260,'BORDER REGION',C.red,{o:u(1),size:19});
+    circ(hg,150,-190,9,C.red); }
+  if (u(2)>0) { const ng = el('g',{opacity:u(2),transform:`translate(330,-240)`},bg);
+    circ(ng,0,0,8,C.amber);
+    T(ng,0,-22,'NUREMBERG',17,C.amber,{f:F.mono,w:700,a:'middle',ls:1.5});
+    path(ng,'M0,10 C-40,60 -140,90 -190,140',C.amber,3,{dash:'3 7',o:.8}); }
+  if (u(3)>0) chip(bg,0,330,'FRANCE — OR THE FRANCO-GERMAN BORDER',C.ice,{o:u(3),size:20});
+}
+function vDna(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.3, b.t0+.7+k*.3));
+  const bg = el('g',{transform:`translate(${W/2},940)`},g);
+  T(bg,0,-360,'THE TEETH. THE BONES. THE DNA.',24,C.amber,{f:F.mono,w:700,a:'middle',ls:2.5});
+  const hg = el('g',{opacity:u(0),transform:`translate(0,30)`},bg);
+  let d1='M', d2='M';
+  for (let i=0;i<=40;i++){ const y=-220+i*11, ph=i/40*Math.PI*3;
+    d1 += (i?' L':'')+Math.sin(ph)*110+','+y; d2 += (i?' L':'')+Math.sin(ph+Math.PI)*110+','+y; }
+  path(hg,d1,C.blue,5,{o:.9}); path(hg,d2,C.ice,5,{o:.9});
+  for (let i=1;i<40;i+=3){ const y=-220+i*11, ph=i/40*Math.PI*3;
+    const x1=Math.sin(ph)*110, x2=Math.sin(ph+Math.PI)*110;
+    line(hg,x1,y,x2,y,C.steel,3,{o:.7}); }
+  if (u(1)>0) chip(bg,0,320,'mtDNA HAPLOGROUP H24 — MATERNAL LINE',C.red,{o:u(1),size:22});
+  if (u(2)>0) chip(bg,0,380,'SOUTH-EASTERN EUROPE / SOUTH-WESTERN ASIA',C.ice,{o:u(2),size:19});
+}
+function vCase(g, t, b) {
+  const u = k => ease(seg(t, b.t0+.35+k*.3, b.t0+.7+k*.3));
+  const bg = el('g',{transform:`translate(${W/2},930)`},g);
+  rect(bg,-360,-300,720,560,C.cream,{rx:10,stroke:C.steel,sw:2.5,filter:'url(#soft)'});
+  rect(bg,-360,-300,240,70,C.steel,{rx:10}); rect(bg,-360,-270,240,40,C.steel);
+  T(bg,-240,-252,'CASE 134/70',19,C.paper,{f:F.mono,w:700,a:'middle',ls:1});
+  const qs = ['WHO WAS SHE?','WHY THE ALIASES?','WHY ISDALEN?'];
+  qs.forEach((q,i)=>{ const u1 = u(i); if (u1<=0) return;
+    const qg = el('g',{opacity:u1,transform:`translate(0,${-140+i*95})`},bg);
+    T(qg,-310,0,q,30,C.ink,{f:F.serif,w:700,ls:1});
+    T(qg,280,0,'?',40,C.red,{f:F.serif,w:700,a:'middle'}); });
+  if (u(3)>0) { const og = el('g',{opacity:u(3),transform:`translate(0,190)`},bg);
+    stamp(og,0,0,'STILL OPEN',34,C.red,{ang:-4,o:u(3)}); }
 }
 
 // ---------- render ----------
 window.DUR = DUR; window.EV = [];
 window.render = function(t) {
   world.innerHTML = '';
+  defs.innerHTML = document.getElementById('stampInk').outerHTML + document.getElementById('soft').outerHTML
+    + '<clipPath id="frameClip"><rect width="1080" height="1920"/></clipPath>';
   const dark = WHICH !== 'B';
   rect(world,0,0,W,H, dark ? C.night : C.paper);
   if (dark) mountains(world);
   chrome(t);
-  const lt = t;
-  if (WHICH==='A') vSuitcase(world, W/2, 860, 1.0, lt);
-  if (WHICH==='B') vNotebook(world, W/2, 900, lt);
-  if (WHICH==='C') vSpy(world, W/2, 880, lt, t);
-  if (WHICH==='D') vIdentity(world, W/2, 900, lt);
+  for (const b of D.beats) {
+    const a = ease(seg(t, b.t0-.35, b.t0+.12)) * (1 - ease(seg(t, b.t1+.18, b.t1+.5)));
+    if (a <= 0.002) continue;
+    if (b.kind === 'photo') drawPhoto(world, b, t, a);
+    else { const fn = {items:vItems,labels:vLabels,cipher:vCipher,aliases:vAliases,coast:vCoast,
+            folder:vFolder,ledger:vLedger,france:vFrance,dna:vDna,case:vCase}[b.fn];
+      if (fn) fn(world, t, b); }
+  }
   const hookU = ease(seg(t,.5,1.1)) * (1 - ease(seg(t, D.lines[0].t1, D.lines[0].t1+.5)));
   if (hookU > 0) {
     const hg = el('g',{opacity:hookU,transform:`translate(${W/2},${560})`},world);
     const hook = { A:'THE STRANGE SUITCASES', B:'SHE WROTE IN CODE', C:'WAS SHE A SPY?', D:'SCIENCE SPOKE IN 2017' }[WHICH];
-    T(hg,0,0,hook,72,dark?C.cream:C.ink,{f:F.serif,w:700,a:'middle',ls:1});
-    line(hg,-260,36,260,36,C.red,5);
+    rect(hg,-470,-84,940,148, dark?'rgba(12,20,31,0.62)':'rgba(232,237,241,0.78)',{rx:12});
+    T(hg,0,0,hook,70,dark?C.cream:C.ink,{f:F.serif,w:700,a:'middle',ls:1});
+    line(hg,-260,44,260,44,C.red,5);
   }
   captions(t);
-  const last = D.lines[D.lines.length-1];
-  const cu = ease(seg(t, last.t1 - .4, last.t1 + .1));
-  if (cu > 0) {
-    const cg = el('g',{opacity:cu,transform:`translate(${W/2},${H-1250+(1-cu)*40})`},world);
-    rect(cg,-420,-90,840,180,C.ink,{rx:16,stroke:C.amber,sw:3});
-    T(cg,0,-18,'WATCH THE FULL FILM',44,C.amber,{f:F.mono,w:700,a:'middle',ls:3});
-    T(cg,0,44,'THE ISDAL WOMAN — 13:53',30,C.cream,{f:F.sans,w:700,a:'middle'});
-    T(cg,0,148,'OPUSCAR STUDIO · LINK IN DESCRIPTION',24,C.steel,{f:F.mono,a:'middle',ls:2});
-  }
+  endCard(t);
   drawFX(t);
   let fo = 0;
   if (t < .5) fo = 1 - t/.5;
@@ -272,9 +524,23 @@ window.render = function(t) {
   document.getElementById('fade').setAttribute('opacity', fo);
   return true;
 };
-</script>
-<script>
-document.fonts.ready.then(() => { try { window.render(0); } catch (e) {} window.READY = true; });
+function mountains(g) {
+  path(g,`M0,1560 L0,1440 L160,1250 L320,1420 L500,1180 L660,1390 L830,1200 L980,1400 L1080,1300 L1080,1920 L0,1920 Z`,'none',0,{fill:'#0F1B29',o:.9});
+  path(g,`M0,1660 L0,1560 L200,1400 L420,1600 L640,1420 L860,1620 L1080,1470 L1080,1920 L0,1920 Z`,'none',0,{fill:'#0A121D'});
+}
+
+// ---------- boot: preload plates so SVG <image> paints synchronously ----------
+const PLATE_IDS = new Set();
+for (const b of D.beats) {
+  if (b.kind === 'photo') PLATE_IDS.add(b.id);
+  if (b.photo) PLATE_IDS.add(b.photo.id);
+  if (b.id2) PLATE_IDS.add(b.id2);
+}
+Promise.all([...PLATE_IDS].map(id => new Promise(res => {
+  const im = new Image(); im.onload = im.onerror = res; im.src = `stills/${id}.jpg`; return im;
+}))).then(() => {
+  document.fonts.ready.then(() => { try { window.render(0); } catch (e) { console.error(e); } window.READY = true; });
+});
 </script>
 </body>
 </html>
