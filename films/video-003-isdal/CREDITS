@@ -1,0 +1,22 @@
+# CREDITS — video-003-isdal
+
+## Production
+- Writing, research, narration script, scene design, code, score, mix: Opuscar Studio pipeline
+  (lemo-opuscar) — 2026.
+- Narration voice: Kokoro-ONNX `am_michael` (Kokoro v1.0, Apache-2.0 model weights).
+- Engine: "ice-dossier", adapted from the studio's halftone-dossier engine (Zodiac, video-002).
+- Fonts (subset WOFF2, redistributed within this project only): Noto Serif SC, Noto Sans SC
+  (SIL OFL 1.1); JetBrains Mono (OFL); ZCOOL KuaiLe, Bagel Fat One (OFL).
+
+## Imagery
+- Every visual is an original schematic reconstruction drawn programmatically (SVG/CSS/canvas).
+- No archival photographs, no AI-generated imagery, no reproductions of police evidence or
+  crime-scene material are used. Maps are stylised and non-navigational.
+
+## Audio
+- Score and foley: synthesized in-project (numpy DSP) — no third-party samples.
+- Mastering: EBU R128-guided loudness normalisation (≈ −14.3 LUFS integrated).
+
+## Sources for all factual claims
+- See SOURCES.md (BBC News 2017; BBC/NRK "Death in Ice Valley" 2018; Bergen police case 134/70
+  reporting; Wikipedia synthesis with citations; NRK 2016 reopening coverage).
