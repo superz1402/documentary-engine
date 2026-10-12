@@ -2,13 +2,16 @@
 // Usage:
 //   node render_shorts.mjs <filmDir> <A|B|C|D> [--fps 24] [--out file.mp4] [--qc t1,t2,...]
 //   --qc renders single frames at the given times into out/qc_<X>_<t>.png (fast check)
-// Reuses the opuscar core static server + browser launcher (same as render_range.mjs).
+// Uses this repo's core static server + browser launcher (core/render/).
 import fs from 'fs'; import path from 'path'; import { spawn } from 'child_process';
-import { serve, pageURL } from '/home/z/my-project/opuscar/core/render/serve.mjs';
-import { EXE, ARGS } from '/home/z/my-project/opuscar/core/render/browser.mjs';
-import { chromium } from '/home/z/my-project/opuscar/node_modules/playwright-core/index.mjs';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { serve, pageURL } from '../../core/render/serve.mjs';
+import { EXE, ARGS } from '../../core/render/browser.mjs';
+const require = createRequire(import.meta.url);
+const { chromium } = require('playwright-core');
 
-const ROOT = '/home/z/my-project/opuscar';
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const args = process.argv.slice(2);
 const film = path.resolve(args[0]);
 const which = (args[1] || 'A').toUpperCase();

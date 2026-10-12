@@ -1,0 +1,16 @@
+{
+  "name": "documentary-engine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Documentary Engine — deterministic exhibit-documentary pipeline: research dossier -> narration -> TTS -> SVG/canvas render(t) engine -> archival plates -> frame-accurate render -> procedural score -> release.",
+  "type": "module",
+  "scripts": {
+    "events": "node core/render/events.mjs",
+    "still": "node core/render/still.mjs",
+    "render": "node core/render/video.mjs",
+    "range": "node core/render/range.mjs"
+  },
+  "dependencies": {
+    "playwright-core": ">=1.40.0"
+  }
+}

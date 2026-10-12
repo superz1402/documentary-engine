@@ -5,3 +5,8 @@ asr_out.txt
 *.mp4
 *.wav
 __pycache__/
+
+# TTS model binaries (large, re-downloadable) — see core/README.md
+core/tts/*.onnx
+core/tts/*.bin
+node_modules/

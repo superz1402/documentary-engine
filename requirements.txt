@@ -1,0 +1,12 @@
+# Documentary Engine — Python deps (audio mix + TTS + stills pipeline)
+numpy>=1.26
+scipy>=1.11
+soundfile>=0.12
+requests>=2.31
+Pillow>=10.0
+
+# Voice pipeline (core/tts/tts.py uses a local Kokoro ONNX model):
+#   models are NOT committed (large binaries). Place next to core/tts/:
+#     kokoro-v1.0.onnx  voices-v1.0.bin
+#   and run an ONNX runtime env if you need to regenerate narration:
+#     onnxruntime>=1.17
