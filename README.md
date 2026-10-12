@@ -1,6 +1,6 @@
 # Opuscar Studio — Video Library
 
-A public production studio: every documentary produced with the [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) pipeline lives here. **🎬 Landing page (GitHub Pages): https://superz1402.github.io/opuscar-studio/ — film library with embedded trailers.**
+A public production studio: every documentary produced with the [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) pipeline lives here. **🎬 Landing page (GitHub Pages): https://superz1402.github.io/documentary-engine/ — film library with embedded trailers.**
 
 Each new video is published as a GitHub Release — no per-video repositories to manage. Release assets (MP4, subtitles, poster, metadata) are freely downloadable..
 
