@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Engine PoC — representative documentary scene</title>
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #0C141F; }
+  svg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#050A10" flood-opacity="0.4"/>
+    </filter>
+    <filter id="blurbg"><feGaussianBlur stdDeviation="14"/></filter>
+    <clipPath id="frameClip"><rect width="1920" height="1080"/></clipPath>
+  </defs>
+  <g clip-path="url(#frameClip)">
+    <g id="world"></g>
+    <rect id="fade" width="1920" height="1080" fill="#0C141F" opacity="0"/>
+  </g>
+</svg>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const DUR = 16, FPS = 30;
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag);
+  for (const k in attrs || {}) e.setAttribute(k, attrs[k]); (parent || world).appendChild(e); return e; };
+const clamp = (x,a,b) => Math.min(b, Math.max(a,x));
+const lerp = (a,b,u) => a+(b-a)*u;
+const ease = u => 1 - Math.pow(1 - clamp(u,0,1), 3);
+const seg = (t,a,b) => clamp((t-a)/Math.max(1e-6,b-a),0,1);
+function T(parent,x,y,str,size,fill,opt={}) {
+  const e = el('text',{x,y,fill,'font-family':opt.f||'Liberation Serif, serif','font-size':size,
+    'font-weight':opt.w||'normal','text-anchor':opt.a||'start','letter-spacing':opt.ls||0,
+    opacity:opt.o==null?1:opt.o},parent);
+  e.textContent = str; return e;
+}
+// subtitle cues (from poc.srt — identical timing)
+const CUES = [
+  [1.2, 4.6, 'In November 1970, two girls found a body in the ice valley.'],
+  [5.0, 9.0, 'The woman carried no name — every label had been removed.'],
+  [9.5, 13.5, 'Fifty years later, the case is still open.'],
+];
+window.render = function(t) {
+  world.innerHTML = '';
+  const bg = (href, u) => {   // full-screen cover image + slow ken-burns
+    const g = el('g', { opacity: u }, world);
+    const s = 1.06 + 0.05 * (t / DUR);
+    el('image', { href, x: -960, y: -540, width: 3840, height: 2160, preserveAspectRatio: 'xMidYMid slice',
+      transform: `translate(960,540) scale(${s}) translate(-960,-540)`, filter: 'url(#blurbg)' }, g);
+    el('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: '#0C141F', opacity: .22 }, g);
+  };
+  const bgA = seg(t, 0, 8), bgB = seg(t, 7, 8);      // scene A 0-8, crossfade 7-8
+  bg('bg1.jpg', Math.min(bgA, 1));
+  if (bgB > 0) bg('bg2.jpg', ease(bgB));
+  // ---- scene A: animated title + subtitle ----
+  if (t < 8) {
+    const uT = ease(seg(t, .5, 1.6)), uO = 1 - seg(t, 7.4, 8);
+    const tg = el('g', { opacity: uT * uO, transform: `translate(960,430)` }, world);
+    T(tg, 0, 0, 'THE ISDAL WOMAN', 92, '#f2f5f7', { w: 700, a: 'middle', ls: lerp(26, 4, uT) });
+    const uR = ease(seg(t, 1.0, 1.9));
+    el('rect', { x: -160 * uR, y: 26, width: 320 * uR, height: 5, fill: '#c4362f' }, tg);
+    const uS = ease(seg(t, 1.3, 2.2));
+    T(tg, 0, 92, 'THE WOMAN WHO ERASED HER OWN IDENTITY', 26, '#c8d4dd',
+      { f: 'Liberation Sans, sans-serif', w: 600, a: 'middle', ls: 7, o: uS });
+  }
+  // ---- scene B: evidence card + lower third ----
+  if (t >= 7) {
+    const uC = ease(seg(t, 7.9, 8.45));
+    if (uC > 0) {
+      const cg = el('g', { opacity: uC, transform: `translate(${lerp(115, 155, uC)},${lerp(200, 173, uC)})`, filter: 'url(#soft)' }, world);
+      el('rect', { x: 0, y: 0, width: 460, height: 250, rx: 10, fill: '#f3f6f8', stroke: '#13202e', 'stroke-width': 2 }, cg);
+      T(cg, 26, 48, 'THE SUITCASES', 30, '#13202e', { f: 'Liberation Sans, sans-serif', w: 700 });
+      ['Two suitcases, Bergen station', 'Every label cut away', '500 DM sewn into the lining']
+        .forEach((s, i) => { el('circle', { cx: 32, cy: 84 + i * 44, r: 4, fill: '#33465a' }, cg);
+          T(cg, 50, 92 + i * 44, s, 21, '#33465a', { f: 'Liberation Sans, sans-serif' }); });
+      const uSt = ease(seg(t, 8.8, 9.2));
+      if (uSt > 0) {
+        const sg = el('g', { opacity: uSt, transform: `translate(410,-6) rotate(-6) scale(${lerp(1.6,1,uSt)})` }, cg);
+        el('rect', { x: -110, y: -26, width: 220, height: 52, rx: 6, fill: '#f3f6f8', stroke: '#a63d33', 'stroke-width': 4 }, sg);
+        T(sg, 0, 8, 'CASE 134/70', 22, '#a63d33', { f: 'Liberation Mono, monospace', w: 700, a: 'middle', ls: 3 });
+      }
+    }
+    const uL = ease(seg(t, 8.1, 8.6)) * (1 - seg(t, 13.1, 13.6));
+    if (uL > 0) {
+      const lg = el('g', { opacity: uL, transform: `translate(${lerp(-660, 85, uL)},920)`, filter: 'url(#soft)' }, world);
+      el('rect', { x: 0, y: 0, width: 400, height: 96, fill: 'rgba(10,15,20,0.8)' }, lg);
+      el('rect', { x: 0, y: 0, width: 5, height: 96, fill: '#c4362f' }, lg);
+      T(lg, 24, 42, 'Isdalen, Norway', 30, '#f2f5f7', { f: 'Liberation Sans, sans-serif', w: 600 });
+      T(lg, 24, 74, 'NOVEMBER 1970 · CASE FILE 134/70', 15, '#94a6b6', { f: 'Liberation Sans, sans-serif', ls: 1.6 });
+    }
+  }
+  // ---- captions (accurate SRT timing) ----
+  for (const [a, b, s] of CUES) {
+    if (t < a || t > b) continue;
+    const u = ease(seg(t, a, a + .25)) * (1 - seg(t, b - .2, b));
+    const g = el('g', { opacity: u }, world);
+    const wpx = s.length * 13.4 + 60, x = (1920 - wpx) / 2;
+    el('rect', { x, y: 962, width: wpx, height: 62, rx: 4, fill: 'rgba(10,15,20,0.8)' }, g);
+    T(g, 960, 1002, s, 34, '#f2f5f7', { f: 'Liberation Sans, sans-serif', w: 600, a: 'middle' });
+  }
+  // fade in/out
+  let fo = 1 - seg(t, 0, .4);
+  if (t > DUR - .8) fo = seg(t, DUR - .8, DUR);
+  document.getElementById('fade').setAttribute('opacity', fo);
+  return true;
+};
+window.DUR = DUR; window.EV = [];
+try { window.render(0); } catch (e) {}
+window.READY = true;
+</script>
+</body>
+</html>

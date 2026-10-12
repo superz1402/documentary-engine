@@ -67,6 +67,20 @@ ffmpeg + ffprobe on PATH
 Procedural sound primitives (drones, wind, stamps, thuds, paper) used by each
 film's `mix.py`. Everything is seeded numpy — the mix is reproducible bit-for-bit.
 
+## Render providers
+
+The engine above is the **primary (`builtin`) provider** — deterministic
+`render(t)` pages, film-brand SVG aesthetic. A **secondary, optional
+provider** exists for overlay/imagery scene clips (titles, lower thirds,
+evidence cards, burned-caption inserts): [Geneva](https://github.com/geneva-render/geneva)
+— a single static Rust binary, browserless HTML/CSS compositor, schema-
+validated JSON timelines, MIT. It is *not* referenced by any film build;
+render a clip with it, ffprobe-validate it, and cut it in at concat if you
+want it. Full contract, selection rules, measured 4–15× speed advantage on
+that scene class, and rollback: see `VIDEO_ENGINE_ARCHITECTURE.md` and the
+working example in `bench/`.
+
+
 ## tts/
 
 - `tts.py` — narration: `lines.json` -> `vo/*.wav` + `dur.json` (Kokoro ONNX,

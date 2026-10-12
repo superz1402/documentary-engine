@@ -1,0 +1,125 @@
+{
+  "geneva": "1.1",
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "assets": {
+    "valley": {
+      "src": "bg1.jpg"
+    },
+    "coast": {
+      "src": "bg2.jpg"
+    },
+    "title": {
+      "src": "title.html"
+    },
+    "card": {
+      "src": "lower.html"
+    },
+    "words": {
+      "src": "poc.srt"
+    },
+    "voice": {
+      "src": "narration.wav"
+    }
+  },
+  "layers": [
+    {
+      "id": "picture",
+      "clips": [
+        {
+          "source": {
+            "kind": "image",
+            "asset": "valley"
+          },
+          "fit": "cover",
+          "effects": [
+            {
+              "kind": "blur",
+              "radius": 14
+            }
+          ],
+          "duration": "8s",
+          "transition_out": {
+            "kind": "crossfade",
+            "duration": "1s"
+          }
+        },
+        {
+          "source": {
+            "kind": "image",
+            "asset": "coast"
+          },
+          "fit": "cover",
+          "effects": [
+            {
+              "kind": "blur",
+              "radius": 14
+            }
+          ],
+          "duration": "8s"
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "clips": [
+        {
+          "source": {
+            "kind": "html",
+            "asset": "title"
+          },
+          "start": "0.5s",
+          "duration": "8s"
+        }
+      ]
+    },
+    {
+      "id": "evidence",
+      "clips": [
+        {
+          "source": {
+            "kind": "html",
+            "asset": "card"
+          },
+          "start": "7.5s",
+          "duration": "7s"
+        }
+      ]
+    },
+    {
+      "id": "subs",
+      "clips": [
+        {
+          "source": {
+            "kind": "captions",
+            "asset": "words",
+            "margin": "8%",
+            "style": {
+              "font": "600 34px 'Liberation Sans'",
+              "color": "#f2f5f7",
+              "background": "#0a0f14cc",
+              "padding": "12px",
+              "radius": "4px",
+              "max_width": "70%"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "audio": [
+    {
+      "id": "voice",
+      "clips": [
+        {
+          "asset": "voice",
+          "start": "0.5s",
+          "duration": "14s"
+        }
+      ]
+    }
+  ]
+}
