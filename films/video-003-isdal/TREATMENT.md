@@ -51,3 +51,12 @@ Print-shop foley on stamps/thuds. Ducking ≈ −7 dB under narration. Mastered 
 
 Each short: hook title card, one central visual, burned captions, part indicator (1/4…4/4),
 end card "WATCH THE FULL FILM — THE ISDAL WOMAN".
+
+## v2 edition (2026-10-12)
+
+The film was re-rendered with the archival-plate layer: ten licensed plates
+(Wikimedia Commons, PD/CC BY/CC BY-SA; ledger in stills/credits.json) embedded
+as taped evidence prints with on-screen author+license tags across nine scenes.
+Narration, timeline and score unchanged from v1.0.0; mux gain corrected to match
+the v1 master (-14.3 LUFS). Theory scenes stay vector-only by policy.
+See VIDEO_ENGINE_AUDIT.md for the render-provider audit that ran alongside.

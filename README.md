@@ -9,7 +9,7 @@ Each new video is published as a GitHub Release — no per-video repositories to
 | Video | Title | Runtime | Release |
 |---|---|---|---|
 | 002 | The Zodiac Killer: The Ciphers, the Letters, and the Killer Nobody Could Identify | 17:23 | [video-002-zodiac v1.0.0](../../releases/tag/video-002-zodiac-v1.0.0) |
-| 003 | The Isdal Woman: The Woman Who Erased Her Own Identity | 13:53 | [video-003-isdal v1.0.0](../../releases/tag/video-003-isdal-v1.0.0) |
+| 003 | The Isdal Woman: The Woman Who Erased Her Own Identity | 13:53 | [video-003-isdal v2.0.0](../../releases/tag/video-003-isdal-v2.0.0) · [v1.0.0](../../releases/tag/video-003-isdal-v1.0.0) |
 
 ## Layout
 
