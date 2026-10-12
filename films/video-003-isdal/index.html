@@ -29,6 +29,9 @@
       <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 5.9" result="gm"/>
       <feComposite in="d" in2="gm" operator="in"/>
     </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#050A10" flood-opacity="0.4"/>
+    </filter>
     <clipPath id="frameClip"><rect width="1920" height="1080"/></clipPath>
   </defs>
   <g clip-path="url(#frameClip)">
@@ -191,6 +194,72 @@ function chip(parent, x, y, str, opt = {}) {
   return g;
 }
 
+// ---------- ARCHIVAL PLATES ----------
+// Real photographic material pasted onto the dossier. Registry mirrors
+// stills/credits.json (source page / author / license per plate); the short
+// on-screen tag is a courtesy credit, the full ledger rides in the film
+// description + CREDITS. License gate: PD / CC0 / CC BY / CC BY-SA only.
+const PLATES = {
+  dahl_isdalen: { ar: [16, 9], caption: 'ISDALEN AT SVARTEDIKET',           tag: 'J.C. DAHL, 1842 · NATIONAL MUSEUM, OSLO · PD' },
+  isdalen_hist: { ar: [4, 3],  caption: 'SVARTEDIKET — ISDALEN, BERGEN',    tag: 'PERIOD PHOTO · NATIONAL LIBRARY OF NORWAY · PD' },
+  station:      { ar: [4, 5],  caption: 'BERGEN RAILWAY STATION',           tag: 'MODERN PHOTO · CC BY-SA 4.0' },
+  dm500:        { ar: [8, 5],  caption: '500 DEUTSCHMARK',                  tag: 'ARCHIVE NOTE · CC BY-SA 4.0' },
+  bergen1970:   { ar: [4, 3],  caption: 'BERGEN, 1970',                     tag: 'PERIOD PHOTO · CC BY 2.0' },
+  oslo1970:     { ar: [4, 3],  caption: 'OSLO, 1970',                       tag: 'FORTEPAN 1970 · CC BY-SA 3.0' },
+  stavanger_map:{ ar: [4, 5],  caption: 'NORWEGIAN TOPO MAP, 1970',         tag: '1970 TOPO MAP · PD' },
+  mollendal:    { ar: [4, 3],  caption: 'MØLLENDAL CEMETERY, BERGEN',       tag: 'MODERN PHOTO · PD' },
+  nuremberg:    { ar: [4, 3],  caption: 'NUREMBERG — WHERE THE TEETH POINT',tag: 'MODERN PHOTO · CC BY-SA 4.0' },
+};
+const DEFS = document.querySelector('#stage defs');
+
+// taped evidence print: photo + mat + caption + license tag + slow ken-burns.
+// (x, y) = photo top-left; w = photo width; lt = scene-local time (s); dur = scene duration (s)
+function plate(parent, id, x, y, w, lt, dur, opt = {}) {
+  const P = PLATES[id]; if (!P) return null;
+  const h = Math.round(w * P.ar[1] / P.ar[0]);
+  const p = clamp(lt / Math.max(1e-6, dur), 0, 1);
+  const a0 = opt.appear == null ? .5 : opt.appear;
+  const u = ease(seg(lt, a0, a0 + .55));
+  if (u <= 0) return null;
+  const rot = opt.rot || 0;
+  const g = el('g', { opacity: u * (opt.o == null ? 1 : opt.o), filter: 'url(#soft)',
+    transform: `translate(${x + w / 2},${y + h / 2 + (1 - u) * 16}) rotate(${rot}) scale(${lerp(1.045, 1, u)})` }, parent);
+  const pad = 12, capH = 52;
+  rect(g, -w/2 - pad, -h/2 - pad, w + pad*2, h + pad*2 + capH, opt.mat || C.cream, { rx: 4, stroke: '#C4CFD8', sw: 1 });
+  const kb = 1.06 + .07 * (p % 1), drift = Math.sin(p * Math.PI * .9) * 8;
+  const cid = 'plc_' + id + '_' + Math.round(x) + '_' + Math.round(y);
+  if (!DEFS.querySelector('#' + cid)) {
+    const clip = el('clipPath', { id: cid }, DEFS);
+    el('rect', { x: -w/2, y: -h/2, width: w, height: h }, clip);
+  }
+  const ig = el('g', { 'clip-path': `url(#${cid})` }, g);
+  el('image', { href: `stills/${id}.jpg`, x: -w/2, y: -h/2, width: w, height: h,
+    preserveAspectRatio: 'xMidYMid slice', transform: `scale(${kb}) translate(${drift},${drift * .55})` }, ig);
+  rect(g, -w/2, -h/2, w, h, 'none', { stroke: 'rgba(19,32,46,0.4)', sw: 2 });
+  T(g, 0, h/2 + pad + 24, P.caption, Math.min(20, (w + 24) / (P.caption.length * .72)), C.ink, { f: F.mono, w: 700, a: 'middle', ls: 1.5 });
+  T(g, 0, h/2 + pad + 44, P.tag, Math.min(12.5, (w + 24) / (P.tag.length * .68)), C.steel, { f: F.mono, a: 'middle', ls: 1 });
+  tape(g, -w/2 + 40, -h/2 - pad + 7, 88, rot - 9);
+  tape(g, w/2 - 40, -h/2 - pad + 7, 88, rot + 9);
+  return g;
+}
+
+// faded map/photo texture inside a card (no mat, no caption) — e.g. real 1970
+// topo map under the reconstructed route
+function plateBackdrop(parent, id, x, y, w, h, lt, dur, opt = {}) {
+  const cid = 'plb_' + id + '_' + Math.round(x) + '_' + Math.round(y);
+  if (!DEFS.querySelector('#' + cid)) {
+    const clip = el('clipPath', { id: cid }, DEFS);
+    el('rect', { x, y, width: w, height: h }, clip);
+  }
+  const p = clamp(lt / Math.max(1e-6, dur), 0, 1);
+  const ig = el('g', { 'clip-path': `url(#${cid})`, opacity: opt.o == null ? .13 : opt.o }, parent);
+  const kb = 1.08 + .06 * (p % 1), cx = x + w/2, cy = y + h/2;
+  el('image', { href: `stills/${id}.jpg`, x, y, width: w, height: h,
+    preserveAspectRatio: 'xMidYMid slice',
+    transform: `translate(${cx},${cy}) scale(${kb}) translate(${-cx},${-cy})` }, ig);
+  return ig;
+}
+
 // scene frame: standard exhibit layout (header chip + title + content area)
 function sceneFrame(sc, lt, opt = {}) {
   const g = el('g', {}, world);
@@ -300,8 +369,11 @@ window.render = function(t) {
 </script>
 <script src="scenes.js"></script>
 <script>
-// renderer handshake: fonts loaded (and one warm-up frame) → READY
-document.fonts.ready.then(() => { try { window.render(0); } catch (e) {} window.READY = true; });
+// renderer handshake: plates preloaded (SVG <image> paints synchronously),
+// fonts loaded, one warm-up frame → READY
+Promise.all(Object.keys(PLATES).map(id => new Promise(res => {
+  const im = new Image(); im.onload = im.onerror = res; im.src = `stills/${id}.jpg`; return im;
+}))).then(() => document.fonts.ready.then(() => { try { window.render(0); } catch (e) {} window.READY = true; }));
 </script>
 </body>
 </html>

@@ -119,6 +119,8 @@ function S1(sc, lt, t) {
     T(fg, 96, 1044, 'OPUSCAR STUDIO · EXHIBIT FILM NO. 003', 16, STEEL, { f: F.mono, ls: 3 });
     T(fg, 1824, 1044, 'CASE 134/70 · BERGEN', 16, STEEL, { f: F.mono, a: 'end', ls: 3 });
   }
+  // archival plate: the valley itself, painted 128 years before she died (J.C. Dahl, 1842)
+  plate(g, 'dahl_isdalen', 1390, 640, 460, lt, sc.t1 - sc.t0, { rot: -1.6, appear: 6.0, o: .92 });
   window.EV.push({ t: t - lt + .5, type: 'whoosh' }, { t: t - lt + .85, type: 'stamp' });
 }
 
@@ -170,6 +172,8 @@ function S3(sc, lt, t) {
     if (u2 < 1) circ(mg, pts[vis - 1][0], pts[vis - 1][1], 7, INK);
   }
   T(mg, -250, 235, 'MORNING HIKE — FATHER & TWO DAUGHTERS', 16, INK, { f: F.sans, w: 700 });
+  // archival plate: period photograph of the valley (National Library of Norway, PD)
+  plate(g, 'isdalen_hist', 115, 368, 420, lt, sc.t1 - sc.t0, { rot: 1.4, appear: .6 });
   const u3 = ease(seg(lt, 3.4, 3.9));
   if (u3 > 0) {
     const fcg = el('g', { opacity: u3, transform: `translate(180,760)` }, g);
@@ -262,13 +266,15 @@ function S6(sc, lt, t) {
   bgFill(PAP);
   const g = sceneFrame(sc, lt);
   T(g, 960, 200, 'FOUND 3 DAYS LATER — BERGEN RAILWAY STATION', 26, STEEL, { f: F.mono, w: 700, a: 'middle', ls: 3, o: ease(seg(lt, .3, .8)) });
+  // archival plate: the station itself
+  plate(g, 'station', 1552, 112, 220, lt, sc.t1 - sc.t0, { rot: 2.2, appear: .5 });
   const u1 = ease(seg(lt, .7, 1.4));
   suitcase(g, 560, 490, 1.0 * lerp(1.1, 1, u1), { o: u1 });
   suitcase(g, 1360, 490, 1.0 * lerp(1.1, 1, u1), { o: u1, cut: true });
   T(g, 560, 730, 'SUITCASE No.1 — CLOTHING · SHOES · WIGS', 19, INK, { f: F.sans, w: 700, a: 'middle', o: u1 });
   T(g, 1360, 730, 'SUITCASE No.2 — MAKE-UP · CREAMS · GLASSES', 19, INK, { f: F.sans, w: 700, a: 'middle', o: u1 });
   const inv = ['WIGS', 'ECZEMA CREAM', 'MAPS & TIMETABLES', 'COINS: BE · GB · CH', 'GLASSES — FINGERPRINTS MATCHED'];
-  inv.forEach((s, i) => evidenceRow(g, 130 + i * 355, 830, s, lt, 1.5 + i * .18));
+  inv.forEach((s, i) => evidenceRow(g, 130 + i * 355, 804, s, lt, 1.5 + i * .18));
   const u2 = seg(lt, 2.6, 3.1);
   if (u2 > 0) {
     const dg = el('g', { opacity: ease(u2), transform: `translate(1360,945) scale(${lerp(1.4, 1, pop(u2))})` }, g);
@@ -276,6 +282,8 @@ function S6(sc, lt, t) {
     T(dg, 0, 14, 'SEWN IN THE LINING: 500 DM', 30, AMB, { f: F.mono, w: 700, a: 'middle', ls: 1.5 });
     window.EV.push({ t: t - lt + 2.6, type: 'thud' });
   }
+  // archival plate: the actual banknote denomination found sewn into the lining
+  plate(g, 'dm500', 60, 130, 260, lt, sc.t1 - sc.t0, { rot: -2.2, appear: 2.9 });
   T(g, 960, 1035, 'AND AGAIN — EVERY IDENTIFICATION MARK ON EVERY ITEM, CUT AWAY OR FILED OFF.', 25, RED, { f: F.serif, w: 700, a: 'middle', o: ease(seg(lt, 3.3, 3.9)) });
 }
 
@@ -314,6 +322,8 @@ function S7(sc, lt, t) {
     });
   }
   T(g, 960, 1000, 'WHAT HAPPENED IN THE SIX DAYS AFTER 23 NOVEMBER IS NOT RECORDED ANYWHERE.', 27, RED, { f: F.serif, w: 700, a: 'middle', o: ease(seg(lt, 3.1, 3.7)) });
+  // archival plate: the city she moved through (period street scene)
+  plate(g, 'bergen1970', 85, 726, 260, lt, sc.t1 - sc.t0, { rot: -1.8, appear: 2.5 });
 }
 
 // ================= S8 — THE ALIASES =================
@@ -387,6 +397,8 @@ function S10(sc, lt, t) {
   const u = ease(seg(lt, .4, 1.1));
   const pg = el('g', { opacity: u, transform: `translate(${840},${150 + (1 - u) * 26})` }, g);
   card(pg, 0, 0, 960, 800, {});
+  // archival texture: real 1970 Norwegian topo map under the reconstructed route
+  plateBackdrop(pg, 'stavanger_map', 14, 14, 932, 772, lt, sc.t1 - sc.t0, { o: .13 });
   T(pg, 480, 56, 'NORWAY — RECONSTRUCTED ROUTE', 20, STEEL, { f: F.mono, w: 700, a: 'middle', ls: 3 });
   const ng = el('g', { transform: `translate(480,420) scale(0.72)` }, pg);
   path(ng, 'M-330,320 C-300,180 -260,60 -180,-60 C-120,-150 -60,-240 40,-300 C120,-345 220,-360 320,-330 C360,-318 356,-280 320,-262 C240,-226 180,-190 150,-120 C120,-50 90,40 30,120 C-30,200 -140,300 -240,330 Z', C.blue, 3.5, { fill: C.frost });
@@ -432,6 +444,8 @@ function S10(sc, lt, t) {
   });
   T(g, 440, 1000, 'EVERY HABIT POINTED THE SAME DIRECTION:', 24, INK, { f: F.sans, w: 700, a: 'middle', o: ease(seg(lt, 3.3, 3.8)) });
   T(g, 440, 1040, 'A WOMAN PRACTISED AT NOT BEING FOUND.', 27, RED, { f: F.serif, w: 700, a: 'middle', o: ease(seg(lt, 3.5, 4.0)) });
+  // archival plate: one of the cities on her route, 1970
+  plate(g, 'oslo1970', 56, 86, 200, lt, sc.t1 - sc.t0, { rot: -2, appear: .5 });
 }
 
 // ================= S11 — THE VERDICT OF 1971 =================
@@ -462,6 +476,8 @@ function S11(sc, lt, t) {
     circ(cg, 0, -40, 3, RED, { o: .5 });
   }
   T(g, 960, 940, 'THE VERDICT SETTLED THE FILE. IT NEVER SETTLED THE ARGUMENT.', 30, RED, { f: F.serif, w: 700, a: 'middle', o: ease(seg(lt, 3.4, 4.0)) });
+  // archival plate: where she was buried — grave kept for the day she might be named
+  plate(g, 'mollendal', 1495, 296, 330, lt, sc.t1 - sc.t0, { rot: 2, appear: 2.5 });
 }
 
 // ================= S12 — THEORY: SUICIDE =================
@@ -627,6 +643,8 @@ function S16(sc, lt, t) {
     Wrap(cg, 44, 92, cd[1], 21, STEEL, { maxw: 790, lh: 28, f: F.sans, w: 700 });
   });
   T(g, 960, 990, 'THE DNA DOE PROJECT\u2019S COLLEEN FITZPATRICK JOINED THE EFFORT — THE FILE NOW HAS MODERN SCIENCE BEHIND IT.', 23, STEEL, { f: F.sans, a: 'middle', o: ease(seg(lt, 3.4, 3.9)) });
+  // archival plate: the city the isotopes point to
+  plate(g, 'nuremberg', 60, 704, 240, lt, sc.t1 - sc.t0, { rot: -1.5, appear: 2.6 });
 }
 
 // ================= S17 — WHAT REMAINS UNKNOWN =================
@@ -707,6 +725,8 @@ function S18(sc, lt, t) {
     T(eg, 960, 870, 'THE WOMAN WHO ERASED HER OWN IDENTITY', 23, ICE, { f: F.mono, a: 'middle', ls: 4 });
     T(eg, 960, 918, 'FULL SOURCE LIST IN THE DESCRIPTION · OPUSCAR STUDIO 2026', 18, STEEL, { f: F.mono, a: 'middle', ls: 2 });
   }
+  // bookend: the same Dahl painting that opened the film, dimmer now
+  plate(g, 'dahl_isdalen', 1520, 140, 320, lt, sc.t1 - sc.t0, { rot: 1.8, appear: 1.2, o: .8 });
 }
 
 // ---------- precomputed foley event table (read by core/render/events.mjs) ----------
