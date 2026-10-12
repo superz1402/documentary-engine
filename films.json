@@ -141,10 +141,11 @@
         ]
       ],
       "release": {
-        "tag": "video-003-isdal-v1.0.0",
-        "url": "https://github.com/superz1402/documentary-engine/releases/tag/video-003-isdal-v1.0.0",
-        "film_url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-v1.0.0/isdal-003.mp4",
-        "film_size": "294 MB",
+        "tag": "video-003-isdal-v2.0.0",
+        "url": "https://github.com/superz1402/documentary-engine/releases/tag/video-003-isdal-v2.0.0",
+        "film_url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-v2.0.0/isdal-003-v2.mp4",
+        "film_size": "356 MB",
+        "edition": "v2 — real archival plates",
         "srt_url": "https://github.com/superz1402/documentary-engine/releases/download/video-003-isdal-v1.0.0/isdal-003.srt",
         "sources_url": "https://github.com/superz1402/documentary-engine/blob/main/films/video-003-isdal/SOURCES.md"
       },
