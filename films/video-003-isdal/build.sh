@@ -18,8 +18,9 @@ node core/render/video.mjs "$HERE" --fps 24 --workers 2 --out "$HERE/out/video.m
 # 3. audio mix (score + foley + voice)
 "$LIB/.venv/bin/python" "$HERE/mix.py"
 
-# 4. mux (voice-forward loudness for YouTube ≈ -15 LUFS; video already CRF 14 -> stream copy)
+# 4. mux — voice-forward chain matching the v1.0.0 release master (-14.3 LUFS integrated):
+#    volume=10.5dB + limiter at -0.1 dBFS (mix.wav sits at -24.8 LUFS; +6 dB alone lands at -18.8)
 ffmpeg -y -loglevel error -i "$HERE/out/video.mp4" -i "$HERE/out/mix.wav" \
-  -filter:a "volume=6dB,alimiter=limit=0.9882:level=false" -map 0:v -map 1:a \
+  -filter:a "volume=10.5dB,alimiter=limit=0.9882:level=false" -map 0:v -map 1:a \
   -c:v copy -c:a aac -b:a 256k -movflags +faststart -shortest "$HERE/out/isdal-003.mp4"
 echo "BUILD DONE: $HERE/out/isdal-003.mp4"

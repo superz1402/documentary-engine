@@ -10,7 +10,7 @@ This film rebuilds the case file piece by piece: the discovery, what the autopsy
 
 In 2016 the case was reopened. Isotope analysis now points to a birth around 1930, in or near Nuremberg, with a childhood in France or along its border. Her DNA tells us more. Her name remains unknown.
 
-Researched against primary police reporting, BBC/NRK's Death in Ice Valley, and contemporary Norwegian coverage. Every visual is a labelled schematic reconstruction — no archival photographs, no AI imagery, no crime-scene depictions. Full source list: SOURCES.md in this repository.
+Researched against primary police reporting, BBC/NRK's Death in Ice Valley, and contemporary Norwegian coverage. Visuals are labelled schematic reconstructions; where licensed archival photographs appear (v2 edition), they are context imagery — cities, valley, station, documents — each tagged on screen with its author and license, never depicting the body, the scene, or evidence not in the public record. No AI imagery impersonating real photographs. Full source list: SOURCES.md in this repository.
 
 ⏱ CHAPTERS
 0:00 The Woman Without a Name
@@ -37,15 +37,18 @@ Researched against primary police reporting, BBC/NRK's Death in Ice Valley, and 
 
 #isdalwoman #documentary #truecrime #coldcase #norway
 
-🖼 IMAGE CREDITS (shorts v2 archival plates — all Wikimedia Commons, license-checked)
-• Bergen Railway Station — Bahnfrend, CC BY-SA 4.0
-• 500-DeutscheMark note — Dr. Thomas Liptak, CC BY-SA 4.0
-• Bergen 1970 / Trondheim 1970 — Municipal Archives of Trondheim, CC BY 2.0
-• Isdalen valley views — Aqwis (CC BY-SA 3.0); Nasjonalbiblioteket (Public domain)
-• Norwegian topo map 1970 — USGS, Public domain
-• Oslo 1970 — Fortepan, CC BY-SA 3.0 · Nuremberg — PiotrPiotrPl, CC BY-SA 4.0
-• Møllendal cemetery — Reinhardheydt, Public domain
-• "Isdalen at Svartediket" — Johan Christian Dahl, 1842, Public domain (National Museum, Oslo)
+🖼 IMAGE CREDITS (v2 film + shorts archival plates — all Wikimedia Commons, license-checked)
+The v2 edition of the film embeds the following licensed plates, each tagged on screen:
+• Isdalen at Svartediket (S1/S18) — Johan Christian Dahl, 1842, Public domain (National Museum, Oslo)
+• Svartediket–Isdalen period photo (S3) — Nasjonalbiblioteket (National Library of Norway), Public domain
+• Bergen Railway Station (S6) — Bahnfrend, CC BY-SA 4.0
+• 500-DeutscheMark note (S6) — Dr. Thomas Liptak, CC BY-SA 4.0
+• Bergen 1970 (S7) — Municipal Archives of Trondheim, CC BY 2.0
+• Norwegian topo map 1970 (S10 backdrop) — USGS, Public domain
+• Oslo 1970 (S10) — Fortepan, CC BY-SA 3.0
+• Møllendal cemetery (S11) — Reinhardheydt, Public domain
+• Nuremberg (S16) — PiotrPiotrPl, CC BY-SA 4.0
+Also used in the shorts: Isdalen valley views — Aqwis (CC BY-SA 3.0); Trondheim 1970 — Municipal Archives of Trondheim, CC BY 2.0
 Full ledger with source links: films/video-003-isdal/stills/credits.json
 
 ## Tags

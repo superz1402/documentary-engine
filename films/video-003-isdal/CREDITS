@@ -9,9 +9,14 @@
   (SIL OFL 1.1); JetBrains Mono (OFL); ZCOOL KuaiLe, Bagel Fat One (OFL).
 
 ## Imagery
-- Every visual is an original schematic reconstruction drawn programmatically (SVG/CSS/canvas).
-- No archival photographs, no AI-generated imagery, no reproductions of police evidence or
-  crime-scene material are used. Maps are stylised and non-navigational.
+- Original schematic reconstruction drawn programmatically (SVG/CSS/canvas),
+  plus — in the v2 edition and the shorts — licensed archival CONTEXT plates
+  (cities, valley, station, banknote, map, cemetery, an 1842 painting),
+  fetched and license-validated by core/stills/fetch_stills.py; every plate
+  is tagged on screen with author + license.
+- No AI-generated imagery; no reproductions of police evidence or crime-scene
+  material; nothing depicting the body. Maps are stylised and non-navigational
+  (the S10 backdrop is a real 1970 USGS topographic map, Public domain).
 
 ## Audio
 - Score and foley: synthesized in-project (numpy DSP) — no third-party samples.
