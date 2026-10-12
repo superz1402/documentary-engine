@@ -7,25 +7,60 @@
       "no": "002",
       "title": "The Zodiac Killer",
       "subtitle": "The Ciphers, the Letters, and the Killer Nobody Could Identify",
-      "tagline": "He left investigators a library of evidence \u2014 everything except an identity.",
+      "tagline": "He left investigators a library of evidence — everything except an identity.",
       "runtime": "17:23",
       "year": "2026",
-      "tags": ["TRUE CRIME", "COLD CASE", "CIPHERS", "INVESTIGATION"],
+      "tags": [
+        "TRUE CRIME",
+        "COLD CASE",
+        "CIPHERS",
+        "INVESTIGATION"
+      ],
       "poster": "assets/video-002-zodiac/poster.jpg",
       "thumb": "assets/video-002-zodiac/thumb.jpg",
       "trailer": "assets/video-002-zodiac/zodiac-002-trailer.mp4",
       "trailer_len": "1:09",
       "chapters": [
-        ["0:00", "The Letters Arrive"],
-        ["1:35", "The Attacks: 1968\u20131969"],
-        ["3:55", "\u201cThis Is the Zodiac Speaking\u201d"],
-        ["5:39", "The 408 Cipher: Solved in 1969"],
-        ["7:26", "The 340 Cipher: 51 Years Unsolved"],
-        ["8:41", "How the 340 Was Broken"],
-        ["10:54", "The Unsolved Short Ciphers"],
-        ["12:08", "The Suspects"],
-        ["13:48", "Why the Case Still Fails"],
-        ["15:23", "What the Evidence Proves"]
+        [
+          "0:00",
+          "The Letters Arrive"
+        ],
+        [
+          "1:35",
+          "The Attacks: 1968–1969"
+        ],
+        [
+          "3:55",
+          "“This Is the Zodiac Speaking”"
+        ],
+        [
+          "5:39",
+          "The 408 Cipher: Solved in 1969"
+        ],
+        [
+          "7:26",
+          "The 340 Cipher: 51 Years Unsolved"
+        ],
+        [
+          "8:41",
+          "How the 340 Was Broken"
+        ],
+        [
+          "10:54",
+          "The Unsolved Short Ciphers"
+        ],
+        [
+          "12:08",
+          "The Suspects"
+        ],
+        [
+          "13:48",
+          "Why the Case Still Fails"
+        ],
+        [
+          "15:23",
+          "What the Evidence Proves"
+        ]
       ],
       "release": {
         "tag": "video-002-zodiac-v1.0.0",
@@ -36,7 +71,88 @@
         "sources_url": "https://github.com/superz1402/opuscar-studio/blob/main/films/video-002-zodiac/SOURCES.md"
       },
       "status": "released"
+    },
+    {
+      "id": "video-003-isdal",
+      "no": "003",
+      "title": "The Isdal Woman",
+      "subtitle": "The Woman Who Erased Her Own Identity",
+      "tagline": "She checked in under eight false names — and erased every label that could say who she was.",
+      "runtime": "13:53",
+      "year": "2026",
+      "tags": [
+        "TRUE CRIME",
+        "COLD CASE",
+        "UNIDENTIFIED",
+        "NORWAY"
+      ],
+      "poster": "assets/video-003-isdal/poster.jpg",
+      "thumb": "assets/video-003-isdal/thumb.jpg",
+      "trailer": "assets/video-003-isdal/trailer.mp4",
+      "trailer_len": "0:49",
+      "chapters": [
+        [
+          "0:00",
+          "The Woman Without a Name"
+        ],
+        [
+          "0:56",
+          "Case 134/70"
+        ],
+        [
+          "1:21",
+          "Discovery: November 29"
+        ],
+        [
+          "2:55",
+          "What the Body Said"
+        ],
+        [
+          "3:42",
+          "The Suitcases"
+        ],
+        [
+          "4:31",
+          "Room 407"
+        ],
+        [
+          "5:21",
+          "Eight False Names"
+        ],
+        [
+          "6:11",
+          "The Notebook"
+        ],
+        [
+          "7:39",
+          "The Verdict of 1971"
+        ],
+        [
+          "8:22",
+          "The Theories"
+        ],
+        [
+          "10:47",
+          "Reopened: The Science"
+        ],
+        [
+          "12:23",
+          "What Remains Unknown"
+        ]
+      ],
+      "release": {
+        "tag": "video-003-isdal-v1.0.0",
+        "url": "https://github.com/superz1402/opuscar-studio/releases/tag/video-003-isdal-v1.0.0",
+        "film_url": "https://github.com/superz1402/opuscar-studio/releases/download/video-003-isdal-v1.0.0/isdal-003.mp4",
+        "film_size": "294 MB",
+        "srt_url": "https://github.com/superz1402/opuscar-studio/releases/download/video-003-isdal-v1.0.0/isdal-003.srt",
+        "sources_url": "https://github.com/superz1402/opuscar-studio/blob/main/films/video-003-isdal/SOURCES.md"
+      },
+      "status": "released"
     }
   ],
-  "next": { "no": "003", "status": "IN PRODUCTION" }
+  "next": {
+    "no": "003",
+    "status": "IN PRODUCTION"
+  }
 }
