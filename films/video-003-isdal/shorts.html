@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Isdal Shorts</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0C141F; }
+  svg, canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  #paper { mix-blend-mode: multiply; pointer-events: none; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="stampInk" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="11" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="3" seed="21" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 5.9" result="gm"/>
+      <feComposite in="d" in2="gm" operator="in"/>
+    </filter>
+    <clipPath id="frameClip"><rect width="1080" height="1920"/></clipPath>
+  </defs>
+  <g clip-path="url(#frameClip)">
+    <g id="cam"><g id="world"></g></g>
+    <rect id="fade" width="1080" height="1920" fill="#0C141F" opacity="0"/>
+  </g>
+</svg>
+<canvas id="paper" width="1080" height="1920"></canvas>
+<script src="shorts_data.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const C = { paper:'#E8EDF1', cream:'#F3F6F8', ink:'#13202E', deep:'#0C141F', blue:'#3E6C93',
+            ice:'#B8CCD8', red:'#A63D33', amber:'#C9A227', steel:'#4E6377', frost:'#D6E2EA', night:'#0C141F' };
+const F = { serif:"'Noto Serif SC'", mono:"'JetBrains Mono','Noto Sans SC'", sans:"'Noto Sans SC'" };
+const W = 1080, H = 1920;
+const WHICH = new URLSearchParams(location.search).get('which') || 'A';
+const D = SDATA[WHICH], DUR = D.dur;
+const PARTN = { A: 1, B: 2, C: 3, D: 4 }[WHICH];
+const PARTT = { A: 'THE STRANGE SUITCASES', B: 'THE NOTEBOOK & THE TRAVEL TRAIL',
+                C: 'WAS SHE A SPY?', D: 'THE IDENTITY THAT REMAINS UNKNOWN' }[WHICH];
+
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag);
+  for (const k in attrs || {}) e.setAttribute(k, attrs[k]); (parent || world).appendChild(e); return e; };
+const clamp = (x,a,b) => Math.min(b, Math.max(a,x));
+const lerp = (a,b,u) => a+(b-a)*u;
+const ease = u => 1 - Math.pow(1 - clamp(u,0,1), 3);
+const pop = u => { u = clamp(u,0,1); return 1 + Math.pow(2,-10*u) * Math.sin((u*10-.75)*(2*Math.PI/3)); };
+const seg = (t,a,b) => clamp((t-a)/Math.max(1e-6,b-a),0,1);
+const R = (seed) => { let s = seed % 2147483647; if (s<=0) s += 2147483646;
+  return () => (s = s*16807 % 2147483647) / 2147483647; };
+
+function T(parent,x,y,str,size,fill,opt={}) {
+  const e = el('text',{x,y,fill,'font-family':opt.f||F.serif,'font-size':size,
+    'font-weight':opt.w||'normal','font-style':opt.i?'italic':'normal','text-anchor':opt.a||'start',
+    'letter-spacing':opt.ls||0,opacity:opt.o==null?1:opt.o},parent);
+  if (opt.filter) e.setAttribute('filter',opt.filter);
+  e.textContent = str; return e;
+}
+const measSVG = document.createElementNS(NS,'svg');
+measSVG.setAttribute('width','0'); measSVG.setAttribute('height','0');
+measSVG.style.position='absolute'; document.body.appendChild(measSVG);
+function Wrap(parent,x,y,str,size,fill,opt={}) {
+  const maxw = opt.maxw||900, lh = opt.lh||size*1.4;
+  const words = str.split(' '); const lines = []; let cur = '';
+  const meas = document.createElementNS(NS,'text');
+  meas.setAttribute('font-family',opt.f||F.serif); meas.setAttribute('font-size',size);
+  if (opt.w) meas.setAttribute('font-weight',opt.w);
+  measSVG.appendChild(meas);
+  for (const wd of words) { const test = cur?cur+' '+wd:wd; meas.textContent = test;
+    if (meas.getComputedTextLength() > maxw && cur) { lines.push(cur); cur = wd; } else cur = test; }
+  meas.remove(); if (cur) lines.push(cur);
+  const g = el('g',{},parent);
+  lines.forEach((ln,i)=>T(g,x,y+i*lh,ln,size,fill,opt));
+  return {g,n:lines.length,lh};
+}
+function rect(parent,x,y,w,h,fill,opt={}) {
+  const a = {x,y,width:w,height:h,fill,rx:opt.rx||0,stroke:opt.stroke||'none','stroke-width':opt.sw||1,
+    opacity:opt.o==null?1:opt.o}; if (opt.tr) a.transform = opt.tr;
+  return el('rect',a,parent);
+}
+function line(parent,x1,y1,x2,y2,stroke,sw,opt={}) {
+  return el('line',{x1,y1,x2,y2,stroke,'stroke-width':sw,'stroke-dasharray':opt.dash||undefined,
+    opacity:opt.o==null?1:opt.o},parent);
+}
+function path(parent,d,stroke,sw,opt={}) {
+  return el('path',{d,fill:opt.fill||'none',stroke,'stroke-width':sw,
+    'stroke-dasharray':opt.dash||undefined,'stroke-linecap':'round','stroke-linejoin':'round',
+    opacity:opt.o==null?1:opt.o},parent);
+}
+function poly(parent,pts,stroke,sw,opt={}) {
+  return el('polyline',{points:pts.map(p=>p.join(',')).join(' '),fill:opt.fill||'none',stroke,
+    'stroke-width':sw,'stroke-dasharray':opt.dash||undefined,'stroke-linejoin':'round',
+    opacity:opt.o==null?1:opt.o},parent);
+}
+function circ(parent,cx,cy,r,fill,opt={}) {
+  return el('circle',{cx,cy,r,fill,stroke:opt.stroke||'none','stroke-width':opt.sw||1,
+    opacity:opt.o==null?1:opt.o},parent);
+}
+function stamp(parent,x,y,str,size,col,opt={}) {
+  const g = el('g',{transform:`translate(${x},${y}) rotate(${opt.ang==null?-5:opt.ang}) scale(${opt.s||1})`,
+    filter:'url(#stampInk)',opacity:opt.o==null?1:opt.o},parent);
+  const wpx = str.length*size*.62+size*.9;
+  rect(g,-wpx/2,-size*.85,wpx,size*1.7,'none',{stroke:col,sw:size*.12,rx:6});
+  T(g,0,size*.34,str,size,col,{f:F.mono,w:700,a:'middle',ls:size*.12});
+  return g;
+}
+
+// paper grain (static)
+const paperC = document.getElementById('paper').getContext('2d');
+(function(){ const rnd = R(41); paperC.fillStyle='#FFF'; paperC.fillRect(0,0,W,H);
+  const img = paperC.getImageData(0,0,W,H);
+  for (let i=0;i<img.data.length;i+=4){ const v=252+(rnd()*3-1.5)*2.2; img.data[i]=img.data[i+1]=img.data[i+2]=v; }
+  paperC.putImageData(img,0,0);
+  const gr = paperC.createRadialGradient(W/2,H/2,H*.4,W/2,H/2,H*.95);
+  gr.addColorStop(0,'rgba(255,255,255,0)'); gr.addColorStop(1,'rgba(120,140,155,0.22)');
+  paperC.fillStyle=gr; paperC.fillRect(0,0,W,H);
+})();
+
+const SNOW = []; { const rnd = R(7); for (let i=0;i<90;i++) SNOW.push({x:rnd()*W,y:rnd()*H,r:1+rnd()*2.6,v:26+rnd()*50,ph:rnd()*7,a:.2+rnd()*.35}); }
+let fxctx = null;
+function drawFX(t) {
+  if (!fxctx) { const cv = document.createElement('canvas'); cv.width=W; cv.height=H;
+    cv.style.cssText='position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;';
+    document.body.appendChild(cv); fxctx = cv.getContext('2d'); }
+  fxctx.clearRect(0,0,W,H);
+  for (const f of SNOW) {
+    const y = (f.y + t*f.v) % (H+30) - 15;
+    const x = f.x + Math.sin(t*.5+f.ph)*22;
+    fxctx.globalAlpha = f.a; fxctx.fillStyle = '#FFF';
+    fxctx.beginPath(); fxctx.arc(x,y,f.r,0,7); fxctx.fill();
+  }
+  fxctx.globalAlpha = 1;
+}
+
+// ---------- chrome ----------
+function chrome(t) {
+  const g = el('g',{},world);
+  const u = ease(seg(t,0,.5));
+  rect(g,0,0,W,220,'rgba(12,20,31,0.0)');
+  const cg = el('g',{opacity:u,transform:`translate(${W/2},${96+(1-u)*-20})`},g);
+  T(cg,0,0,'THE ISDAL WOMAN · CASE 134/70',24,C.steel,{f:F.mono,w:700,a:'middle',ls:4});
+  T(cg,0,54,PARTT,30,C.ice,{f:F.mono,w:700,a:'middle',ls:3});
+  for (let i=0;i<4;i++) circ(cg,(i-1.5)*36,110,i===PARTN-1?10:6,i===PARTN-1?C.red:'rgba(184,204,216,0.35)');
+  return g;
+}
+function captions(t) {
+  const cur = D.lines.find(l => t >= l.t0 - .12 && t <= l.t1 + .3);
+  const g = el('g',{},world);
+  if (!cur) return;
+  const u = ease(seg(t, cur.t0-.12, cur.t0+.14));
+  const c = el('g',{opacity:u},g);
+  const words = cur.text.split(' ');
+  measSVG.innerHTML='';
+  const mm = document.createElementNS(NS,'text');
+  mm.setAttribute('font-family',F.sans); mm.setAttribute('font-size',44); mm.setAttribute('font-weight',700);
+  measSVG.appendChild(mm);
+  const linesArr = []; let curL = '';
+  for (const wd of words) { const test = curL?curL+' '+wd:wd; mm.textContent = test;
+    if (mm.getComputedTextLength() > 880 && curL) { linesArr.push(curL); curL = wd; } else curL = test; }
+  mm.remove(); if (curL) linesArr.push(curL);
+  const lh = 58, bh = linesArr.length*lh + 56;
+  const y0 = H - 320 - bh;
+  rect(c,40,y0,W-80,bh,'rgba(12,20,31,0.90)',{rx:14});
+  rect(c,40,y0,14,bh,C.red,{rx:6});
+  linesArr.forEach((ln,i)=>T(c,W/2,y0+70+i*lh,ln,44,C.cream,{f:F.sans,w:700,a:'middle',ls:.5}));
+}
+
+// ---------- per-short visuals ----------
+function vSuitcase(g, cx, cy, s, lt) {
+  const u = ease(seg(lt,.6,1.3));
+  const gg = el('g',{opacity:u,transform:`translate(${cx},${cy+ (1-u)*40}) scale(${s*lerp(1.15,1,u)})`},g);
+  rect(gg,-300,-200,600,400,C.frost,{rx:18,stroke:C.ice,sw:4});
+  rect(gg,-300,-200,600,80,C.ice,{rx:18,stroke:C.ice,sw:3});
+  line(gg,-300,-120,300,-120,C.ice,3);
+  rect(gg,-56,-96,44,30,C.amber,{rx:4,stroke:C.ink,sw:2});
+  rect(gg,12,-96,44,30,C.amber,{rx:4,stroke:C.ink,sw:2});
+  path(gg,'M-60,-200 C-60,-256 60,-256 60,-200','none',0,{fill:'none',stroke:C.ice,sw:8});
+  line(gg,150,60,150,140,C.red,6);
+  poly(gg,[[150,60],[210,40],[210,150]],C.steel,2.5,{fill:C.paper,o:.9});
+  T(gg,150,196,'LABEL CUT',22,C.red,{f:F.mono,w:700,a:'middle',ls:3});
+  return gg;
+}
+function vNotebook(g, cx, cy, lt) {
+  const u = ease(seg(lt,.6,1.3));
+  const gg = el('g',{opacity:u,transform:`translate(${cx},${cy})`},g);
+  rect(gg,-330,-260,660,520,C.cream,{rx:12,stroke:C.steel,sw:2});
+  const rnd = R(11);
+  const dec = [['C 7 — 12.10','OSLO'],['D 3 — 24.10','TRONDHEIM'],['E 9 — 21.11','STAVANGER'],['F 2 — 18.11','BERGEN']];
+  for (let r=0;r<4;r++){
+    let s=''; for (let k=0;k<8;k++) s += String.fromCharCode(65+Math.floor(rnd()*26));
+    const u1 = ease(seg(lt,.9+r*.28,1.25+r*.28));
+    T(gg,-290,-160+r*90,s,34,C.ink,{f:F.mono,ls:5,o:u1});
+    const u2 = ease(seg(lt,1.5+r*.28,1.85+r*.28));
+    if (u2>0){ T(gg,60,-160+r*90,'→ '+dec[r][1],32,C.red,{f:F.serif,w:700,o:u2}); }
+    line(gg,-290,-130+r*90,290,-130+r*90,C.steel,1.2,{o:.5});
+  }
+  return gg;
+}
+function vSpy(g, cx, cy, lt, t) {
+  const u = ease(seg(lt,.6,1.2));
+  const gg = el('g',{opacity:u},g);
+  rect(gg,cx-330,cy-230,660,460,C.ink,{rx:14});
+  T(gg,cx,cy-160,'THE CONTEXT — 1970',26,C.amber,{f:F.mono,w:700,a:'middle',ls:3});
+  T(gg,cx,cy-96,'A NATO COUNTRY.',40,C.cream,{f:F.serif,w:700,a:'middle'});
+  T(gg,cx,cy-40,'FALSE NAMES. CODES.',40,C.cream,{f:F.serif,w:700,a:'middle'});
+  path(gg,`M${cx-290},${cy+180} C${cx-140},${cy+120} ${cx+40},${cy+110} ${cx+240},${cy+150} L${cx+240},${cy+210} L${cx-290},${cy+210} Z`,'none',0,{fill:'rgba(94,134,168,0.3)'});
+  T(gg,cx,cy+200,'MISSILE TEST ZONES — NORWEGIAN COAST',20,C.ice,{f:F.mono,w:700,a:'middle'});
+  const u2 = seg(lt,2.4,2.9);
+  if (u2>0){
+    const sg = el('g',{opacity:ease(u2),transform:`translate(${cx},${cy+40}) scale(${lerp(1.5,1,pop(u2))})`,filter:'url(#stampInk)'},gg);
+    stamp(sg,0,0,'NOT IN THE FILE',40,C.red,{ang:-6});
+  }
+  return gg;
+}
+function vIdentity(g, cx, cy, lt) {
+  const u = ease(seg(lt,.6,1.2));
+  const gg = el('g',{opacity:u,transform:`translate(${cx},${cy})`},g);
+  const rows = [['BORN ≈ 1930','IN OR NEAR NUREMBERG',C.red,1.0],['CHILDHOOD','FRANCE / THE BORDER REGION',C.amber,1.8],
+                ['mtDNA H24','S-E EUROPE / S-W ASIA',C.blue,2.6]];
+  rows.forEach((r,i)=>{
+    const u2 = ease(seg(lt,r[3],r[3]+.5));
+    if (u2<=0) return;
+    const rg = el('g',{opacity:u2,transform:`translate(0,${-210+i*150+(1-u2)*24})`},gg);
+    rect(rg,-330,0,660,120,C.cream,{rx:10,stroke:r[2],sw:2.5});
+    rect(rg,-330,0,16,120,r[2],{rx:4});
+    T(rg,-290,52,r[0],34,C.ink,{f:F.mono,w:700});
+    T(rg,-290,96,r[1],24,C.steel,{f:F.sans,w:700});
+  });
+  return gg;
+}
+function mountains(g) {
+  path(g,`M0,1560 L0,1440 L160,1250 L320,1420 L500,1180 L660,1390 L830,1200 L980,1400 L1080,1300 L1080,1920 L0,1920 Z`,'none',0,{fill:'#0F1B29',o:.9});
+  path(g,`M0,1660 L0,1560 L200,1400 L420,1600 L640,1420 L860,1620 L1080,1470 L1080,1920 L0,1920 Z`,'none',0,{fill:'#0A121D'});
+}
+
+// ---------- render ----------
+window.DUR = DUR; window.EV = [];
+window.render = function(t) {
+  world.innerHTML = '';
+  const dark = WHICH !== 'B';
+  rect(world,0,0,W,H, dark ? C.night : C.paper);
+  if (dark) mountains(world);
+  chrome(t);
+  const lt = t;
+  if (WHICH==='A') vSuitcase(world, W/2, 860, 1.0, lt);
+  if (WHICH==='B') vNotebook(world, W/2, 900, lt);
+  if (WHICH==='C') vSpy(world, W/2, 880, lt, t);
+  if (WHICH==='D') vIdentity(world, W/2, 900, lt);
+  const hookU = ease(seg(t,.5,1.1)) * (1 - ease(seg(t, D.lines[0].t1, D.lines[0].t1+.5)));
+  if (hookU > 0) {
+    const hg = el('g',{opacity:hookU,transform:`translate(${W/2},${560})`},world);
+    const hook = { A:'THE STRANGE SUITCASES', B:'SHE WROTE IN CODE', C:'WAS SHE A SPY?', D:'SCIENCE SPOKE IN 2017' }[WHICH];
+    T(hg,0,0,hook,72,dark?C.cream:C.ink,{f:F.serif,w:700,a:'middle',ls:1});
+    line(hg,-260,36,260,36,C.red,5);
+  }
+  captions(t);
+  const last = D.lines[D.lines.length-1];
+  const cu = ease(seg(t, last.t1 - .4, last.t1 + .1));
+  if (cu > 0) {
+    const cg = el('g',{opacity:cu,transform:`translate(${W/2},${H-1250+(1-cu)*40})`},world);
+    rect(cg,-420,-90,840,180,C.ink,{rx:16,stroke:C.amber,sw:3});
+    T(cg,0,-18,'WATCH THE FULL FILM',44,C.amber,{f:F.mono,w:700,a:'middle',ls:3});
+    T(cg,0,44,'THE ISDAL WOMAN — 13:53',30,C.cream,{f:F.sans,w:700,a:'middle'});
+    T(cg,0,148,'OPUSCAR STUDIO · LINK IN DESCRIPTION',24,C.steel,{f:F.mono,a:'middle',ls:2});
+  }
+  drawFX(t);
+  let fo = 0;
+  if (t < .5) fo = 1 - t/.5;
+  if (t > DUR - .9) fo = Math.max(fo, seg(t, DUR-.9, DUR));
+  document.getElementById('fade').setAttribute('opacity', fo);
+  return true;
+};
+</script>
+<script>
+document.fonts.ready.then(() => { try { window.render(0); } catch (e) {} window.READY = true; });
+</script>
+</body>
+</html>
