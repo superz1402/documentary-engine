@@ -9,6 +9,7 @@ Each new video is published as a GitHub Release — no per-video repositories to
 | Video | Title | Runtime | Release |
 |---|---|---|---|
 | 002 | The Zodiac Killer: The Ciphers, the Letters, and the Killer Nobody Could Identify | 17:23 | [video-002-zodiac v1.0.0](../../releases/tag/video-002-zodiac-v1.0.0) |
+| 003 | The Isdal Woman: The Woman Who Erased Her Own Identity | 13:53 | [video-003-isdal v1.0.0](../../releases/tag/video-003-isdal-v1.0.0) |
 
 ## Layout
 
@@ -23,6 +24,10 @@ films/
     render_range.mjs      # resumable range renderer for constrained hosts
     zodiac-002.srt        # subtitles
     trailer: zodiac-002-trailer.mp4  # 1:09 web trailer (also on the Release + Pages site)
+
+```
+films/video-003-isdal/   # same layout + shorts.html (vertical engine) + lines_shorts.json + VERIFICATION.md
+```
     chapters.txt          # YouTube chapter timestamps
     youtube.md            # title / description / tags package
     SOURCES.md            # fact-check sources
